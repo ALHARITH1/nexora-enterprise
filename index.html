@@ -80,6 +80,8 @@
     <link rel="stylesheet" href="css/auth.css">
     <link rel="stylesheet" href="css/dashboard.css">
     <link rel="stylesheet" href="css/dark.css">
+    <link rel="stylesheet" href="css/kanban.css">
+    <link rel="stylesheet" href="css/processes.css">
 </head>
 <body>
 <!-- PRELOADER -->
@@ -305,6 +307,9 @@
         <button class="nav-btn" onclick="showView('projects')"><i class="ti ti-folder-open"></i> المشاريع</button>
         <button class="nav-btn" onclick="showView('approvals')"><i class="ti ti-check-double"></i> الاعتماد <span class="count" id="approvalsCount">0</span></button>
         <button class="nav-btn" onclick="showView('costs')"><i class="ti ti-coin"></i> التكاليف</button>
+        <button class="nav-btn" onclick="showView('boq')"><i class="ti ti-clipboard-list"></i> جدول الكميات</button>
+        <button class="nav-btn" onclick="showView('dailyLabor')"><i class="ti ti-users"></i> اليوميات</button>
+        <button class="nav-btn" onclick="showView('cashflow')"><i class="ti ti-cash"></i> السيولة</button>
         <button class="nav-btn" onclick="showView('reports')"><i class="ti ti-chart-bar"></i> التقارير</button>
         <button class="nav-btn" onclick="showView('employees')"><i class="ti ti-users"></i> الموظفون</button>
         <button class="nav-btn" onclick="showView('processes')"><i class="ti ti-engineering"></i> العمليات</button>
@@ -324,6 +329,12 @@
     <div id="view-approvals" class="section"><div id="approvalsContent"></div></div>
     <!-- COSTS -->
     <div id="view-costs" class="section"><div id="costsContent"></div></div>
+    <!-- BOQ -->
+    <div id="view-boq" class="section"><div id="boqContent"></div></div>
+    <!-- DAILY LABOR -->
+    <div id="view-dailyLabor" class="section"><div id="dailyLaborContent"></div></div>
+    <!-- CASHFLOW -->
+    <div id="view-cashflow" class="section"><div id="cashflowContent"></div></div>
     <!-- REPORTS -->
     <div id="view-reports" class="section"><div id="reportsContent"></div></div>
     <!-- EMPLOYEES -->
@@ -336,6 +347,16 @@
     <div id="view-processes" class="section"><div id="processesContent"></div></div>
     <!-- PROCESS DETAIL -->
     <div id="view-processDetail" class="section"><div id="processDetailContent"></div></div>
+    <!-- PROCESS WIZARD -->
+    <div id="view-processWizard" class="section"><div id="processWizardContent"></div></div>
+    <!-- PROCESS DASHBOARD -->
+    <div id="view-processDashboard" class="section"><div id="processDashboardContent"></div></div>
+    <!-- STAKEHOLDERS -->
+    <div id="view-stakeholders" class="section"><div id="stakeholdersContent"></div></div>
+    <!-- CONTRACTS -->
+    <div id="view-contracts" class="section"><div id="contractsContent"></div></div>
+    <!-- CHANGE REQUESTS -->
+    <div id="view-changes" class="section"><div id="changesContent"></div></div>
 
     <!-- TASK MODAL -->
     <div class="modal-overlay" id="taskModal"><div class="modal" id="taskModalBody"></div></div>
@@ -405,10 +426,16 @@
 <!-- Application Scripts -->
 <script src="js/config.js"></script>
 <script src="js/helpers.js"></script>
+<script src="js/supabaseClient.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/rbac.js"></script>
 <script src="js/store.js"></script>
+<script src="js/router.js"></script>
 <script src="js/components/toast.js"></script>
 <script src="js/components/modal.js"></script>
 <script src="js/components/charts.js"></script>
+<script src="js/components/sidebar.js"></script>
+<script src="js/components/header.js"></script>
 <script src="js/components/interactive.js"></script>
 <script src="js/views/dashboard.js"></script>
 <script src="js/views/projects.js"></script>
@@ -420,8 +447,18 @@
 <script src="js/views/employees.js"></script>
 <script src="js/views/admin.js"></script>
 <script src="js/views/owner.js"></script>
+<script src="js/processes/processCatalog.js"></script>
+<script src="js/processes/processEngine.js"></script>
+<script src="js/processes/processWizard.js"></script>
 <script src="js/views/processes.js"></script>
 <script src="js/views/processDetail.js"></script>
+<script src="js/views/processDashboard.js"></script>
+<script src="js/views/boq.js"></script>
+<script src="js/views/dailyLabor.js"></script>
+<script src="js/views/cashflow.js"></script>
+<script src="js/views/stakeholders.js"></script>
+<script src="js/views/contracts.js"></script>
+<script src="js/views/changeRequests.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

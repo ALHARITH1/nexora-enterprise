@@ -1,4 +1,4 @@
-const CACHE = 'tibrflow-v4';
+const CACHE = 'nexora-v3.3.0';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -10,14 +10,22 @@ const STATIC_ASSETS = [
   './css/landing.css',
   './css/auth.css',
   './css/dashboard.css',
+  './css/kanban.css',
+  './css/processes.css',
   './css/dark.css',
   './js/config.js',
   './js/helpers.js',
+  './js/supabaseClient.js',
+  './js/auth.js',
+  './js/rbac.js',
   './js/store.js',
+  './js/router.js',
   './js/app.js',
   './js/components/toast.js',
   './js/components/modal.js',
   './js/components/charts.js',
+  './js/components/sidebar.js',
+  './js/components/header.js',
   './js/components/interactive.js',
   './js/views/dashboard.js',
   './js/views/projects.js',
@@ -29,8 +37,18 @@ const STATIC_ASSETS = [
   './js/views/employees.js',
   './js/views/admin.js',
   './js/views/owner.js',
+  './js/processes/processCatalog.js',
+  './js/processes/processEngine.js',
+  './js/processes/processWizard.js',
   './js/views/processes.js',
-  './js/views/processDetail.js'
+  './js/views/processDetail.js',
+  './js/views/processDashboard.js',
+  './js/views/boq.js',
+  './js/views/dailyLabor.js',
+  './js/views/cashflow.js',
+  './js/views/stakeholders.js',
+  './js/views/contracts.js',
+  './js/views/changeRequests.js'
 ];
 const CDN_ASSETS = [
   'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap',

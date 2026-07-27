@@ -203,7 +203,8 @@ NEXORA.App = {
     if (el) el.classList.add('active');
     var map = {
       dashboard: 'لوحة', projects: 'المشاريع', approvals: 'الاعتماد',
-      costs: 'التكاليف', reports: 'التقارير', employees: 'الموظفون',
+      costs: 'التكاليف', boq: 'جدول الكميات', dailyLabor: 'اليوميات', cashflow: 'السيولة',
+      reports: 'التقارير', employees: 'الموظفون',
       processes: 'العمليات', processDetail: 'العمليات', admin: 'إدارة', owner: 'المالك'
     };
     document.querySelectorAll('.nav-btn').forEach(function(b) {
@@ -213,6 +214,9 @@ NEXORA.App = {
     if (v === 'projects' && typeof renderProjects === 'function') renderProjects();
     if (v === 'approvals' && typeof renderApprovals === 'function') renderApprovals();
     if (v === 'costs' && typeof renderCosts === 'function') renderCosts();
+    if (v === 'boq' && typeof renderBOQ === 'function') renderBOQ();
+    if (v === 'dailyLabor' && typeof renderDailyLabor === 'function') renderDailyLabor();
+    if (v === 'cashflow' && typeof renderCashflow === 'function') renderCashflow();
     if (v === 'reports' && typeof renderReports === 'function') renderReports();
     if (v === 'employees' && typeof renderEmployeesView === 'function') renderEmployeesView();
     if (v === 'processes' && typeof renderProcesses === 'function') renderProcesses();
