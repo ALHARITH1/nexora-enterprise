@@ -131,4 +131,4 @@ NEXORA.Views.ProcessDetail = {
   }
 };
 
-window.openProcessDetail = function(pid) { NEXORA.Views.ProcessDetail.render(pid); };
+window.openProcessDetail = function(pid) { NEXORA.App.curProcessId = pid; NEXORA.Views.ProcessDetail.render(pid); };
