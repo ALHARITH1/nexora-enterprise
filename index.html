@@ -1,464 +1,367 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="نظام إدارة مشاريع مقاولات متكامل: تتبع البنود والمهام، تسجيل الساعات، الاعتمادات، وتحليل التكاليف والأرباح.">
-    <meta name="keywords" content="إدارة مشاريع, مقاولات, بنود, مهام, اعتماد, تكاليف, تقارير">
-    <meta name="author" content="NEXORA">
-    <meta name="robots" content="index, follow">
-    <meta name="revisit-after" content="7 days">
-    <meta name="language" content="Arabic">
-    <title>NEXORA — نظام إدارة مشاريع المقاولات</title>
-    <link rel="canonical" href="https://nexaura0.pages.dev/">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%231E3A8A'/%3E%3Ctext x='50' y='68' font-size='55' text-anchor='middle' fill='%23D4AF37'%3E%F0%9F%9B%A0%3C/text%3E%3C/svg%3E">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; img-src 'self' data: https:; connect-src 'self' https:; style-src 'self' https: 'unsafe-inline'; font-src 'self' https: data:; script-src 'self' https: 'unsafe-inline'; manifest-src 'self';">
-    <meta name="theme-color" content="#1E3A8A" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#0B1220" media="(prefers-color-scheme: dark)">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="NEXORA">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%231E3A8A'/%3E%3Ctext x='50' y='68' font-size='55' text-anchor='middle' fill='%23D4AF37'%3E%F0%9F%9B%A0%3C/text%3E%3C/svg%3E">
-    <meta name="application-name" content="NEXORA">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta property="og:title" content="NEXORA — نظام إدارة مشاريع المقاولات">
-    <meta property="og:description" content="نظام متكامل لإدارة مشاريع المقاولات: تتبع البنود والمهام، الاعتمادات، التكاليف، والتقارير.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://nexaura0.pages.dev/">
-    <meta property="og:locale" content="ar_AR">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="NEXORA — نظام إدارة مشاريع المقاولات">
-    <meta name="twitter:description" content="نظام متكامل لإدارة مشاريع المقاولات.">
-    <link rel="manifest" href="./manifest.json">
-    <script type="application/ld+json">
-    [{
-      "@context":"https://schema.org",
-      "@type":"SoftwareApplication",
-      "name":"NEXORA",
-      "operatingSystem":"Web",
-      "applicationCategory":"BusinessApplication",
-      "description":"نظام إدارة مشاريع المقاولات",
-      "url":"https://nexaura0.pages.dev/",
-      "author":{"@type":"Organization","name":"NEXORA"},
-      "offers":{"@type":"Offer","price":"0","priceCurrency":"SAR"}
-    },{
-      "@context":"https://schema.org",
-      "@type":"WebSite",
-      "url":"https://nexaura0.pages.dev/",
-      "name":"NEXORA",
-      "inLanguage":"ar",
-      "potentialAction":{"@type":"SearchAction","target":"https://nexaura0.pages.dev/?q={search_term_string}","query-input":"required name=search_term_string"}
-    },{
-      "@context":"https://schema.org",
-      "@type":"Organization",
-      "name":"NEXORA",
-      "url":"https://nexaura0.pages.dev/",
-      "logo":"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%231E3A8A'/%3E%3Ctext x='50' y='68' font-size='55' text-anchor='middle' fill='%23D4AF37'%3E%F0%9F%9B%A0%3C/text%3E%3C/svg%3E"
-    }]
-    </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdn.jsdelivr.net">
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap">
-    <link rel="preload" as="style" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.44.0/dist/tabler-icons.min.css">
-    <link rel="preload" as="script" href="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js">
-    <link rel="preload" as="script" href="https://cdn.jsdelivr.net/npm/frappe-gantt@0.6.1/dist/frappe-gantt.min.js">
-    <link rel="preload" as="script" href="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js">
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.44.0/dist/tabler-icons.min.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/frappe-gantt@0.6.1/dist/frappe-gantt.min.css" media="print" onload="this.media='all'">
-    <noscript>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.44.0/dist/tabler-icons.min.css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/frappe-gantt@0.6.1/dist/frappe-gantt.min.css">
-    </noscript>
-    <link rel="stylesheet" href="css/variables.css">
-    <link rel="stylesheet" href="css/base.css">
-    <link rel="stylesheet" href="css/components.css">
-    <link rel="stylesheet" href="css/layout.css">
-    <link rel="stylesheet" href="css/landing.css">
-    <link rel="stylesheet" href="css/auth.css">
-    <link rel="stylesheet" href="css/dashboard.css">
-    <link rel="stylesheet" href="css/dark.css">
-    <link rel="stylesheet" href="css/kanban.css">
-    <link rel="stylesheet" href="css/processes.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEXORA — نظام إدارة مشاريع المقاولات</title>
+  <meta name="description" content="منصة احترافية لإدارة مشاريع المقاولات: متابعة البنود، المهام، الاعتمادات، التكاليف، والتقارير الذكية.">
+  <link rel="canonical" href="https://nexaura0.pages.dev/">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%231E3A8A'/%3E%3Ctext x='50' y='68' font-size='55' text-anchor='middle' fill='%23D4AF37'%3E%F0%9F%9B%A0%3C/text%3E%3C/svg%3E">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1E3A8A">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.44.0/dist/tabler-icons.min.css">
+
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/landing.css">
+  <link rel="stylesheet" href="css/auth.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/kanban.css">
+  <link rel="stylesheet" href="css/processes.css">
+  <link rel="stylesheet" href="css/dark.css">
 </head>
-<body>
-<!-- PRELOADER -->
-<div class="preloader" id="preloader">
-    <div class="preloader-logo"><i class="ti ti-helmet"></i></div>
-    <div class="preloader-spinner"></div>
-    <div class="preloader-text">NEXORA</div>
-</div>
-<div class="scroll-progress" id="scrollProgress"></div>
+<body class="rtl">
 
-<!-- ════════════════════════════ LANDING PAGE ════════════════════════════ -->
-<div class="landing-page" id="landingPage">
-  <nav class="lnav">
-    <div class="lnav-logo">
-      <div class="brand-icon" style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--P),var(--PS));color:#fff;display:flex;align-items:center;justify-content:center;font-size:19px;box-shadow:0 3px 10px rgba(30,58,138,.25);flex-shrink:0"><i class="ti ti-helmet"></i></div>
-      <div style="margin-right:8px"><div class="lnav-logo-name">NEXORA</div><div class="lnav-logo-sub">تبر فلو</div></div>
-    </div>
-    <div class="lnav-actions">
-      <button class="btn btn-o btn-sm" onclick="showAuth('register')">تسجيل شركة</button>
-      <button class="btn btn-p btn-sm" onclick="showAuth('login')"><i class="ti ti-login"></i>دخول النظام</button>
-    </div>
-  </nav>
-  <section class="l-hero">
-    <div class="l-hero-copy">
-      <div class="l-badge"><i class="ti ti-bolt"></i>نظام إدارة مشاريع مقاولات 2026</div>
-      <h1>تابع مشاريعك<br><span>بخطوات محكمة</span><br>من البداية للاعتماد</h1>
-      <p class="l-hero-sub">من توزيع المهام على الموظفين إلى تحليل التكاليف والأرباح وإصدار التقارير — تبر فلو هو نظامك المتكامل لإدارة مشاريع المقاولات.</p>
-      <div class="l-hero-btns">
-        <button class="btn btn-p" style="padding:12px 26px;font-size:var(--fs-lg)" onclick="showAuth('register')"><i class="ti ti-building-plus"></i>ابدأ مجانًا</button>
-        <button class="btn btn-o" style="padding:12px 22px;font-size:var(--fs-lg)" onclick="showAuth('login')"><i class="ti ti-player-play"></i>جرّب النظام</button>
+  <!-- ═══════════ LANDING PAGE ═══════════ -->
+  <div id="landingPage" class="landing">
+    <nav class="l-nav">
+      <div class="l-nav-brand"><i class="ti ti-building-skyscraper"></i> NEXORA</div>
+      <div class="l-nav-links">
+        <a class="btn btn-ghost" href="#login" onclick="NEXORA.Router.navigate('login');event.preventDefault();">تسجيل الدخول</a>
+        <a class="btn btn-primary" href="#login" onclick="NEXORA.Router.navigate('login');event.preventDefault();">ابدأ مجاناً</a>
       </div>
-      <div class="l-hero-stats">
-        <div class="l-hero-stat"><strong class="counter" data-count="4">4</strong><span>مستويات صلاحية</span></div>
-        <div class="l-hero-stat"><strong class="counter" data-count="6">6</strong><span>تقارير فورية</span></div>
-        <div class="l-hero-stat"><strong class="counter" data-count="30">30</strong><span>يوم فترة تجريبية</span></div>
-      </div>
-    </div>
-    <div class="l-hero-visual">
-      <div class="l-preview">
-        <div class="l-preview-bar"><div class="brand-icon" style="width:30px;height:30px;border-radius:8px;font-size:15px;background:rgba(255,255,255,.2)"><i class="ti ti-helmet"></i></div><span>NEXORA — لوحة المشاريع</span></div>
-        <div class="l-preview-body">
-          <div class="l-mock-stat"><strong class="green">78%</strong><span>تقدم المشاريع</span></div>
-          <div class="l-mock-stat"><strong class="blue">12</strong><span>مشروع نشط</span></div>
-          <div class="l-mock-stat"><strong class="gold">486,200</strong><span>إجمالي التكاليف</span></div>
-          <div class="l-mock-stat"><strong class="red">8</strong><span>مهام بانتظار الاعتماد</span></div>
-        </div>
-        <div class="l-mock-rows">
-          <div class="l-mock-row"><div class="l-mock-dot" style="background:var(--AM)"></div><div class="l-mock-text">مبنى سكني — نسبة الإنجاز 82%</div><div class="l-mock-chip" style="background:var(--GL);color:#854f0b">خلال الميزانية</div></div>
-          <div class="l-mock-row"><div class="l-mock-dot" style="background:var(--P)"></div><div class="l-mock-text">فيلا — بانتظار اعتماد الخرسانة</div><div class="l-mock-chip" style="background:var(--PL);color:var(--P)">اعتماد</div></div>
-          <div class="l-mock-row"><div class="l-mock-dot" style="background:var(--RE)"></div><div class="l-mock-text">مستودع — تأخير في التوريد</div><div class="l-mock-chip" style="background:#fee2e2;color:#991b1b">متأخر</div></div>
-          <div class="l-mock-row"><div class="l-mock-dot" style="background:var(--GR)"></div><div class="l-mock-text">تشطيب — مكتمل ومعتمد ✓</div><div class="l-mock-chip" style="background:#dcfce7;color:#166534">تم</div></div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="l-section" style="background:#fff">
-    <div class="l-section-head reveal"><h2>كل ما تحتاجه لإدارة مشاريعك</h2><p>من المهمة الأولى حتى الاعتماد النهائي، يغطي تبر فلو كل جوانب إدارة مشاريع المقاولات</p></div>
-    <div class="l-features reveal-stagger">
-      <div class="l-feature"><div class="l-feature-icon" style="background:#e8eef9"><i class="ti ti-folder-open" style="color:var(--P)"></i></div><h3>المشاريع والبنود</h3><p>تنظيم المشاريع إلى بنود ومراحل مع ميزانية وجدول زمني ونسبة إنجاز وزنية دقيقة.</p></div>
-      <div class="l-feature"><div class="l-feature-icon" style="background:#dcfce7"><i class="ti ti-checklist" style="color:#166534"></i></div><h3>لوحة المهام (Kanban)</h3><p>مهام مسندة للموظفين مع ساعات عمل وتسجيل يومي، ونظام اعتماد متكامل.</p></div>
-      <div class="l-feature"><div class="l-feature-icon" style="background:var(--GL)"><i class="ti ti-coin" style="color:var(--G)"></i></div><h3>تحليل التكاليف</h3><p>متابعة التكاليف الفعلية مقابل الميزانية المخططة، وحساب الربح والخسارة لكل بند.</p></div>
-      <div class="l-feature"><div class="l-feature-icon" style="background:#fee2e2"><i class="ti ti-chart-bar" style="color:var(--RE)"></i></div><h3>تقارير فورية</h3><p>خمسة تقارير احترافية: المشاريع، التكاليف، أداء الموظفين، الأعمال المتأخرة، والاعتمادات.</p></div>
-      <div class="l-feature"><div class="l-feature-icon" style="background:#f0fdf4"><i class="ti ti-shield-check" style="color:#166534"></i></div><h3>الاعتماد والموافقات</h3><p>سير عمل كامل: معلقة → قيد العمل → بانتظار الاعتماد → اعتماد أو رفض، مع سجل كامل.</p></div>
-      <div class="l-feature"><div class="l-feature-icon" style="background:#f3e8ff"><i class="ti ti-users" style="color:#7c3aed"></i></div><h3>صلاحيات متعددة</h3><p>أدوار واضحة لكل عضو في الشركة مع صلاحيات دقيقة حسب المنصب والمسؤولية.</p></div>
-    </div>
-  </section>
-  <section class="l-section" style="background:var(--BG);">
-    <div class="l-section-head reveal"><h2>ماذا يقول عملاؤنا</h2><p>تجربة حقيقية من مستخدمي تبر فلو في إدارة مشاريعهم</p></div>
-    <div class="l-testimonials reveal-stagger" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;max-width:960px;margin:0 auto;">
-      <div class="l-testimonial" style="background:var(--WH);border:1px solid var(--BD);border-radius:16px;padding:24px;box-shadow:var(--SH);"><div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;"><div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--P),var(--PS));color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;">م</div><div><strong style="color:var(--TX);font-size:14px;">مهندس محمد العتيبي</strong><div style="font-size:12px;color:var(--TX2);">مدير مشاريع — شركة الأفق</div></div></div><div style="color:var(--G);font-size:14px;margin-bottom:8px;">★★★★★</div><p style="color:var(--TX2);font-size:13px;line-height:1.8;">"منذ استخدام تبر فلو، صار تتبع المهام والاعتمادات أسهل بكثير. النظام وفر علينا كثير وقت وخلانا نشوف الصورة الكاملة لكل مشروع."</p></div>
-      <div class="l-testimonial" style="background:var(--WH);border:1px solid var(--BD);border-radius:16px;padding:24px;box-shadow:var(--SH);"><div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;"><div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--G),#b8911e);color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;">خ</div><div><strong style="color:var(--TX);font-size:14px;">خالد السلمي</strong><div style="font-size:12px;color:var(--TX2);">محاسب — شركة البناء الحديث</div></div></div><div style="color:var(--G);font-size:14px;margin-bottom:8px;">★★★★★</div><p style="color:var(--TX2);font-size:13px;line-height:1.8;">"تقارير التكاليف والتحليل المالي ساعدتني أراقب الميزانيات بدقة. أحب أني أقدر أشوف الربح والخسارة لكل بند لحظياً."</p></div>
-      <div class="l-testimonial" style="background:var(--WH);border:1px solid var(--BD);border-radius:16px;padding:24px;box-shadow:var(--SH);"><div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;"><div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;">س</div><div><strong style="color:var(--TX);font-size:14px;">سارة الغامدي</strong><div style="font-size:12px;color:var(--TX2);">مهندسة مشرف — شركة الإنشاءات</div></div></div><div style="color:var(--G);font-size:14px;margin-bottom:8px;">★★★★☆</div><p style="color:var(--TX2);font-size:13px;line-height:1.8;">"أنظمة الاعتماد خلصتنا من البيروقراطية. الموافقات تصير إلكترونياً بسرعة، والكل يقدر يتتبع طلباته بدون أوراق."</p></div>
-    </div>
-  </section>
-  <div class="l-how">
-    <div class="l-how-head"><h2>كيف يعمل النظام؟</h2><p>ثلاث خطوات بسيطة لبدء إدارة مشاريعك بكفاءة</p></div>
-    <div class="l-steps">
-      <div class="l-step"><div class="l-step-num"><i class="ti ti-building-plus l-step-icon"></i></div><h4>سجّل شركتك</h4><p>أنشئ حساب الشركة في دقيقة واحدة وابدأ الفترة التجريبية المجانية لشهر كامل</p></div>
-      <div class="l-step"><div class="l-step-num"><i class="ti ti-users-group l-step-icon"></i></div><h4>أضف فريقك</h4><p>سجّل الموظفين وصلاحياتهم، وأنشئ مشروعك الأول مع البنود والمهام</p></div>
-      <div class="l-step"><div class="l-step-num"><i class="ti ti-chart-arrows-vertical l-step-icon"></i></div><h4>تابع واعتمد</h4><p>راقب التقدم، حلل التكاليف، واعتمد المهام — كل شيء في لوحة واحدة</p></div>
-    </div>
-  </div>
-  <section class="l-roles">
-    <div class="l-section-head"><h2>صلاحيات مصممة لكل دور</h2><p>كل عضو في الفريق يرى فقط ما يحتاجه، لا أكثر ولا أقل</p></div>
-    <div class="l-roles-grid">
-      <div class="l-role"><div class="l-role-icon"><i class="ti ti-user-shield"></i></div><h4>مدير المشروع</h4><p>إدارة المشاريع والبنود والمهام والاعتمادات والتقارير الكاملة.</p></div>
-      <div class="l-role"><div class="l-role-icon" style="background:#dcfce7;color:#166534"><i class="ti ti-users"></i></div><h4>مهندس</h4><p>تحديث المهام، تسجيل الساعات، وإضافة التقارير اليومية.</p></div>
-      <div class="l-role"><div class="l-role-icon" style="background:var(--GL);color:#854f0b"><i class="ti ti-report-money"></i></div><h4>محاسب</h4><p>مراجعة التكاليف والميزانيات واعتماد المصروفات.</p></div>
-      <div class="l-role"><div class="l-role-icon" style="background:var(--PL);color:var(--P)"><i class="ti ti-eye"></i></div><h4>مشرف</h4><p>متابعة سير العمل وتقارير الأداء والموافقات المبدئية.</p></div>
-    </div>
-  </section>
-  <section class="l-section reveal" style="background:#fff;">
-    <div class="l-section-head"><h2>نظام موثوق من أكثر من ١٠٠ شركة</h2><p>أرقام تعكس التزامنا بتقديم أفضل حلول إدارة المشاريع</p></div>
-    <div class="l-stat-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:24px;max-width:800px;margin:0 auto;">
-      <div class="l-stat-card" style="text-align:center;padding:24px 12px;background:var(--WH);border:1px solid var(--BD);border-radius:16px;box-shadow:var(--SH);transition:transform .3s,box-shadow .3s;"><div style="font-size:36px;font-weight:800;color:var(--P);line-height:1;"><span class="counter" data-count="120">120</span><span style="font-size:18px;">+</span></div><div style="font-size:14px;color:var(--TX2);margin-top:8px;">شركة مسجلة</div></div>
-      <div class="l-stat-card" style="text-align:center;padding:24px 12px;background:var(--WH);border:1px solid var(--BD);border-radius:16px;box-shadow:var(--SH);transition:transform .3s,box-shadow .3s;"><div style="font-size:36px;font-weight:800;color:var(--G);line-height:1;"><span class="counter" data-count="1500">1500</span><span style="font-size:18px;">+</span></div><div style="font-size:14px;color:var(--TX2);margin-top:8px;">مشروع مكتمل</div></div>
-      <div class="l-stat-card" style="text-align:center;padding:24px 12px;background:var(--WH);border:1px solid var(--BD);border-radius:16px;box-shadow:var(--SH);transition:transform .3s,box-shadow .3s;"><div style="font-size:36px;font-weight:800;color:#7c3aed;line-height:1;"><span class="counter" data-count="98">98</span><span style="font-size:18px;">%</span></div><div style="font-size:14px;color:var(--TX2);margin-top:8px;">رضا العملاء</div></div>
-      <div class="l-stat-card" style="text-align:center;padding:24px 12px;background:var(--WH);border:1px solid var(--BD);border-radius:16px;box-shadow:var(--SH);transition:transform .3s,box-shadow .3s;"><div style="font-size:36px;font-weight:800;color:var(--RE);line-height:1;"><span class="counter" data-count="5">5</span><span style="font-size:18px;">+</span></div><div style="font-size:14px;color:var(--TX2);margin-top:8px;">سنوات خبرة</div></div>
-    </div>
-  </section>
-  <div class="l-cta">
-    <h2>جاهز لبدء إدارة مشاريعك بكفاءة؟</h2>
-    <p>سجّل شركتك الآن وجرّب تبر فلو مجانًا لمدة شهر كامل</p>
-    <div class="l-cta-btns">
-      <button class="btn btn-g" style="padding:13px 28px;font-size:var(--fs-xl)" onclick="showAuth('register')"><i class="ti ti-building-plus"></i>تسجيل شركة جديدة</button>
-      <button class="btn" style="background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.3);color:#fff;padding:13px 24px;font-size:var(--fs-lg)" onclick="showAuth('login')"><i class="ti ti-login"></i>دخول النظام</button>
-    </div>
-  </div>
-  <!-- FAQ -->
-  <section class="l-section" style="background:#fff">
-    <div class="l-section-head reveal"><h2>الأسئلة الشائعة</h2><p>أجوبة لأكثر الأسئلة تكراراً عن نظام تبر فلو</p></div>
-    <div class="l-faq reveal-stagger" style="max-width:700px;margin:0 auto;">
-      <details><summary><i class="ti ti-help"></i> هل النظام مجاني؟</summary><p>نعم، الفترة التجريبية مجانية لمدة 30 يوماً كاملة بدون حاجة لبطاقة ائتمان. بعدها يمكنك الاشتراك للاستمرار.</p></details>
-      <details><summary><i class="ti ti-help"></i> هل أحتاج تحميل برنامج؟</summary><p>لا، كل شيء يعمل عبر المتصفح. يمكنك أيضاً تثبيت التطبيق على جوالك أو جهازك لاستخدام أسرع (PWA).</p></details>
-      <details><summary><i class="ti ti-help"></i> هل بياناتي آمنة؟</summary><p>نعم، جميع البيانات محفوظة محلياً في متصفحك باستخدام IndexedDB. لا يتم إرسال أي بيانات لخوادم خارجية.</p></details>
-      <details><summary><i class="ti ti-help"></i> كم عدد الموظفين المسموح؟</summary><p>غير محدود. يمكنك إضافة عدد غير محدود من الموظفين والصلاحيات حسب حاجة شركتك.</p></details>
-      <details><summary><i class="ti ti-help"></i> هل يدعم النظام التقارير؟</summary><p>نعم، يحتوي على 6 تقارير احترافية قابلة للتصدير PDF و CSV و JSON.</p></details>
-    </div>
-  </section>
-  <section class="l-section reveal">
-    <div class="l-section-head"><h2>تواصل معنا</h2><p>عندك استفسار أو اقتراح؟ احنا هنا لمساعدتك</p></div>
-    <div style="max-width:520px;margin:0 auto;background:var(--WH);border:1px solid var(--BD);border-radius:16px;padding:32px;box-shadow:var(--SH);">
-      <div class="form-row"><label><i class="ti ti-mail"></i> بريدك الإلكتروني</label><input id="contactEmail" type="email" placeholder="name@company.com" style="width:100%;padding:10px 14px;border:1px solid var(--BD);border-radius:10px;font-family:inherit;font-size:14px;"></div>
-      <div class="form-row" style="margin-top:12px;"><label><i class="ti ti-message"></i> رسالتك</label><textarea id="contactMsg" rows="4" placeholder="اكتب رسالتك هنا..." style="width:100%;padding:10px 14px;border:1px solid var(--BD);border-radius:10px;font-family:inherit;font-size:14px;resize:vertical;"></textarea></div>
-      <button class="btn btn-p" style="width:100%;justify-content:center;padding:12px;margin-top:14px;font-size:var(--fs-md);" onclick="submitContact()"><i class="ti ti-send"></i> إرسال الرسالة</button>
-      <div id="contactMsgBox" style="margin-top:10px;font-size:13px;text-align:center;"></div>
-    </div>
-  </section>
-  <footer class="l-footer">
-    <div style="display:flex;align-items:center;gap:var(--sp-3)"><div class="brand-icon" style="width:30px;height:30px;border-radius:8px;font-size:15px"><i class="ti ti-helmet"></i></div><strong style="color:var(--TX)">NEXORA تبر فلو</strong></div>
-    <span>نظام إدارة مشاريع المقاولات &copy; 2026</span>
-  </footer>
-</div>
+    </nav>
 
-<!-- ════════════════════════════ AUTH PAGE ════════════════════════════ -->
-<section class="auth-page" id="authPage" style="display:none;">
-  <div class="auth-hero">
-    <div class="auth-logo">
-      <div class="brand-icon"><i class="ti ti-helmet"></i></div>
-      <div><div class="brand-name" style="color:#fff;font-size:var(--fs-2xl)">NEXORA</div><div class="brand-sub" style="color:rgba(255,255,255,.75)">تبر فلو</div></div>
-    </div>
-    <div class="auth-copy">
-      <h1>نظام متكامل لإدارة مشاريع المقاولات</h1>
-      <p>من توزيع المهام إلى تحليل التكاليف والاعتماد — كل شيء في مكان واحد.</p>
-      <div class="auth-points">
-        <div class="auth-point"><i class="ti ti-folder-open"></i><strong>مشاريع وبنود</strong><span>ميزانية وجدول زمني ونسبة إنجاز.</span></div>
-        <div class="auth-point"><i class="ti ti-checklist"></i><strong>لوحة المهام</strong><span>Kanban مع إسناد وتسجيل ساعات.</span></div>
-        <div class="auth-point"><i class="ti ti-coin"></i><strong>تحليل التكاليف</strong><span>أرباح وخسائر لكل بند.</span></div>
-        <div class="auth-point"><i class="ti ti-checks"></i><strong>نظام اعتماد</strong><span>سير عمل كامل للموافقات.</span></div>
-      </div>
-    </div>
-    <div class="auth-foot">NEXORA تبر فلو &copy; 2026</div>
-  </div>
-  <div class="auth-panel-wrap">
-    <div class="auth-panel">
-      <button class="auth-back" onclick="showLanding()"><i class="ti ti-arrow-right"></i>العودة للرئيسية</button>
-      <div class="auth-tabs">
-        <button id="loginTab" class="active" onclick="switchAuth('login')">دخول الشركة</button>
-        <button id="registerTab" onclick="switchAuth('register')">تسجيل شركة</button>
-      </div>
-      <div class="auth-form active" id="loginForm">
-        <div class="auth-title">دخول نظام إدارة المشاريع</div>
-        <div class="auth-sub">أدخل بريدك الإلكتروني المسجل في الشركة.</div>
-        <div id="loginMsg" class="message-box"></div>
-        <div class="form-row"><label>البريد الإلكتروني</label><input id="loginEmail" type="email" value="admin@company.com" placeholder="name@company.com"></div>
-        <button class="btn btn-p" style="width:100%;justify-content:center;padding:12px var(--sp-5);font-size:var(--fs-lg)" onclick="doLogin()"><i class="ti ti-login"></i>دخول</button>
-        <div class="demo-box" style="margin-top:14px;">
-          <strong>حسابات تجريبية:</strong><br>
-          <span style="color:var(--G);">👑 owner@tibrflow.com</span> — مالك التطبيق<br>
-          <span style="color:var(--P);">admin@company.com</span> — مدير شركة الأفق<br>
-          <span style="color:var(--PS);">eng@company.com</span> — مهندس<br>
-          جديد؟ سجّل شركتك من تبويب <strong>تسجيل شركة</strong>
+    <section class="l-hero">
+      <div class="l-hero-text">
+        <div class="l-hero-badge"><i class="ti ti-sparkles"></i> منصة مقاولات سحابية</div>
+        <h1>إدارة مشاريع المقاولات<br>بشكل <span>احترافي</span></h1>
+        <p>تابع مشاريعك من أي مكان: البنود، المهام، الاعتمادات، التكاليف، والتقارير الذكية — كل ما تحتاجه في منصة واحدة.</p>
+        <div class="l-hero-actions">
+          <a class="btn btn-primary btn-lg" href="#login" onclick="NEXORA.Router.navigate('login');event.preventDefault();"><i class="ti ti-rocket"></i> ابدأ مجاناً</a>
+          <a class="btn btn-lg" href="#features"><i class="ti ti-player-play"></i> شاهد المميزات</a>
+        </div>
+        <div class="l-hero-stats">
+          <div class="l-hero-stat"><div class="num counter" data-count="500">0</div><div class="lbl">مشروع</div></div>
+          <div class="l-hero-stat"><div class="num counter" data-count="1200">0</div><div class="lbl">مستخدم</div></div>
+          <div class="l-hero-stat"><div class="num counter" data-count="98">0</div><div class="lbl">% رضا</div></div>
         </div>
       </div>
-      <div class="auth-form" id="registerForm">
-        <div class="auth-title">تسجيل شركة جديدة</div>
-        <div class="auth-sub">سجّل شركتك وابدأ الفترة التجريبية المجانية لمدة شهر.</div>
-        <div id="regMsg" class="message-box"></div>
-        <div class="form-row"><label>اسم الشركة <span style="color:var(--RE)">*</span></label><input id="regCompany" placeholder="مثال: شركة الأفق للمقاولات"></div>
-        <div class="form-row"><label>بريد الشركة الإلكتروني <span style="color:var(--RE)">*</span></label><input id="regCompanyEmail" type="email" placeholder="info@company.com"></div>
-        <div class="form-row"><label>اسم مسؤول الحساب <span style="color:var(--RE)">*</span></label><input id="regName" placeholder="مثال: أحمد المدير"></div>
-        <div class="form-row"><label>بريد مسؤول الحساب <span style="color:var(--RE)">*</span></label><input id="regEmail" type="email" placeholder="admin@company.com"></div>
-        <button class="btn btn-g" style="width:100%;justify-content:center;padding:12px var(--sp-5);font-size:var(--fs-lg)" onclick="registerCompany()"><i class="ti ti-building-plus"></i>إنشاء حساب تجريبي</button>
+      <div class="l-hero-visual">
+        <div class="l-hero-preview">
+          <div class="l-hero-preview-header">
+            <span style="background:#ef4444;"></span><span style="background:#f59e0b;"></span><span style="background:#22c55e;"></span>
+          </div>
+          <div class="l-hero-preview-content">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
+              <div style="background:var(--surface);padding:12px;border-radius:8px;"><div style="font-size:11px;color:var(--text-muted);">المشاريع النشطة</div><div style="font-size:22px;font-weight:700;color:var(--primary);">12</div></div>
+              <div style="background:var(--surface);padding:12px;border-radius:8px;"><div style="font-size:11px;color:var(--text-muted);">المهام</div><div style="font-size:22px;font-weight:700;color:var(--gold);">48</div></div>
+            </div>
+            <div style="background:var(--surface);padding:10px;border-radius:8px;margin-bottom:8px;">
+              <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;">تقدم المشروع</div>
+              <div style="height:6px;background:var(--bg-secondary);border-radius:3px;"><div style="width:72%;height:100%;background:linear-gradient(90deg,var(--primary),var(--gold));border-radius:3px;"></div></div>
+            </div>
+            <div style="background:var(--surface);padding:10px;border-radius:8px;">
+              <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;">الميزانية</div>
+              <div style="height:6px;background:var(--bg-secondary);border-radius:3px;"><div style="width:55%;height:100%;background:var(--success);border-radius:3px;"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="l-section">
+      <div class="l-section-head">
+        <h2>مميزات شاملة لإدارة شاملة</h2>
+        <p>كل ما تحتاجه لإنجاح مشاريعك في مكان واحد</p>
+      </div>
+      <div class="l-features">
+        <div class="l-feature"><div class="l-feature-icon" style="background:var(--primary-bg);color:var(--primary);"><i class="ti ti-building-community"></i></div><h3>إدارة المشاريع</h3><p>إنشاء وتتبع المشاريع بسهولة مع تحديد الميزانيات والجداول الزمنية</p></div>
+        <div class="l-feature"><div class="l-feature-icon" style="background:var(--gold-light);color:var(--gold);"><i class="ti ti-layout-kanban"></i></div><h3>لوحة كانبان</h3><p>إدارة سير العمل بصرياً مع سحب وإفلات المهام بين مراحل التنفيذ</p></div>
+        <div class="l-feature"><div class="l-feature-icon" style="background:var(--success-light);color:var(--success);"><i class="ti ti-cash"></i></div><h3>تحليل التكاليف</h3><p>مقارنة الميزانيات المخططة بالتكاليف الفعلية مع تنبؤ بتجاوزات الميزانية</p></div>
+        <div class="l-feature"><div class="l-feature-icon" style="background:var(--danger-light);color:var(--danger);"><i class="ti ti-chart-bar"></i></div><h3>تقارير ذكية</h3><p>رسوم بيانية تفاعلية وتقارير شاملة مع إمكانية التصدير PDF وCSV</p></div>
+        <div class="l-feature"><div class="l-feature-icon" style="background:var(--info-light);color:var(--info);"><i class="ti ti-clipboard-check"></i></div><h3>اعتمادات إلكترونية</h3><p>مسار اعتماد واضح للمهام والميزانيات بدون أوراق</p></div>
+        <div class="l-feature"><div class="l-feature-icon" style="background:var(--warning-light);color:var(--warning);"><i class="ti ti-shield-lock"></i></div><h3>صلاحيات متقدمة</h3><p>نظام أدوار دقيق يحدد ما يراه ويفعله كل مستخدم</p></div>
+      </div>
+    </section>
+
+    <section class="l-section">
+      <div class="l-section-head">
+        <h2>.Roles مصمم لأدوارك</h2>
+        <p>كل دور له واجهة وصلاحيات مخصصة</p>
+      </div>
+      <div class="l-roles">
+        <div class="l-role"><div class="l-role-avatar" style="background:linear-gradient(135deg,var(--primary),var(--primary-light));"><i class="ti ti-crown"></i></div><h4>مدير المشروع</h4><p>رؤية شاملة + اعتماد</p></div>
+        <div class="l-role"><div class="l-role-avatar" style="background:linear-gradient(135deg,var(--success),var(--success-dark));"><i class="ti ti-helmet"></i></div><h4>مهندس الموقع</h4><p>مهام + تسجيل ساعات</p></div>
+        <div class="l-role"><div class="l-role-avatar" style="background:linear-gradient(135deg,#7C3AED,#5B21B6);"><i class="ti ti-calculator"></i></div><h4>المحاسب</h4><p>تكاليف + تقارير مالية</p></div>
+        <div class="l-role"><div class="l-role-avatar" style="background:linear-gradient(135deg,var(--gold),var(--gold-dark));"><i class="ti ti-settings"></i></div><h4>المدير العام</h4><p>صلاحيات كاملة</p></div>
+      </div>
+    </section>
+
+    <section class="l-section l-faq">
+      <div class="l-section-head"><h2>الأسئلة الشائعة</h2></div>
+      <details><summary>هل النظام مجاني؟</summary><div class="faq-answer">نعم! فترة تجريبية 30 يوم بدون بطاقة ائتمان.</div></details>
+      <details><summary>هل يعمل بدون إنترنت؟</summary><div class="faq-answer">نعم، يعمل بدون إنترنت ويتزامن عند الاتصال.</div></details>
+      <details><summary>هل أستطيع إضافة موظفين؟</summary><div class="faq-answer">نعم، يمكنك إضافة موظفين بأدوار مختلفة وصلاحيات مخصصة.</div></details>
+      <details><summary>هل البيانات آمنة؟</summary><div class="faq-answer">نعم، البيانات محفوظة في قاعدة بيانات مشفرة ومحمية.</div></details>
+    </section>
+
+    <section class="l-cta">
+      <h2>ابدأ إدارة مشاريعك الآن</h2>
+      <p>انضم لمئات الشركات التي تستخدم NEXORA لإدارة مشاريعها بكفاءة</p>
+      <a class="btn btn-gold btn-lg" href="#login" onclick="NEXORA.Router.navigate('login');event.preventDefault();"><i class="ti ti-rocket"></i> ابدأ مجاناً</a>
+    </section>
+
+    <footer class="l-footer">
+      <p>&copy; 2026 NEXORA. جميع الحقوق محفوظة.</p>
+    </footer>
+  </div>
+
+  <!-- ═══════════ AUTH PAGE ═══════════ -->
+  <div id="authPage" class="auth hidden">
+    <div class="auth-hero">
+      <button class="btn btn-ghost auth-back" onclick="NEXORA.Router.navigate('landing')" style="color:#fff;"><i class="ti ti-arrow-right"></i> الرئيسية</button>
+      <h1><i class="ti ti-building-skyscraper"></i> NEXORA</h1>
+      <p>منصة احترافية لإدارة مشاريع المقاولات</p>
+      <div class="features-list">
+        <div class="feature-item"><i class="ti ti-check-circle"></i> إدارة المشاريع والبنود</div>
+        <div class="feature-item"><i class="ti ti-check-circle"></i> مهام و kanban board</div>
+        <div class="feature-item"><i class="ti ti-check-circle"></i> تحليل التكاليف والأرباح</div>
+        <div class="feature-item"><i class="ti ti-check-circle"></i> تقارير ذكية قابلة للتصدير</div>
+      </div>
+    </div>
+    <div class="auth-panel-wrap">
+      <div class="auth-panel">
+        <div class="auth-tabs">
+          <button class="auth-tab active" onclick="NEXORA.AuthPage._switchTab('login', this)">دخول</button>
+          <button class="auth-tab" onclick="NEXORA.AuthPage._switchTab('register', this)">حساب جديد</button>
+        </div>
+
+        <div class="auth-card">
+          <div id="authLoginForm" class="auth-form active">
+            <h2 class="auth-title">مرحباً بعودتك</h2>
+            <p class="auth-sub">سجّل دخولك للمتابعة</p>
+            <form id="loginForm">
+              <div class="form-group"><label>البريد الإلكتروني</label><input type="email" id="loginEmail" required placeholder="you@company.com"></div>
+              <div class="form-group"><label>كلمة المرور</label><input type="password" id="loginPass" required placeholder="••••••••"></div>
+              <button type="submit" class="btn btn-primary btn-lg" style="width:100%;margin-top:var(--sp-4);"><i class="ti ti-login"></i> تسجيل الدخول</button>
+            </form>
+            <div class="auth-demo">
+              <p><i class="ti ti-info-circle"></i> للتجربة السريعة، استخدم:</p>
+              <code>owner@nexora.app</code>
+            </div>
+          </div>
+
+          <div id="authRegisterForm" class="auth-form">
+            <h2 class="auth-title">إنشاء حساب جديد</h2>
+            <p class="auth-sub">ابدأ فترتك التجريبية المجانية</p>
+            <form id="registerForm">
+              <div class="form-group"><label>اسم الشركة</label><input type="text" id="regCompany" required placeholder="اسم شركتك"></div>
+              <div class="form-group"><label>بريد الشركة</label><input type="email" id="regEmail" required placeholder="info@company.com"></div>
+              <div class="form-group"><label>اسم المدير</label><input type="text" id="regAdmin" required placeholder="الاسم الكامل"></div>
+              <div class="form-group"><label>كلمة المرور</label><input type="password" id="regPass" required minlength="6" placeholder="6 أحرف على الأقل"></div>
+              <button type="submit" class="btn btn-primary btn-lg" style="width:100%;margin-top:var(--sp-4);"><i class="ti ti-plus"></i> إنشاء الحساب</button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</section>
 
-<!-- ═══════════════ EXPIRED PAGE ═══════════════ -->
-<div class="app" id="expiredPage" style="display:none;">
-    <div class="header">
-        <h1><i class="ti ti-helmet"></i> <span style="font-weight:300;opacity:.7;font-size:var(--fs-md);letter-spacing:.04em;">NEXORA</span> تبر فلو</h1>
-    </div>
-    <div class="card" style="max-width:500px;margin:40px auto;text-align:center;">
-        <div style="font-size:60px;margin-bottom:16px;">⏳</div>
-        <h2 style="color:var(--G);margin-bottom:10px;">انتهت الفترة التجريبية</h2>
-        <p style="color:var(--TX2);margin-bottom:20px;">للأسف، انتهت الفترة التجريبية المجانية لشركتك. اشترك الآن لاستعادة جميع الميزات.</p>
-        <div style="background:var(--BG);border-radius:8px;padding:16px;margin-bottom:16px;">
-            <div style="font-size:13px;color:var(--TX2);">شركة: <strong id="expiredCompanyName" style="color:var(--TX);"></strong></div>
-            <div style="font-size:13px;color:var(--TX2);">انتهت في: <strong id="expiredDate" style="color:var(--TX);"></strong></div>
+  <!-- ═══════════ APP SHELL ═══════════ -->
+  <div id="appShell" class="app-shell hidden">
+    <div id="scrollProgress" class="scroll-progress"></div>
+    <div id="overlay" class="overlay"></div>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo"><i class="ti ti-building-skyscraper"></i></div>
+        <div class="sidebar-brand"><h2>NEXORA</h2><small>تبر فلو</small></div>
+      </div>
+      <nav id="sidebarNav" class="sidebar-nav"></nav>
+      <div class="sidebar-footer">
+        <div class="sidebar-user" onclick="NEXORA.Auth.logout()">
+          <div class="sidebar-user-avatar" id="sidebarUserAvatar">?</div>
+          <div class="sidebar-user-info">
+            <div class="user-name" id="sidebarUserName">-</div>
+            <div class="user-role" id="sidebarUserRole">-</div>
+          </div>
+          <i class="ti ti-logout" style="margin-right:auto;color:var(--text-muted);font-size:18px;"></i>
         </div>
-        <button class="btn btn-primary" style="width:100%;justify-content:center;padding:12px;font-size:15px;" onclick="alert('📞 تواصل مع مالك التطبيق على البريد owner@tibrflow.com لتجديد الاشتراك.')"><i class="ti ti-credit-card"></i> تجديد الاشتراك</button>
-        <button class="btn" style="width:100%;justify-content:center;margin-top:8px;" onclick="doLogout()">تسجيل الخروج</button>
-    </div>
-</div>
+      </div>
+    </aside>
 
-<!-- ═══════════════ MAIN APP ═══════════════ -->
-<div class="app" id="mainApp" style="display:none;">
-    <div class="header">
-        <div><h1><i class="ti ti-helmet"></i> <span style="font-weight:300;opacity:.7;font-size:var(--fs-md);letter-spacing:.04em;">NEXORA</span> تبر فلو</h1></div>
+    <!-- Main -->
+    <main class="main-content">
+      <header class="top-header">
+        <div class="header-right">
+          <button id="menuToggle" class="menu-toggle"><i class="ti ti-menu-2"></i></button>
+          <h2 class="header-title" id="headerTitle">لوحة التحكم</h2>
+        </div>
         <div class="header-left">
-            <span><i class="ti ti-user-circle" style="color:var(--G);"></i> <span id="hdrName"></span></span>
-            <span class="user-badge" id="hdrRole"></span>
-            <span id="trialInfo" style="display:none;"></span>
-            <button class="btn btn-sm" onclick="toggleNotifications()" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;position:relative;" title="الإشعارات"><i class="ti ti-bell"></i><span id="notifBadge" style="position:absolute;top:-4px;right:-4px;background:var(--RE);color:#fff;border-radius:50%;width:16px;height:16px;font-size:9px;display:flex;align-items:center;justify-content:center;font-weight:700;display:none;">0</span></button>
-            <button class="btn btn-sm" onclick="showGlobalSearch()" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;" title="بحث (Ctrl+K)"><i class="ti ti-search"></i></button>
-            <button class="btn btn-danger btn-sm" onclick="doLogout()"><i class="ti ti-logout"></i></button>
-            <button class="btn btn-sm" onclick="toggleTheme()" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;" title="الوضع المظلم (Ctrl+D)"><i class="ti ti-moon-stars"></i></button>
+          <div class="header-search">
+            <i class="ti ti-search"></i>
+            <input type="text" id="globalSearch" placeholder="بحث... Ctrl+K">
+          </div>
+          <button id="notifToggle" class="header-action">
+            <i class="ti ti-bell"></i>
+            <span class="action-badge" id="notifBadge" style="display:none;">0</span>
+          </button>
+          <button id="themeToggle" class="header-action"><i class="ti ti-moon"></i></button>
         </div>
+      </header>
+
+      <!-- ═══════════ ALL VIEWS ═══════════ -->
+      <div class="page-content">
+        <div id="view-dashboard" class="view-section active"><div id="dashContent"></div></div>
+        <div id="view-projects" class="view-section"><div id="projectsContent"></div></div>
+        <div id="view-project" class="view-section"><div id="projectContent"></div></div>
+        <div id="view-item" class="view-section"><div id="itemContent"></div></div>
+        <div id="view-approvals" class="view-section"><div id="approvalsContent"></div></div>
+        <div id="view-costs" class="view-section"><div id="costsContent"></div></div>
+        <div id="view-reports" class="view-section"><div id="reportsContent"></div></div>
+        <div id="view-employees" class="view-section"><div id="employeesContent"></div></div>
+        <div id="view-admin" class="view-section"><div id="adminContent"></div></div>
+        <div id="view-owner" class="view-section"><div id="ownerContent"></div></div>
+        <div id="view-processes" class="view-section"><div id="processesContent"></div></div>
+        <div id="view-processDetail" class="view-section"><div id="processDetailContent"></div></div>
+        <div id="view-processWizard" class="view-section"><div id="processWizardContent"></div></div>
+        <div id="view-processDashboard" class="view-section"><div id="processDashboardContent"></div></div>
+        <div id="view-boq" class="view-section"><div id="boqContent"></div></div>
+        <div id="view-dailyLabor" class="view-section"><div id="dailyLaborContent"></div></div>
+        <div id="view-cashflow" class="view-section"><div id="cashflowContent"></div></div>
+        <div id="view-stakeholders" class="view-section"><div id="stakeholdersContent"></div></div>
+        <div id="view-contracts" class="view-section"><div id="contractsContent"></div></div>
+        <div id="view-changes" class="view-section"><div id="changesContent"></div></div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- Notification Panel -->
+  <div id="notifPanel" class="notif-panel">
+    <div class="notif-panel-header">
+      <h4 style="font-size:var(--text-lg);font-weight:var(--fw-bold);">الإشعارات</h4>
+      <button class="btn btn-sm btn-ghost" onclick="document.getElementById('notifPanel').classList.remove('open')"><i class="ti ti-x"></i></button>
     </div>
-    <div class="nav" id="mainNav">
-        <button class="nav-btn active" onclick="showView('dashboard')"><i class="ti ti-chart-pie"></i> لوحة القيادة</button>
-        <button class="nav-btn" onclick="showView('projects')"><i class="ti ti-folder-open"></i> المشاريع</button>
-        <button class="nav-btn" onclick="showView('approvals')"><i class="ti ti-check-double"></i> الاعتماد <span class="count" id="approvalsCount">0</span></button>
-        <button class="nav-btn" onclick="showView('costs')"><i class="ti ti-coin"></i> التكاليف</button>
-        <button class="nav-btn" onclick="showView('boq')"><i class="ti ti-clipboard-list"></i> جدول الكميات</button>
-        <button class="nav-btn" onclick="showView('dailyLabor')"><i class="ti ti-users"></i> اليوميات</button>
-        <button class="nav-btn" onclick="showView('cashflow')"><i class="ti ti-cash"></i> السيولة</button>
-        <button class="nav-btn" onclick="showView('reports')"><i class="ti ti-chart-bar"></i> التقارير</button>
-        <button class="nav-btn" onclick="showView('employees')"><i class="ti ti-users"></i> الموظفون</button>
-        <button class="nav-btn" onclick="showView('processes')"><i class="ti ti-engineering"></i> العمليات</button>
-        <button class="nav-btn" onclick="showView('admin')" id="adminNavBtn" style="display:none;"><i class="ti ti-settings"></i> الإدارة</button>
-        <button class="nav-btn" onclick="showView('owner')" id="ownerNavBtn" style="display:none;"><i class="ti ti-crown"></i> لوحة المالك</button>
-    </div>
+    <div id="notifPanelBody" class="notif-panel-body"></div>
+  </div>
 
-    <!-- DASHBOARD -->
-    <div id="view-dashboard" class="section active"><div id="dashContent"></div></div>
-    <!-- PROJECTS -->
-    <div id="view-projects" class="section"><div id="projectsContent"></div></div>
-    <!-- PROJECT DETAIL -->
-    <div id="view-project" class="section"><div id="projectContent"></div></div>
-    <!-- ITEM DETAIL -->
-    <div id="view-item" class="section"><div id="itemContent"></div></div>
-    <!-- APPROVALS -->
-    <div id="view-approvals" class="section"><div id="approvalsContent"></div></div>
-    <!-- COSTS -->
-    <div id="view-costs" class="section"><div id="costsContent"></div></div>
-    <!-- BOQ -->
-    <div id="view-boq" class="section"><div id="boqContent"></div></div>
-    <!-- DAILY LABOR -->
-    <div id="view-dailyLabor" class="section"><div id="dailyLaborContent"></div></div>
-    <!-- CASHFLOW -->
-    <div id="view-cashflow" class="section"><div id="cashflowContent"></div></div>
-    <!-- REPORTS -->
-    <div id="view-reports" class="section"><div id="reportsContent"></div></div>
-    <!-- EMPLOYEES -->
-    <div id="view-employees" class="section"><div id="employeesContent"></div></div>
-    <!-- ADMIN -->
-    <div id="view-admin" class="section"><div id="adminContent"></div></div>
-    <!-- OWNER DASHBOARD -->
-    <div id="view-owner" class="section"><div id="ownerContent"></div></div>
-    <!-- PROCESSES (PMBOK) -->
-    <div id="view-processes" class="section"><div id="processesContent"></div></div>
-    <!-- PROCESS DETAIL -->
-    <div id="view-processDetail" class="section"><div id="processDetailContent"></div></div>
-    <!-- PROCESS WIZARD -->
-    <div id="view-processWizard" class="section"><div id="processWizardContent"></div></div>
-    <!-- PROCESS DASHBOARD -->
-    <div id="view-processDashboard" class="section"><div id="processDashboardContent"></div></div>
-    <!-- STAKEHOLDERS -->
-    <div id="view-stakeholders" class="section"><div id="stakeholdersContent"></div></div>
-    <!-- CONTRACTS -->
-    <div id="view-contracts" class="section"><div id="contractsContent"></div></div>
-    <!-- CHANGE REQUESTS -->
-    <div id="view-changes" class="section"><div id="changesContent"></div></div>
+  <!-- ═══════════ SCRIPTS ═══════════ -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
 
-    <!-- TASK MODAL -->
-    <div class="modal-overlay" id="taskModal"><div class="modal" id="taskModalBody"></div></div>
-    <!-- EDIT EMPLOYEE MODAL -->
-    <div class="modal-overlay" id="empModal">
-        <div class="modal" style="max-width:450px;">
-            <div class="modal-title"><i class="ti ti-user-edit"></i> تعديل بيانات الموظف</div>
-            <div id="empModalMsg" class="message-box"></div>
-            <input type="hidden" id="editEmpId">
-            <div class="grid-2">
-                <div><label>الاسم</label><input type="text" id="editEmpName"></div>
-                <div><label>البريد</label><input type="email" id="editEmpEmail"></div>
-            </div>
-            <div class="grid-2">
-                <div><label>الدور</label>
-                    <select id="editEmpRole" style="padding:8px 12px;border:1px solid var(--BD);border-radius:8px;font-size:13px;font-family:inherit;width:100%;margin-bottom:10px;">
-                        <option value="مدير مشروع">مدير مشروع</option>
-                        <option value="مهندس موقع">مهندس موقع</option>
-                        <option value="مشرف">مشرف</option>
-                        <option value="محاسب">محاسب</option>
-                        <option value="أمين مستودع">أمين مستودع</option>
-                        <option value="عامل">عامل</option>
-                    </select>
-                </div>
-                <div><label>الساعة (ريال)</label><input type="number" id="editEmpRate"></div>
-            </div>
-            <div style="display:flex;gap:8px;margin-top:4px;">
-                <button class="btn btn-primary" onclick="saveEditEmployee()"><i class="ti ti-device-floppy"></i> حفظ التغييرات</button>
-                <button class="btn" onclick="closeEmpModal()">إلغاء</button>
-            </div>
-        </div>
-    </div>
-</div>
+  <script src="js/config.js?v=3.3.0" defer></script>
+  <script src="js/utils/helpers.js?v=3.3.0" defer></script>
+  <script src="js/supabaseClient.js?v=3.3.0" defer></script>
+  <script src="js/auth.js?v=3.3.0" defer></script>
+  <script src="js/rbac.js?v=3.3.0" defer></script>
+  <script src="js/store.js?v=3.3.0" defer></script>
+  <script src="js/router.js?v=3.3.0" defer></script>
+  <script src="js/components/toast.js?v=3.3.0" defer></script>
+  <script src="js/components/modal.js?v=3.3.0" defer></script>
+  <script src="js/components/charts.js?v=3.3.0" defer></script>
+  <script src="js/components/sidebar.js?v=3.3.0" defer></script>
+  <script src="js/components/header.js?v=3.3.0" defer></script>
+  <script src="js/components/interactive.js?v=3.3.0" defer></script>
+  <script src="js/views/dashboard.js?v=3.3.0" defer></script>
+  <script src="js/views/projects.js?v=3.3.0" defer></script>
+  <script src="js/views/projectDetail.js?v=3.3.0" defer></script>
+  <script src="js/views/itemDetail.js?v=3.3.0" defer></script>
+  <script src="js/views/approvals.js?v=3.3.0" defer></script>
+  <script src="js/views/costs.js?v=3.3.0" defer></script>
+  <script src="js/views/reports.js?v=3.3.0" defer></script>
+  <script src="js/views/employees.js?v=3.3.0" defer></script>
+  <script src="js/views/admin.js?v=3.3.0" defer></script>
+  <script src="js/views/owner.js?v=3.3.0" defer></script>
+  <script src="js/processes/processCatalog.js?v=3.3.0" defer></script>
+  <script src="js/processes/processEngine.js?v=3.3.0" defer></script>
+  <script src="js/processes/processWizard.js?v=3.3.0" defer></script>
+  <script src="js/views/processes.js?v=3.3.0" defer></script>
+  <script src="js/views/processDetail.js?v=3.3.0" defer></script>
+  <script src="js/views/processDashboard.js?v=3.3.0" defer></script>
+  <script src="js/views/boq.js?v=3.3.0" defer></script>
+  <script src="js/views/dailyLabor.js?v=3.3.0" defer></script>
+  <script src="js/views/cashflow.js?v=3.3.0" defer></script>
+  <script src="js/views/stakeholders.js?v=3.3.0" defer></script>
+  <script src="js/views/contracts.js?v=3.3.0" defer></script>
+  <script src="js/views/changeRequests.js?v=3.3.0" defer></script>
+  <script src="js/app.js?v=3.3.0" defer></script>
 
-<!-- TOAST CONTAINER -->
-<div id="toastContainer" style="position:fixed;bottom:20px;right:20px;z-index:200;display:flex;flex-direction:column;gap:8px;pointer-events:none;"></div>
+  <!-- Auth Logic -->
+  <script defer>
+    NEXORA.AuthPage = {
+      _switchTab(tab, btn) {
+        document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('authLoginForm').classList.toggle('active', tab === 'login');
+        document.getElementById('authRegisterForm').classList.toggle('active', tab === 'register');
+      }
+    };
 
-<!-- NOTIFICATION PANEL -->
-<div id="notifPanel" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:90;background:rgba(11,20,40,.3);backdrop-filter:blur(2px);" onclick="if(event.target===this)closeNotifications()">
-    <div style="position:absolute;top:80px;left:20px;width:380px;max-width:calc(100vw - 40px);max-height:70vh;background:var(--WH);border:1px solid var(--BD);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.15);overflow:hidden;display:flex;flex-direction:column;animation:modalIn .2s ease;">
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--BD);">
-            <strong style="font-size:var(--fs-md);color:var(--TX);"><i class="ti ti-bell" style="color:var(--G);margin-left:6px;"></i>الإشعارات</strong>
-            <button onclick="closeNotifications()" style="background:none;border:0;color:var(--TX2);font-size:18px;cursor:pointer;padding:4px;"><i class="ti ti-x"></i></button>
-        </div>
-        <div id="notifList" style="padding:8px;overflow-y:auto;flex:1;max-height:50vh;">
-            <div class="empty-state" style="padding:24px;"><i class="ti ti-bell-off"></i><strong>لا توجد إشعارات</strong></div>
-        </div>
-    </div>
-</div>
+    document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+      const pass = document.getElementById('loginPass').value;
+      if (!email) return;
+      try {
+        await NEXORA.Auth.login(email, pass);
+        NEXORA.Sidebar.init();
+        NEXORA.Sidebar.updateUser(NEXORA.Auth.getUser());
+        NEXORA.Header.init();
+        NEXORA.Router.navigate('dashboard');
+      } catch (err) {
+        NEXORA.Toast.show('خطأ في تسجيل الدخول: ' + err.message, 'error');
+      }
+    });
 
-<!-- INSTALL PROMPT -->
-<div id="installPrompt" style="display:none;position:fixed;bottom:20px;right:20px;z-index:250;background:linear-gradient(135deg,var(--P),var(--PS));color:#fff;padding:16px 20px;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,.2);max-width:360px;animation:modalIn .3s ease;align-items:center;gap:12px;direction:rtl;">
-    <div><strong style="font-size:var(--fs-md);"><i class="ti ti-rocket" style="color:var(--G);"></i> ثبّت التطبيق</strong><p style="font-size:var(--fs-sm);opacity:.85;margin-top:4px;">ثبّت NEXORA تبر فلو على جهازك لاستخدام أسرع.</p></div>
-    <div style="display:flex;gap:8px;margin-top:10px;"><button onclick="installApp()" style="background:var(--G);color:var(--TX);border:0;border-radius:999px;padding:8px 18px;font-weight:700;font-size:var(--fs-sm);cursor:pointer;font-family:inherit;">تثبيت</button><button onclick="dismissInstall()" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:999px;padding:8px 14px;font-weight:600;font-size:var(--fs-sm);cursor:pointer;font-family:inherit;">لاحقاً</button></div>
-</div>
+    document.getElementById('registerForm')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const company = document.getElementById('regCompany').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const admin = document.getElementById('regAdmin').value.trim();
+      const pass = document.getElementById('regPass').value;
+      if (!company || !email || !admin || !pass) return;
+      try {
+        await NEXORA.Auth.register(company, email, admin, pass);
+        NEXORA.Sidebar.init();
+        NEXORA.Sidebar.updateUser(NEXORA.Auth.getUser());
+        NEXORA.Header.init();
+        NEXORA.Router.navigate('dashboard');
+      } catch (err) {
+        NEXORA.Toast.show('خطأ في التسجيل: ' + err.message, 'error');
+      }
+    });
 
-<!-- WHATSAPP + BACK TO TOP -->
-<button class="whatsapp-btn" onclick="window.open('https://wa.me/966500000000?text=مرحباً،%20استفسار%20عن%20نظام%20تبر%20فلو','_blank')" title="تواصل واتساب" aria-label="تواصل عبر واتساب"><i class="ti ti-brand-whatsapp"></i></button>
-<button class="back-top-btn" id="backTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="العودة للأعلى" aria-label="العودة للأعلى"><i class="ti ti-arrow-up"></i></button>
-
-<!-- External Libraries -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/frappe-gantt@0.6.1/dist/frappe-gantt.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
-
-<!-- Application Scripts -->
-<script src="js/config.js"></script>
-<script src="js/helpers.js"></script>
-<script src="js/supabaseClient.js"></script>
-<script src="js/auth.js"></script>
-<script src="js/rbac.js"></script>
-<script src="js/store.js"></script>
-<script src="js/router.js"></script>
-<script src="js/components/toast.js"></script>
-<script src="js/components/modal.js"></script>
-<script src="js/components/charts.js"></script>
-<script src="js/components/sidebar.js"></script>
-<script src="js/components/header.js"></script>
-<script src="js/components/interactive.js"></script>
-<script src="js/views/dashboard.js"></script>
-<script src="js/views/projects.js"></script>
-<script src="js/views/projectDetail.js"></script>
-<script src="js/views/itemDetail.js"></script>
-<script src="js/views/approvals.js"></script>
-<script src="js/views/costs.js"></script>
-<script src="js/views/reports.js"></script>
-<script src="js/views/employees.js"></script>
-<script src="js/views/admin.js"></script>
-<script src="js/views/owner.js"></script>
-<script src="js/processes/processCatalog.js"></script>
-<script src="js/processes/processEngine.js"></script>
-<script src="js/processes/processWizard.js"></script>
-<script src="js/views/processes.js"></script>
-<script src="js/views/processDetail.js"></script>
-<script src="js/views/processDashboard.js"></script>
-<script src="js/views/boq.js"></script>
-<script src="js/views/dailyLabor.js"></script>
-<script src="js/views/cashflow.js"></script>
-<script src="js/views/stakeholders.js"></script>
-<script src="js/views/contracts.js"></script>
-<script src="js/views/changeRequests.js"></script>
-<script src="js/app.js"></script>
+    if ('IntersectionObserver' in window) {
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            const el = e.target;
+            const target = parseInt(el.dataset.count) || 0;
+            if (target <= 0) return;
+            let current = 0;
+            const step = Math.max(1, Math.ceil(target / 30));
+            const interval = setInterval(() => {
+              current += step;
+              if (current >= target) { current = target; clearInterval(interval); }
+              el.textContent = current.toLocaleString('en-US');
+            }, 40);
+            obs.unobserve(el);
+          }
+        });
+      }, { threshold: 0.5 });
+      document.querySelectorAll('.counter').forEach(el => obs.observe(el));
+    }
+  </script>
 </body>
 </html>
