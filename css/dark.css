@@ -1,6 +1,6 @@
 [data-theme=dark]{--BG:#0B1220;--WH:#111827;--TX:#e8edf5;--TX2:#9aa8c4;--TX3:#6b7a9a;--BD:#202a3f;--SH:0 1px 3px rgba(0,0,0,.25),0 6px 20px rgba(0,0,0,.25);--SH2:0 8px 32px rgba(0,0,0,.4);--PL:#172241;--PLL:#131c36;--GL:#241f10}
 [data-theme=dark] th{background:var(--PD)!important;}
-[data-theme=dark] .header{background:linear-gradient(135deg,#0f1d3d,#0a1428);}
+[data-theme=dark] .top-header{background:var(--WH);border-color:var(--BD);}
 [data-theme=dark] .empty-state i{opacity:.25;}
 [data-theme=dark] .kanban-col{border-style:solid;border-color:var(--BD);}
 [data-theme=dark] table tr:hover td{background:rgba(30,58,138,.08);}

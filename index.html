@@ -315,10 +315,8 @@
       if (!email) return;
       try {
         await NEXORA.Auth.login(email, pass);
-        NEXORA.Sidebar.init();
-        NEXORA.Sidebar.updateUser(NEXORA.Auth.getUser());
-        NEXORA.Header.init();
-        NEXORA.Router.navigate('dashboard');
+        NEXORA.App.cu = NEXORA.Auth.getUser();
+        NEXORA.App._showApp();
       } catch (err) {
         NEXORA.Toast.show('خطأ في تسجيل الدخول: ' + err.message, 'error');
       }
@@ -333,10 +331,8 @@
       if (!company || !email || !admin || !pass) return;
       try {
         await NEXORA.Auth.register(company, email, admin, pass);
-        NEXORA.Sidebar.init();
-        NEXORA.Sidebar.updateUser(NEXORA.Auth.getUser());
-        NEXORA.Header.init();
-        NEXORA.Router.navigate('dashboard');
+        NEXORA.App.cu = NEXORA.Auth.getUser();
+        NEXORA.App._showApp();
       } catch (err) {
         NEXORA.Toast.show('خطأ في التسجيل: ' + err.message, 'error');
       }

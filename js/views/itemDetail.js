@@ -14,7 +14,7 @@ NEXORA.Views.ItemDetail = {
     var i = H.itm(curIid);
     if (!i) return;
 
-    App.showView('item');
+    NEXORA.Router.navigate('item');
     var pr = H.itemProgress(curIid);
     var pf = H.itemProfit(curIid);
     var p = H.proj(i.project_id);
@@ -337,6 +337,7 @@ NEXORA.Views.ItemDetail = {
 };
 
 window.openItem = function(iid) { NEXORA.Views.ItemDetail.render(iid); };
+window.renderItemDetail = function() { NEXORA.Views.ItemDetail.render(); };
 window.addTask = function() { NEXORA.Views.ItemDetail.addTask(); };
 window.openTask = function(tid) { NEXORA.Views.ItemDetail.openTask(tid); };
 window.closeTaskModal = function() { NEXORA.Views.ItemDetail.closeTaskModal(); };

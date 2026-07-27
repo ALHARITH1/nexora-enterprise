@@ -41,6 +41,8 @@ window.showToast = function(msg, type, duration) {
   NEXORA.Components.Toast.show(msg, type, duration);
 };
 
+NEXORA.Toast = NEXORA.Components.Toast;
+
 var _origMsg = window.msg;
 window.msg = function(id, t, tp) {
   if (id === 'loginMsg' || id === 'regMsg') {

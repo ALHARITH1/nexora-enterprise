@@ -65,7 +65,11 @@ NEXORA.Router = {
     if (typeof NEXORA.Sidebar !== 'undefined') NEXORA.Sidebar.setActive(view);
 
     if (typeof window[route.render] === 'function') {
-      window[route.render]();
+      if (route.render === 'openProcessDetail' && NEXORA.App.curProcessId) {
+        window[route.render](NEXORA.App.curProcessId);
+      } else {
+        window[route.render]();
+      }
     }
 
     window.location.hash = view;
@@ -84,5 +88,7 @@ NEXORA.Router = {
         self.navigate(v);
       }
     });
+    var initial = self.getCurrent();
+    self.navigate(initial);
   }
 };
