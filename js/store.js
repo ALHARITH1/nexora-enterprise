@@ -18,6 +18,10 @@ NEXORA.Store = (function() {
     costs: [],
     processes: [],
     process_logs: [],
+    boq_items: [],
+    payment_certificates: [],
+    cash_flow: [],
+    daily_wages: [],
     _ready: false,
     save: function() {
       this._saveToDB();
