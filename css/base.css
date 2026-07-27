@@ -1,0 +1,15 @@
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'IBM Plex Sans Arabic',sans-serif;background:var(--BG);color:var(--TX);min-height:100vh;font-size:var(--fs-lg);line-height:var(--lh-normal);-webkit-font-smoothing:antialiased}
+input,select,textarea,button{font-family:'IBM Plex Sans Arabic',sans-serif}
+button{cursor:pointer;border:0;transition:all .18s ease;outline:0}
+input,select,textarea{outline:0;transition:border-color .18s ease,box-shadow .18s ease;width:100%;padding:10px 14px;border:1.5px solid var(--BD);border-radius:10px;font-size:var(--fs-md);color:var(--TX);background:var(--WH)}
+input:focus,select:focus,textarea:focus{border-color:var(--P)!important;box-shadow:0 0 0 3px rgba(30,58,138,.12)!important}
+label{display:block;margin-bottom:4px;font-weight:600;font-size:var(--fs-base);color:var(--TX2)}
+a{color:var(--P);text-decoration:none}
+table{width:100%;border-collapse:collapse;font-size:var(--fs-md)}
+table th{background:var(--P);color:#fff;padding:10px 14px;text-align:right;font-weight:600;font-size:var(--fs-sm)}
+table td{padding:10px 14px;border-bottom:1px solid var(--BD)}
+tbody tr{transition:background .12s}tbody tr:hover{background:var(--PLL)}
+hr{border:none;border-top:1px solid var(--BD);margin:10px 0}
+@media(max-width:700px){.grid-2,.grid-3,.grid-4,.kanban{grid-template-columns:1fr;}.header{flex-direction:column;text-align:center;}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}

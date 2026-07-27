@@ -1,4 +1,37 @@
-const CACHE = 'tibrflow-v3';
+const CACHE = 'tibrflow-v4';
+const STATIC_ASSETS = [
+  './',
+  './index.html',
+  './manifest.json',
+  './css/variables.css',
+  './css/base.css',
+  './css/components.css',
+  './css/layout.css',
+  './css/landing.css',
+  './css/auth.css',
+  './css/dashboard.css',
+  './css/dark.css',
+  './js/config.js',
+  './js/helpers.js',
+  './js/store.js',
+  './js/app.js',
+  './js/components/toast.js',
+  './js/components/modal.js',
+  './js/components/charts.js',
+  './js/components/interactive.js',
+  './js/views/dashboard.js',
+  './js/views/projects.js',
+  './js/views/projectDetail.js',
+  './js/views/itemDetail.js',
+  './js/views/approvals.js',
+  './js/views/costs.js',
+  './js/views/reports.js',
+  './js/views/employees.js',
+  './js/views/admin.js',
+  './js/views/owner.js',
+  './js/views/processes.js',
+  './js/views/processDetail.js'
+];
 const CDN_ASSETS = [
   'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap',
   'https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.44.0/dist/tabler-icons.min.css',
@@ -11,8 +44,9 @@ const CDN_ASSETS = [
 
 self.addEventListener('install', e => {
   e.waitUntil(
-    caches.open(CACHE).then(c => Promise.allSettled(CDN_ASSETS.map(u => c.add(u).catch(() => null))))
-    .then(() => self.skipWaiting())
+    caches.open(CACHE).then(c => Promise.allSettled(
+      [...STATIC_ASSETS, ...CDN_ASSETS].map(u => c.add(u).catch(() => null))
+    )).then(() => self.skipWaiting())
   );
 });
 
@@ -25,24 +59,22 @@ self.addEventListener('activate', e => {
 
 self.addEventListener('fetch', e => {
   const url = new URL(e.request.url);
-  // Network-first for HTML (ensures latest index.html after deploy)
   if (e.request.mode === 'navigate' || url.pathname.endsWith('.html') || url.pathname === '/' || url.pathname === '') {
     e.respondWith(
       fetch(e.request).then(res => {
-        const cl = caches.open(CACHE).then(c => c.put(e.request, res.clone()));
+        caches.open(CACHE).then(c => c.put(e.request, res.clone()));
         return res;
       }).catch(() => caches.match(e.request).then(r => r || caches.match('./index.html').then(r => r || new Response('غير متصل', { status: 503 }))))
     );
     return;
   }
-  // Cache-first for CDN assets (stable versions)
   e.respondWith(
     caches.match(e.request).then(r => r || fetch(e.request).then(res => {
       if (res && res.status === 200 && (res.type === 'basic' || res.type === 'cors')) {
         caches.open(CACHE).then(c => c.put(e.request, res.clone()));
       }
       return res;
-    }).catch(() => caches.match('./index.html').then(r => r || new Response('غير متصل', { status: 503 }))))
+    }).catch(() => new Response('', { status: 503 })))
   );
 });
 
