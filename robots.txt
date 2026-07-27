@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://nexaura0.pages.dev/sitemap.xml

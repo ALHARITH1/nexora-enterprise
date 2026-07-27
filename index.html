@@ -1,0 +1,2540 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="نظام إدارة مشاريع مقاولات متكامل: تتبع البنود والمهام، تسجيل الساعات، الاعتمادات، وتحليل التكاليف والأرباح.">
+    <meta name="keywords" content="إدارة مشاريع, مقاولات, بنود, مهام, اعتماد, تكاليف, تقارير">
+    <meta name="author" content="NEXORA">
+    <meta name="robots" content="index, follow">
+    <meta name="revisit-after" content="7 days">
+    <meta name="language" content="Arabic">
+    <title>NEXORA — تبر فلو | نظام إدارة مشاريع المقاولات</title>
+    <link rel="canonical" href="https://nexaura0.pages.dev/">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%231E3A8A'/%3E%3Ctext x='50' y='68' font-size='55' text-anchor='middle' fill='%23D4AF37'%3E%F0%9F%9B%A0%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.44.0/dist/tabler-icons.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.44.0/dist/tabler-icons.min.css"></noscript>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap">
+    <link rel="preload" as="style" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.44.0/dist/tabler-icons.min.css">
+    <link rel="preload" as="script" href="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js">
+    <link rel="preload" as="script" href="https://cdn.jsdelivr.net/npm/frappe-gantt@0.6.1/dist/frappe-gantt.min.js">
+    <link rel="preload" as="script" href="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/frappe-gantt@0.6.1/dist/frappe-gantt.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/frappe-gantt@0.6.1/dist/frappe-gantt.min.css"></noscript>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <meta name="theme-color" content="#1E3A8A" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0B1220" media="(prefers-color-scheme: dark)">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="تبر فلو">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%231E3A8A'/%3E%3Ctext x='50' y='68' font-size='55' text-anchor='middle' fill='%23D4AF37'%3E%F0%9F%9B%A0%3C/text%3E%3C/svg%3E">
+    <meta name="application-name" content="تبر فلو">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta property="og:title" content="NEXORA تبر فلو — نظام إدارة مشاريع المقاولات">
+    <meta property="og:description" content="نظام متكامل لإدارة مشاريع المقاولات: تتبع البنود والمهام، الاعتمادات، التكاليف، والتقارير.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nexaura0.pages.dev/">
+    <meta property="og:locale" content="ar_AR">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="NEXORA تبر فلو — نظام إدارة مشاريع المقاولات">
+    <meta name="twitter:description" content="نظام متكامل لإدارة مشاريع المقاولات.">
+    <link rel="manifest" href="/manifest.json">
+    <script type="application/ld+json">
+    [{
+      "@context":"https://schema.org",
+      "@type":"SoftwareApplication",
+      "name":"NEXORA تبر فلو",
+      "operatingSystem":"Web",
+      "applicationCategory":"BusinessApplication",
+      "description":"نظام إدارة مشاريع المقاولات",
+      "url":"https://nexaura0.pages.dev/",
+      "author":{"@type":"Organization","name":"NEXORA"},
+      "offers":{"@type":"Offer","price":"0","priceCurrency":"SAR"}
+    },{
+      "@context":"https://schema.org",
+      "@type":"WebSite",
+      "url":"https://nexaura0.pages.dev/",
+      "name":"NEXORA تبر فلو",
+      "inLanguage":"ar",
+      "potentialAction":{"@type":"SearchAction","target":"https://nexaura0.pages.dev/?q={search_term_string}","query-input":"required name=search_term_string"}
+    },{
+      "@context":"https://schema.org",
+      "@type":"Organization",
+      "name":"NEXORA",
+      "url":"https://nexaura0.pages.dev/",
+      "logo":"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%231E3A8A'/%3E%3Ctext x='50' y='68' font-size='55' text-anchor='middle' fill='%23D4AF37'%3E%F0%9F%9B%A0%3C/text%3E%3C/svg%3E"
+    }]
+    </script>
+    <!-- Scripts loaded at bottom for performance -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; img-src 'self' data: https:; connect-src 'self' https:; style-src 'self' https: 'unsafe-inline'; font-src 'self' https: data:; script-src 'self' https: 'unsafe-inline'; manifest-src 'self';">
+    <style>
+        *{box-sizing:border-box;margin:0;padding:0}
+        :root{
+          --P:#1E3A8A;--PD:#152a63;--PS:#2563EB;--PL:#eaf0fc;--PLL:#f4f7fd;
+          --G:#D4AF37;--GL:#fbf6e4;--GD:#8a6c14;
+          --BG:#FAFBFD;--WH:#fff;
+          --TX:#161e2e;--TX2:#5b6680;--TX3:#9aa3b6;
+          --BD:#eaedf4;--GR:#22C55E;--RE:#EF4444;--AM:#F59E0B;
+          --SH:0 1px 3px rgba(20,30,60,.04),0 6px 20px rgba(20,30,60,.05);
+          --SH2:0 8px 32px rgba(20,30,60,.10);
+          --radius:20px;--radius-sm:12px;
+          --fs-xs:11px;--fs-sm:12px;--fs-base:13px;--fs-md:14px;--fs-lg:15px;--fs-xl:20px;--fs-2xl:24px;--fs-3xl:30px;
+          --lh-tight:1.25;--lh-snug:1.5;--lh-normal:1.65;
+        }
+        [data-theme=dark]{--BG:#0B1220;--WH:#111827;--TX:#e8edf5;--TX2:#9aa8c4;--TX3:#6b7a9a;--BD:#202a3f;--SH:0 1px 3px rgba(0,0,0,.25),0 6px 20px rgba(0,0,0,.25);--SH2:0 8px 32px rgba(0,0,0,.4);--PL:#172241;--PLL:#131c36;--GL:#241f10;--BG:#0B1220;--WH:#111827;}
+        [data-theme=dark] th{background:var(--PD)!important;}
+        [data-theme=dark] .header{background:linear-gradient(135deg,#0f1d3d,#0a1428);}
+        [data-theme=dark] .empty-state i{opacity:.25;}
+        [data-theme=dark] .kanban-col{border-style:solid;border-color:var(--BD);}
+        [data-theme=dark] table tr:hover td{background:rgba(30,58,138,.08);}
+        body{font-family:'IBM Plex Sans Arabic',sans-serif;background:var(--BG);color:var(--TX);min-height:100vh;font-size:var(--fs-lg);line-height:var(--lh-normal);-webkit-font-smoothing:antialiased}
+        input,select,textarea,button{font-family:'IBM Plex Sans Arabic',sans-serif}
+        button{cursor:pointer;border:0;transition:all .18s ease;outline:0}
+        input,select,textarea{outline:0;transition:border-color .18s ease,box-shadow .18s ease;width:100%;padding:10px 14px;border:1.5px solid var(--BD);border-radius:10px;font-size:var(--fs-md);color:var(--TX);background:var(--WH)}
+        input:focus,select:focus,textarea:focus{border-color:var(--P)!important;box-shadow:0 0 0 3px rgba(30,58,138,.12)!important}
+        label{display:block;margin-bottom:4px;font-weight:600;font-size:var(--fs-base);color:var(--TX2)}
+        .app{max-width:1280px;margin:0 auto;padding:16px;min-height:100vh}
+        .header{background:linear-gradient(135deg,var(--P),var(--PD));padding:16px 24px;border-radius:var(--radius);display:flex;justify-content:space-between;align-items:center;color:#fff;margin-bottom:18px;flex-wrap:wrap;gap:10px;box-shadow:0 4px 16px rgba(30,58,138,.2);}
+        .header h1{font-size:var(--fs-2xl);display:flex;align-items:center;gap:10px;letter-spacing:-.3px;}
+        .header h1 i{color:var(--G);}
+        .header-left{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+        .user-badge{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.15);padding:4px 14px;border-radius:999px;font-size:var(--fs-sm);-webkit-user-select:none;}
+        .nav{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap;}
+        .nav-btn{padding:9px 18px;border:1.5px solid var(--BD);border-radius:999px;background:var(--WH);cursor:pointer;font-weight:600;font-size:var(--fs-base);display:flex;align-items:center;gap:6px;transition:all .18s;color:var(--TX2)}
+        .nav-btn:hover{border-color:var(--P);background:var(--PLL);color:var(--P);box-shadow:0 2px 6px rgba(30,58,138,.08);}
+        .nav-btn.active{background:var(--P);color:#fff;border-color:var(--P);}
+        .nav-btn.active .count{background:rgba(255,255,255,.2);color:#fff}
+        .nav-btn .count{background:var(--PL);color:var(--P);border-radius:999px;padding:0 8px;font-size:var(--fs-xs);line-height:1.6;font-weight:700;direction:ltr}
+        .section{display:none;}
+        .section.active{display:block;}
+        .card{background:var(--WH);border:1px solid var(--BD);border-radius:var(--radius);padding:20px;margin-bottom:16px;box-shadow:var(--SH);}
+        .card-title{font-size:var(--fs-xl);font-weight:700;color:var(--P);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+        .card-title i{color:var(--G);}
+        .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:18px;}
+        .stat-card{background:var(--WH);border:1px solid var(--BD);border-radius:var(--radius);padding:18px;box-shadow:var(--SH);transition:box-shadow .18s,transform .18s;}
+        .stat-card:hover{box-shadow:var(--SH2);transform:translateY(-2px)}
+        .stat-card .num{font-size:var(--fs-3xl);font-weight:700;}
+        .stat-card .lbl{font-size:var(--fs-sm);color:var(--TX2);margin-top:2px;font-weight:600;}
+        .stat-card.blue .num{color:var(--P);}
+        .stat-card.gold .num{color:var(--G);}
+        .stat-card.green .num{color:var(--GR);}
+        .stat-card.red .num{color:var(--RE);}
+        .progress-bar{height:7px;background:var(--BD);border-radius:999px;overflow:hidden;margin:6px 0;}
+        .progress-fill{height:100%;border-radius:999px;transition:width .5s ease;}
+        .progress-fill.blue{background:linear-gradient(90deg,var(--P),var(--PS));}
+        .progress-fill.gold{background:linear-gradient(90deg,var(--G),#b8911e);}
+        .progress-fill.green{background:linear-gradient(90deg,var(--GR),#22c55e);}
+        .progress-fill.red{background:linear-gradient(90deg,var(--RE),#ef4444);}
+        .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+        .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+        .grid-4{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;}
+        .btn{border-radius:999px;padding:9px 20px;background:var(--WH);color:var(--P);border:1.5px solid var(--BD);font-weight:700;font-size:var(--fs-base);display:inline-flex;align-items:center;gap:8px;transition:all .18s;}
+        .btn:hover{border-color:var(--P);background:var(--PLL);box-shadow:0 2px 8px rgba(30,58,138,.08);}
+        .btn-primary{background:linear-gradient(135deg,var(--P),var(--PS));color:#fff;border-color:transparent;box-shadow:0 2px 8px rgba(30,58,138,.2);}
+        .btn-primary:hover{background:linear-gradient(135deg,var(--PD),#152a63);box-shadow:0 4px 16px rgba(30,58,138,.3);transform:translateY(-1px)}
+        .btn-success{background:var(--GR);color:#fff;border-color:transparent;box-shadow:0 2px 8px rgba(34,197,94,.2);}
+        .btn-success:hover{background:#16a34a;transform:translateY(-1px)}
+        .btn-danger{background:var(--RE);color:#fff;border-color:transparent;box-shadow:0 2px 8px rgba(239,68,68,.2);}
+        .btn-danger:hover{background:#b91c1c;transform:translateY(-1px)}
+        .btn-warning{background:var(--G);color:#fff;border-color:transparent;box-shadow:0 2px 8px rgba(212,175,55,.3);}
+        .btn-warning:hover{background:#b8911e;transform:translateY(-1px)}
+        .btn-o{background:var(--WH);border:1.5px solid var(--BD);color:var(--P)}
+        .btn-o:hover{border-color:var(--P);background:var(--PLL)}
+        .btn-p{background:linear-gradient(135deg,var(--P),var(--PS));color:#fff;border-color:transparent;box-shadow:0 2px 8px rgba(30,58,138,.2)}
+        .btn-p:hover{background:linear-gradient(135deg,var(--PD),#152a63);box-shadow:0 4px 16px rgba(30,58,138,.3);transform:translateY(-1px)}
+        .btn-g{background:linear-gradient(135deg,var(--G),#b8911e);color:#fff;border-color:transparent;box-shadow:0 2px 8px rgba(212,175,55,.3)}
+        .btn-g:hover{background:linear-gradient(135deg,#b8911e,#a07c18);transform:translateY(-1px)}
+        .btn-sm{padding:5px 14px;font-size:var(--fs-sm);}
+        .list-item{padding:12px 0;border-bottom:1px solid var(--BD);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;}
+        .list-item:last-child{border-bottom:none;}
+        .list-item .info{flex:1;min-width:0;}
+        .list-item .info strong{font-size:var(--fs-md);}
+        .list-item .info small{color:var(--TX2);margin-right:8px;font-size:var(--fs-sm);}
+        .badge{display:inline-flex;align-items:center;border-radius:999px;padding:3px 10px;font-size:var(--fs-xs);font-weight:700;background:var(--BG);color:var(--TX2);}
+        .badge-todo{background:#fef3c7;color:#92400e;}
+        .badge-progress{background:#dbeafe;color:#1e40af;}
+        .badge-done{background:#dcfce7;color:var(--GR);}
+        .badge-approved{background:#dcfce7;color:var(--GR);}
+        .badge-rejected{background:#fee2e2;color:var(--RE);}
+        .badge-profit{background:#dcfce7;color:var(--GR);}
+        .badge-loss{background:#fee2e2;color:var(--RE);}
+        .badge-pending{background:#fef3c7;color:#92400e;}
+        .badge-admin{background:var(--P);color:#fff;}
+        .badge-manager{background:var(--PS);color:#fff;}
+        .badge-engineer{background:var(--GR);color:#fff;}
+        .badge-supervisor{background:var(--G);color:var(--TX);}
+        .badge-accountant{background:var(--P);color:#fff;}
+        .badge-warehouse{background:var(--G);color:var(--TX);}
+        .badge-worker{background:var(--BG);color:var(--TX2);}
+        .message-box{padding:10px 16px;border-radius:var(--radius-sm);margin-bottom:14px;display:none;font-size:var(--fs-base);font-weight:500;}
+        .message-box.error{display:block;background:#fee2e2;border:1px solid #fecaca;color:var(--RE);}
+        .message-box.success{display:block;background:#f0fdf4;border:1px solid #bbf7d0;color:var(--GR);}
+        .message-box.warning{display:block;background:#fffbeb;border:1px solid #fde68a;color:#92400e;}
+        .empty-state{padding:30px;text-align:center;color:var(--TX2);}
+        .empty-state i{font-size:40px;margin-bottom:10px;display:block;color:var(--G);opacity:.5;}
+        .modal-overlay{display:none;position:fixed;inset:0;background:rgba(11,20,40,.5);backdrop-filter:blur(4px);z-index:100;justify-content:center;align-items:center;padding:20px;}
+        .modal-overlay.active{display:flex;}
+        .modal{background:var(--WH);border-radius:20px;max-width:680px;width:100%;max-height:90vh;overflow-y:auto;padding:24px;box-shadow:0 24px 80px rgba(0,0,0,.22);animation:modalIn .2s ease;}
+        @keyframes modalIn{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
+        .modal-title{font-size:var(--fs-xl);font-weight:700;color:var(--P);margin-bottom:14px;display:flex;align-items:center;gap:8px;padding-bottom:12px;border-bottom:1px solid var(--BD);}
+        .back-link{cursor:pointer;color:var(--P);font-weight:600;font-size:var(--fs-md);display:inline-flex;align-items:center;gap:6px;margin-bottom:12px;background:none;padding:0}
+        .back-link:hover{color:var(--G);}
+        .kanban{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+        .kanban-col{background:var(--BG);border-radius:var(--radius-sm);padding:12px;min-height:140px;border:1px dashed var(--BD);}
+        .kanban-col h4{font-size:var(--fs-md);margin-bottom:10px;display:flex;justify-content:space-between;font-weight:700;}
+        .kanban-card{background:var(--WH);border:1px solid var(--BD);border-radius:10px;padding:10px 12px;margin-bottom:8px;cursor:pointer;font-size:var(--fs-base);transition:box-shadow .18s,border-color .18s;}
+        .kanban-card:hover{border-color:var(--P);box-shadow:0 2px 8px rgba(30,58,138,.08);}
+        .kanban-card .k-title{font-weight:600;font-size:var(--fs-base);}
+        .kanban-card .k-meta{font-size:var(--fs-sm);color:var(--TX2);margin-top:4px;}
+        .tab-bar{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;}
+        .tab-btn{padding:6px 16px;border:1.5px solid var(--BD);border-radius:999px;background:var(--WH);cursor:pointer;font-size:var(--fs-base);font-weight:600;color:var(--TX2);transition:all .18s;}
+        .tab-btn:hover{border-color:var(--P);color:var(--P)}
+        .tab-btn.active{background:var(--P);color:#fff;border-color:var(--P);}
+        .tab-content{display:none;}
+        .tab-content.active{display:block;}
+        table{width:100%;border-collapse:collapse;font-size:var(--fs-md);}
+        table th{background:var(--P);color:#fff;padding:10px 14px;text-align:right;font-weight:600;font-size:var(--fs-sm);}
+        table td{padding:10px 14px;border-bottom:1px solid var(--BD);}
+        tbody tr{transition:background .12s}tbody tr:hover{background:var(--PLL)}
+        .flex-between{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+        @media(max-width:700px){.grid-2,.grid-3,.grid-4,.kanban{grid-template-columns:1fr;}.header{flex-direction:column;text-align:center;}}
+        /* LANDING */
+        .landing-page{display:block;min-height:100vh;background:#fff;overflow-x:hidden}
+        body.show-landing .auth-page,body.show-landing .app,body.show-landing #expiredPage{display:none!important}
+        body.show-auth .landing-page{display:none}
+        body.show-auth .auth-page{display:grid}
+        body.authed .landing-page,body.authed .auth-page{display:none}
+        .lnav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--BD);padding:0 48px;height:68px;display:flex;align-items:center;justify-content:space-between}
+        .lnav-logo{display:flex;align-items:center;gap:12px}.lnav-logo-name{font-size:20px;font-weight:700;color:var(--P);letter-spacing:-.3px}.lnav-logo-sub{font-size:11px;color:var(--G);font-weight:600;margin-top:-2px}.lnav-actions{display:flex;align-items:center;gap:8px}
+        .l-hero{background:linear-gradient(155deg,#f7f9fd,#e8eef9 50%,#d8e6f8);padding:48px 48px 0;display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:center;min-height:calc(100vh - 68px);position:relative;overflow:hidden}
+        .l-hero-copy{position:relative;z-index:1;padding-bottom:48px}
+        .l-badge{display:inline-flex;align-items:center;gap:8px;background:var(--PL);color:var(--P);border:1px solid #c4d4f0;border-radius:999px;padding:6px 16px;font-size:13px;font-weight:700;margin-bottom:24px}
+        .l-hero h1{font-size:30px;line-height:1.22;font-weight:700;color:var(--TX);letter-spacing:-.5px;margin-bottom:20px}.l-hero h1 span{color:var(--P)}
+        .l-hero-sub{font-size:15px;color:var(--TX2);line-height:1.85;margin-bottom:32px;max-width:520px}
+        .l-hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:40px}
+        .l-hero-stats{display:flex;gap:28px;flex-wrap:wrap}.l-hero-stat strong{display:block;font-size:17px;font-weight:700;color:var(--P)}.l-hero-stat span{font-size:12px;color:var(--TX2);font-weight:600}
+        .l-hero-visual{position:relative;z-index:1;align-self:flex-end}
+        .l-preview{background:#fff;border-radius:20px 20px 0 0;border:1px solid var(--BD);border-bottom:0;box-shadow:0 -8px 60px rgba(30,58,138,.16);overflow:hidden}
+        .l-preview-bar{background:var(--P);padding:12px 16px;display:flex;align-items:center;gap:8px}.l-preview-bar span{color:rgba(255,255,255,.7);font-size:12px;font-weight:700}
+        .l-preview-body{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;padding:12px}.l-mock-stat{background:var(--BG);border-radius:10px;padding:12px}.l-mock-stat strong{display:block;font-size:17px;font-weight:700}.l-mock-stat span{font-size:11px;color:var(--TX2);font-weight:600}
+        .l-mock-rows{padding:0 12px 12px}.l-mock-row{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--BD)}.l-mock-row:last-child{border-bottom:0}.l-mock-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}.l-mock-text{flex:1;font-size:12px;font-weight:600;color:var(--TX)}.l-mock-chip{border-radius:999px;padding:3px 9px;font-size:11px;font-weight:700}
+        .l-section{padding:48px}.l-section-head{text-align:center;margin-bottom:40px}.l-section-head h2{font-size:26px;font-weight:700;color:var(--TX);margin-bottom:12px}.l-section-head p{font-size:15px;color:var(--TX2);line-height:1.85;max-width:560px;margin:0 auto}
+        .l-features{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}.l-feature{background:#fff;border:1px solid var(--BD);border-radius:18px;padding:28px;box-shadow:var(--SH);transition:.2s}.l-feature:hover{box-shadow:var(--SH2);transform:translateY(-3px)}.l-feature-icon{width:54px;height:54px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:20px}.l-feature h3{font-size:15px;font-weight:700;margin-bottom:8px;color:var(--TX)}.l-feature p{font-size:13px;color:var(--TX2);line-height:1.75}
+        .l-how{background:linear-gradient(135deg,var(--P),var(--PS));padding:40px 48px;color:#fff}.l-how-head{text-align:center;margin-bottom:40px}.l-how-head h2{font-size:20px;font-weight:700;margin-bottom:12px}.l-how-head p{font-size:15px;opacity:.85;max-width:500px;margin:0 auto;line-height:1.85}
+        .l-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;position:relative}.l-steps::before{content:'';position:absolute;top:32px;right:16.5%;left:16.5%;height:2px;background:rgba(255,255,255,.2)}.l-step{text-align:center;position:relative;z-index:1}.l-step-num{width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;margin:0 auto 16px;backdrop-filter:blur(6px)}.l-step-icon{font-size:26px;color:var(--G)}.l-step h4{font-size:15px;font-weight:700;margin-bottom:8px}.l-step p{font-size:13px;opacity:.8;line-height:1.75}
+        .l-roles{padding:40px 48px;background:var(--BG)}.l-roles-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}.l-role{background:#fff;border:1px solid var(--BD);border-radius:16px;padding:24px;box-shadow:var(--SH);transition:.2s}.l-role:hover{box-shadow:var(--SH2);transform:translateY(-2px)}.l-role-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px;background:var(--PL);color:var(--P)}.l-role h4{font-size:14px;font-weight:700;margin-bottom:8px;color:var(--TX)}.l-role p{font-size:12px;color:var(--TX2);line-height:1.75}
+        .l-cta{background:linear-gradient(135deg,#172033,var(--PD));padding:40px 48px;text-align:center;color:#fff;position:relative;overflow:hidden}.l-cta h2{font-size:26px;font-weight:700;margin-bottom:12px}.l-cta p{font-size:15px;opacity:.85;margin-bottom:32px;line-height:1.85;max-width:560px;margin-left:auto;margin-right:auto}.l-cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+        .l-footer{background:#fff;border-top:1px solid var(--BD);padding:24px 48px;display:flex;align-items:center;justify-content:space-between;font-size:13px;color:var(--TX2)}.l-footer strong{color:var(--TX)}
+        /* AUTH */
+        .auth-page{min-height:100vh;display:none;grid-template-columns:1fr 480px;background:linear-gradient(135deg,var(--P),var(--PS),var(--PD));overflow:hidden}
+        .auth-hero{color:#fff;padding:40px;display:flex;flex-direction:column;justify-content:space-between;position:relative;min-height:100vh;overflow:hidden}
+        .auth-hero::before{content:'';position:absolute;inset:auto -100px -120px auto;width:380px;height:380px;border-radius:50%;background:rgba(201,162,39,.15)}.auth-hero::after{content:'';position:absolute;top:-80px;left:-80px;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.05)}
+        .auth-logo{display:flex;align-items:center;gap:12px;position:relative;z-index:1}
+        .auth-copy{max-width:520px;position:relative;z-index:1}.auth-copy h1{font-size:20px;line-height:1.3;margin-bottom:12px;font-weight:700}.auth-copy p{font-size:14px;line-height:1.85;opacity:.9}
+        .auth-points{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:24px}.auth-point{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:16px;backdrop-filter:blur(8px)}.auth-point i{color:var(--G);font-size:22px;margin-bottom:8px;display:block}.auth-point strong{display:block;font-size:13px;font-weight:600}.auth-point span{font-size:11px;opacity:.82;line-height:1.5}.auth-foot{font-size:11px;opacity:.65;position:relative;z-index:1}
+        .auth-panel-wrap{background:var(--BG);padding:32px;display:flex;align-items:center;justify-content:center;min-height:100vh}.auth-panel{width:100%;max-width:460px;background:var(--WH);border:1px solid var(--BD);border-radius:22px;box-shadow:0 24px 70px rgba(0,0,0,.15);padding:24px}
+        .auth-back{display:flex;align-items:center;gap:4px;color:var(--TX2);font-size:13px;font-weight:700;margin-bottom:16px;background:none;cursor:pointer;border:0;padding:0;font-family:inherit}.auth-back:hover{color:var(--P)}
+        .auth-tabs{display:grid;grid-template-columns:1fr 1fr;background:#f1f5fb;border:1px solid var(--BD);border-radius:999px;padding:4px;margin-bottom:24px}.auth-tabs button{background:transparent;border-radius:999px;padding:12px;font-weight:700;color:var(--TX2);font-size:14px;cursor:pointer;border:0;font-family:inherit}.auth-tabs button.active{background:var(--P);color:#fff;box-shadow:0 2px 8px rgba(30,58,138,.3)}
+        .auth-form{display:none}.auth-form.active{display:block}.auth-title{font-size:17px;font-weight:700;margin-bottom:4px;color:var(--TX)}.auth-sub{font-size:13px;color:var(--TX2);line-height:1.5;margin-bottom:20px}
+        .demo-box{background:var(--PLL);border:1px solid var(--BD);border-radius:12px;padding:12px;font-size:12px;color:var(--TX2);line-height:1.85}.demo-box strong{color:var(--TX)}
+        .form-row{margin-bottom:16px}.form-row label{display:block;font-size:13px;color:var(--TX2);font-weight:700;margin-bottom:8px}.form-row input{width:100%;border:1.5px solid var(--BD);border-radius:10px;padding:10px 12px;font-size:14px;color:var(--TX);background:var(--WH)}
+        :root{--sp-1:4px;--sp-2:8px;--sp-3:12px;--sp-4:16px;--sp-5:20px;--sp-6:24px;--sp-7:28px;--sp-8:32px;--sp-10:40px;--sp-12:48px;--lh-relaxed:1.85}
+        @media(max-width:1100px){.l-features{grid-template-columns:repeat(2,1fr)}.l-roles-grid{grid-template-columns:repeat(2,1fr)}}
+        @media(max-width:900px){.lnav{padding:0 20px}.l-hero{grid-template-columns:1fr;padding:40px 20px 0}.l-hero-visual{display:none}.l-hero-copy{padding-bottom:40px}.l-hero h1{font-size:20px}.auth-page{grid-template-columns:1fr}.auth-hero{display:none}.auth-panel-wrap{padding:20px}.l-section,.l-roles{padding:40px 20px}.l-how{padding:24px 20px}.l-cta{padding:32px 20px}.l-features,.l-steps{grid-template-columns:1fr}.l-steps::before{display:none}.l-roles-grid{grid-template-columns:repeat(2,1fr)}.l-footer{flex-direction:column;gap:8px;text-align:center}}
+        @media(max-width:600px){.l-hero h1{font-size:20px}.l-cta h2{font-size:20px}.l-roles-grid,.l-features{grid-template-columns:1fr}.auth-points{grid-template-columns:1fr}}
+        /* Skeleton loading */
+        @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+        .skeleton{background:linear-gradient(90deg,var(--BD) 25%,var(--BG) 50%,var(--BD) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:8px}
+        .skeleton-line{height:14px;margin-bottom:8px;width:100%}.skeleton-line.w60{width:60%}.skeleton-line.w40{width:40%}
+        .skeleton-card{height:80px;margin-bottom:12px}
+        /* Toast animation */
+        @keyframes toastIn{from{opacity:0;transform:translateY(12px)scale(.95)}to{opacity:1;transform:none}}
+        /* Empty states with illustration */
+        .empty-state i,.empty-state .ti{transition:transform .3s}
+        .empty-state:hover i,.empty-state:hover .ti{transform:scale(1.1)}
+        /* Focus states for accessibility */
+        button:focus-visible,.nav-btn:focus-visible,.btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--G)!important;outline-offset:2px}
+        /* Micro interactions */
+        .list-item{transition:background .15s,padding-right .15s}
+        .list-item:hover{background:var(--PLL);padding-right:14px}
+        .stat-card .num{transition:color .3s}
+        /* Progress bar animation */
+        .progress-fill{transition:width .6s cubic-bezier(.22,1,.36,1)}
+        /* Gantt overrides */
+        .gantt .bar-progress{fill:var(--P)!important}.gantt .bar-label{font-family:'IBM Plex Sans Arabic',sans-serif!important;font-size:11px;font-weight:600}
+        .gantt .bar-wrapper:hover .bar-progress{fill:var(--PS)!important}
+        .gantt .today-highlight{fill:rgba(212,175,55,.12)!important}
+        .gantt .grid-header{fill:var(--PLL)!important;stroke:var(--BD)}
+        .gantt .grid-header text{fill:var(--TX)!important;font-weight:700}
+        .gantt .grid-row{fill:var(--WH)!important}
+        .gantt .grid-row:nth-child(even){fill:var(--BG)!important}
+        .gantt .row-line{stroke:var(--BD)!important}
+        .gantt .tick{stroke:var(--BD)!important}
+        .gantt .today-highlight{fill:rgba(30,58,138,.04)!important}
+        .gantt .arrow{stroke:var(--TX3)!important}
+        .gantt-popup{font-family:'IBM Plex Sans Arabic',sans-serif!important;border-radius:12px!important;border:1px solid var(--BD)!important;box-shadow:var(--SH2)!important}
+        [data-theme=dark] .gantt .grid-header{fill:var(--PD)!important}
+        [data-theme=dark] .gantt .grid-row{fill:var(--WH)!important}
+        [data-theme=dark] .gantt .grid-row:nth-child(even){fill:var(--BG)!important}
+        [data-theme=dark] .gantt .bar-label{fill:#fff!important}
+        /* Interactive Brand Identity */
+        @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+        .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s cubic-bezier(.22,1,.36,1),transform .6s cubic-bezier(.22,1,.36,1)}
+        .reveal.visible{opacity:1;transform:none}
+        .reveal-left{opacity:0;transform:translateX(-30px);transition:opacity .5s cubic-bezier(.22,1,.36,1),transform .5s cubic-bezier(.22,1,.36,1)}
+        .reveal-left.visible{opacity:1;transform:none}
+        .reveal-right{opacity:0;transform:translateX(30px);transition:opacity .5s cubic-bezier(.22,1,.36,1),transform .5s cubic-bezier(.22,1,.36,1)}
+        .reveal-right.visible{opacity:1;transform:none}
+        .reveal-scale{opacity:0;transform:scale(.92);transition:opacity .5s cubic-bezier(.22,1,.36,1),transform .5s cubic-bezier(.22,1,.36,1)}
+        .reveal-scale.visible{opacity:1;transform:scale(1)}
+        .reveal-stagger>*{opacity:0;transform:translateY(16px);transition:opacity .4s ease,transform .4s ease}
+        .reveal-stagger.visible>*{opacity:1;transform:none}
+        .reveal-stagger.visible>*:nth-child(1){transition-delay:.05s}
+        .reveal-stagger.visible>*:nth-child(2){transition-delay:.1s}
+        .reveal-stagger.visible>*:nth-child(3){transition-delay:.15s}
+        .reveal-stagger.visible>*:nth-child(4){transition-delay:.2s}
+        .reveal-stagger.visible>*:nth-child(5){transition-delay:.25s}
+        .reveal-stagger.visible>*:nth-child(6){transition-delay:.3s}
+        .scroll-progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:9999;background:linear-gradient(90deg,var(--G),var(--P));transform-origin:0 50%;transform:scaleX(0);transition:transform .1s linear}
+        @keyframes logoGlow{0%,100%{filter:drop-shadow(0 0 6px rgba(212,175,55,.3))}50%{filter:drop-shadow(0 0 18px rgba(212,175,55,.55))}}
+        .logo-glow:hover{animation:logoGlow 2s ease-in-out infinite}
+        @keyframes ripple{to{transform:scale(4);opacity:0}}
+        .ripple-btn{position:relative;overflow:hidden}
+        .btn .ripple-effect{position:absolute;border-radius:50%;background:rgba(255,255,255,.35);width:100px;height:100px;margin:-50px 0 0 -50px;transform:scale(0);animation:ripple .5s ease-out;pointer-events:none;z-index:2}
+        [data-theme=dark] .btn .ripple-effect{background:rgba(255,255,255,.12)}
+        @keyframes countUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+        .card-3d{transition:transform .3s ease,box-shadow .3s ease;transform-style:preserve-3d;perspective:800px}
+        .card-3d:hover{box-shadow:0 20px 60px rgba(30,58,138,.15)}
+        .glow-border{position:relative}
+        .glow-border::after{content:'';position:absolute;inset:-1px;border-radius:inherit;background:linear-gradient(135deg,var(--G),transparent,var(--P),transparent);z-index:-1;opacity:0;transition:opacity .4s;padding:1.5px;-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+        .glow-border:hover::after{opacity:1}
+        @media(hover:hover){.cursor-dot{position:fixed;width:8px;height:8px;border-radius:50%;background:var(--G);pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s;mix-blend-mode:difference;display:none}
+        .cursor-ring{position:fixed;width:36px;height:36px;border-radius:50%;border:1.5px solid var(--G);pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:width .3s,height .3s,border .3s,transform .3s;mix-blend-mode:difference;display:none}
+        .cursor-dot.active,.cursor-ring.active{display:block}
+        .cursor-dot.hover{width:14px;height:14px;background:var(--P)}
+        .cursor-ring.hover{width:52px;height:52px;border-color:var(--P);border-width:2px;transform:translate(-50%,-50%) scale(1.15)}}
+        .preloader{position:fixed;inset:0;z-index:99998;background:var(--BG);display:flex;align-items:center;justify-content:center;flex-direction:column;animation:preloaderFade 1.6s ease forwards;pointer-events:none}
+        @keyframes preloaderFade{0%,60%{opacity:1}100%{opacity:0;visibility:hidden}}
+        @media(prefers-reduced-motion:reduce){.preloader{animation:none;display:none}}
+        .preloader-logo{width:68px;height:68px;border-radius:18px;background:linear-gradient(135deg,var(--P),var(--PS));display:flex;align-items:center;justify-content:center;font-size:34px;color:#fff;box-shadow:0 8px 32px rgba(30,58,138,.3);animation:preloaderPulse 1s ease-in-out infinite}
+        @keyframes preloaderPulse{0%,100%{transform:scale(1);box-shadow:0 8px 32px rgba(30,58,138,.3)}50%{transform:scale(1.05);box-shadow:0 12px 40px rgba(30,58,138,.45)}}
+        .preloader-spinner{width:24px;height:24px;border:2.5px solid var(--BD);border-top-color:var(--G);border-radius:50%;animation:spin .6s linear infinite;margin-top:16px}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        .preloader-text{color:var(--TX2);font-size:12px;font-weight:600;margin-top:12px;letter-spacing:.06em}
+        /* Smooth dark mode + transitions */
+        [data-theme]{transition:background .3s,color .3s}
+        *,*::before,*::after{transition:background .2s,border-color .2s,box-shadow .2s,color .15s}
+        .btn{position:relative;overflow:hidden}
+        .btn-primary::before,.btn-p::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--PD),#0f1d3d);opacity:0;transition:opacity .25s;border-radius:inherit}
+        .btn-primary:hover::before,.btn-p:hover::before{opacity:1}
+        .btn-primary *,.btn-p *,.btn-g *,.btn-success *,.btn-danger *,.btn-warning *,.btn-o *{position:relative;z-index:1}
+        .btn-g::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#b8911e,#8a6c14);opacity:0;transition:opacity .25s;border-radius:inherit}
+        .btn-g:hover::before{opacity:1}
+        .btn-success::before{content:'';position:absolute;inset:0;background:#16a34a;opacity:0;transition:opacity .25s;border-radius:inherit}
+        .btn-success:hover::before{opacity:1}
+        .section{animation:sectionIn .3s ease}
+        @keyframes sectionIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+        /* WhatsApp + Back to Top */
+        .whatsapp-btn{position:fixed;bottom:80px;left:20px;z-index:99;width:52px;height:52px;border-radius:50%;background:#25D366;color:#fff;display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 4px 16px rgba(37,211,102,.35);cursor:pointer;border:0;transition:transform .2s,box-shadow .2s;animation:whatsappPulse 2s infinite}
+        .whatsapp-btn:hover{transform:scale(1.1);box-shadow:0 6px 24px rgba(37,211,102,.45)}
+        @keyframes whatsappPulse{0%{box-shadow:0 4px 16px rgba(37,211,102,.35)}50%{box-shadow:0 4px 24px rgba(37,211,102,.55)}100%{box-shadow:0 4px 16px rgba(37,211,102,.35)}}
+        .back-top-btn{position:fixed;bottom:20px;left:20px;z-index:99;width:42px;height:42px;border-radius:50%;background:var(--P);color:#fff;display:none;align-items:center;justify-content:center;font-size:18px;box-shadow:0 3px 12px rgba(30,58,138,.3);cursor:pointer;border:0;transition:transform .2s,opacity .2s}
+        .back-top-btn:hover{transform:translateY(-3px)}
+        .l-faq details{background:var(--WH);border:1px solid var(--BD);border-radius:14px;margin-bottom:8px;padding:14px 18px;cursor:pointer;transition:box-shadow .2s,border-color .2s}
+        .l-faq details:hover{box-shadow:var(--SH);border-color:var(--P)}
+        .l-faq details summary{font-weight:700;font-size:14px;color:var(--TX);display:flex;align-items:center;gap:8px;list-style:none}
+        .l-faq details summary::-webkit-details-marker{display:none}
+        .l-faq details summary i{color:var(--G);font-size:18px}
+        .l-faq details p{font-size:13px;color:var(--TX2);margin-top:10px;line-height:1.85;padding-right:26px}
+        .l-stat-card:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(30,58,138,.12)!important}
+        .l-testimonial{transition:transform .3s,box-shadow .3s}
+        .l-testimonial:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(30,58,138,.1)!important;border-color:var(--P)!important}
+        @media(prefers-reduced-motion:reduce){.l-stat-card,.l-testimonial{transition:none}.l-stat-card:hover{transform:none}.l-testimonial:hover{transform:none}}
+    </style>
+</head>
+<body>
+<!-- ═══════════ PRELOADER ═══════════ -->
+<div class="preloader" id="preloader">
+    <div class="preloader-logo"><i class="ti ti-helmet"></i></div>
+    <div class="preloader-spinner"></div>
+    <div class="preloader-text">NEXORA تبر فلو</div>
+</div>
+<div class="scroll-progress" id="scrollProgress"></div>
+<!-- ════════════════════════════ LANDING PAGE ════════════════════════════ -->
+<div class="landing-page" id="landingPage">
+  <nav class="lnav">
+    <div class="lnav-logo">
+      <div class="brand-icon" style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--P),var(--PS));color:#fff;display:flex;align-items:center;justify-content:center;font-size:19px;box-shadow:0 3px 10px rgba(30,58,138,.25);flex-shrink:0"><i class="ti ti-helmet"></i></div>
+      <div style="margin-right:8px"><div class="lnav-logo-name">NEXORA</div><div class="lnav-logo-sub">تبر فلو</div></div>
+    </div>
+    <div class="lnav-actions">
+      <button class="btn btn-o btn-sm" onclick="showAuth('register')">تسجيل شركة</button>
+      <button class="btn btn-p btn-sm" onclick="showAuth('login')"><i class="ti ti-login"></i>دخول النظام</button>
+    </div>
+  </nav>
+  <section class="l-hero">
+    <div class="l-hero-copy">
+      <div class="l-badge"><i class="ti ti-bolt"></i>نظام إدارة مشاريع مقاولات 2026</div>
+      <h1>تابع مشاريعك<br><span>بخطوات محكمة</span><br>من البداية للاعتماد</h1>
+      <p class="l-hero-sub">من توزيع المهام على الموظفين إلى تحليل التكاليف والأرباح وإصدار التقارير — تبر فلو هو نظامك المتكامل لإدارة مشاريع المقاولات.</p>
+      <div class="l-hero-btns">
+        <button class="btn btn-p" style="padding:12px 26px;font-size:var(--fs-lg)" onclick="showAuth('register')"><i class="ti ti-building-plus"></i>ابدأ مجانًا</button>
+        <button class="btn btn-o" style="padding:12px 22px;font-size:var(--fs-lg)" onclick="showAuth('login')"><i class="ti ti-player-play"></i>جرّب النظام</button>
+      </div>
+                <div class="l-hero-stats">
+                    <div class="l-hero-stat"><strong class="counter" data-count="4">4</strong><span>مستويات صلاحية</span></div>
+                    <div class="l-hero-stat"><strong class="counter" data-count="6">0</strong><span>تقارير فورية</span></div>
+                    <div class="l-hero-stat"><strong class="counter" data-count="30">0</strong><span>يوم فترة تجريبية</span></div>
+                </div>
+    </div>
+    <div class="l-hero-visual">
+      <div class="l-preview">
+        <div class="l-preview-bar"><div class="brand-icon" style="width:30px;height:30px;border-radius:8px;font-size:15px;background:rgba(255,255,255,.2)"><i class="ti ti-helmet"></i></div><span>NEXORA — لوحة المشاريع</span></div>
+        <div class="l-preview-body">
+          <div class="l-mock-stat"><strong class="green">78%</strong><span>تقدم المشاريع</span></div>
+          <div class="l-mock-stat"><strong class="blue">12</strong><span>مشروع نشط</span></div>
+          <div class="l-mock-stat"><strong class="gold">486,200</strong><span>إجمالي التكاليف</span></div>
+          <div class="l-mock-stat"><strong class="red">8</strong><span>مهام بانتظار الاعتماد</span></div>
+        </div>
+        <div class="l-mock-rows">
+          <div class="l-mock-row"><div class="l-mock-dot" style="background:var(--AM)"></div><div class="l-mock-text">مبنى سكني — نسبة الإنجاز 82%</div><div class="l-mock-chip" style="background:var(--GL);color:#854f0b">خلال الميزانية</div></div>
+          <div class="l-mock-row"><div class="l-mock-dot" style="background:var(--P)"></div><div class="l-mock-text">فيلا — بانتظار اعتماد الخرسانة</div><div class="l-mock-chip" style="background:var(--PL);color:var(--P)">اعتماد</div></div>
+          <div class="l-mock-row"><div class="l-mock-dot" style="background:var(--RE)"></div><div class="l-mock-text">مستودع — تأخير في التوريد</div><div class="l-mock-chip" style="background:#fee2e2;color:#991b1b">متأخر</div></div>
+          <div class="l-mock-row"><div class="l-mock-dot" style="background:var(--GR)"></div><div class="l-mock-text">تشطيب — مكتمل ومعتمد ✓</div><div class="l-mock-chip" style="background:#dcfce7;color:#166534">تم</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+        <section class="l-section" style="background:#fff">
+            <div class="l-section-head reveal"><h2>كل ما تحتاجه لإدارة مشاريعك</h2><p>من المهمة الأولى حتى الاعتماد النهائي، يغطي تبر فلو كل جوانب إدارة مشاريع المقاولات</p></div>
+            <div class="l-features reveal-stagger">
+      <div class="l-feature"><div class="l-feature-icon" style="background:#e8eef9"><i class="ti ti-folder-open" style="color:var(--P)"></i></div><h3>المشاريع والبنود</h3><p>تنظيم المشاريع إلى بنود ومراحل مع ميزانية وجدول زمني ونسبة إنجاز وزنية دقيقة.</p></div>
+      <div class="l-feature"><div class="l-feature-icon" style="background:#dcfce7"><i class="ti ti-checklist" style="color:#166534"></i></div><h3>لوحة المهام (Kanban)</h3><p>مهام مسندة للموظفين مع ساعات عمل وتسجيل يومي، ونظام اعتماد متكامل.</p></div>
+      <div class="l-feature"><div class="l-feature-icon" style="background:var(--GL)"><i class="ti ti-coin" style="color:var(--G)"></i></div><h3>تحليل التكاليف</h3><p>متابعة التكاليف الفعلية مقابل الميزانية المخططة، وحساب الربح والخسارة لكل بند.</p></div>
+      <div class="l-feature"><div class="l-feature-icon" style="background:#fee2e2"><i class="ti ti-chart-bar" style="color:var(--RE)"></i></div><h3>تقارير فورية</h3><p>خمسة تقارير احترافية: المشاريع، التكاليف، أداء الموظفين، الأعمال المتأخرة، والاعتمادات.</p></div>
+      <div class="l-feature"><div class="l-feature-icon" style="background:#f0fdf4"><i class="ti ti-shield-check" style="color:#166534"></i></div><h3>الاعتماد والموافقات</h3><p>سير عمل كامل: معلقة → قيد العمل → بانتظار الاعتماد → اعتماد أو رفض، مع سجل كامل.</p></div>
+      <div class="l-feature"><div class="l-feature-icon" style="background:#f3e8ff"><i class="ti ti-users" style="color:#7c3aed"></i></div><h3>صلاحيات متعددة</h3><p>أدوار واضحة لكل عضو في الشركة مع صلاحيات دقيقة حسب المنصب والمسؤولية.</p></div>
+    </div>
+  </section>
+  <section class="l-section" style="background:var(--BG);">
+    <div class="l-section-head reveal"><h2>ماذا يقول عملاؤنا</h2><p>تجربة حقيقية من مستخدمي تبر فلو في إدارة مشاريعهم</p></div>
+    <div class="l-testimonials reveal-stagger" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;max-width:960px;margin:0 auto;">
+      <div class="l-testimonial" style="background:var(--WH);border:1px solid var(--BD);border-radius:16px;padding:24px;box-shadow:var(--SH);"><div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;"><div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--P),var(--PS));color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;">م</div><div><strong style="color:var(--TX);font-size:14px;">مهندس محمد العتيبي</strong><div style="font-size:12px;color:var(--TX2);">مدير مشاريع — شركة الأفق</div></div></div><div style="color:var(--G);font-size:14px;margin-bottom:8px;">★★★★★</div><p style="color:var(--TX2);font-size:13px;line-height:1.8;">"منذ استخدام تبر فلو، صار تتبع المهام والاعتمادات أسهل بكثير. النظام وفر علينا كثير وقت وخلانا نشوف الصورة الكاملة لكل مشروع."</p></div>
+      <div class="l-testimonial" style="background:var(--WH);border:1px solid var(--BD);border-radius:16px;padding:24px;box-shadow:var(--SH);"><div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;"><div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--G),#b8911e);color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;">خ</div><div><strong style="color:var(--TX);font-size:14px;">خالد السلمي</strong><div style="font-size:12px;color:var(--TX2);">محاسب — شركة البناء الحديث</div></div></div><div style="color:var(--G);font-size:14px;margin-bottom:8px;">★★★★★</div><p style="color:var(--TX2);font-size:13px;line-height:1.8;">"تقارير التكاليف والتحليل المالي ساعدتني أراقب الميزانيات بدقة. أحب أني أقدر أشوف الربح والخسارة لكل بند لحظياً."</p></div>
+      <div class="l-testimonial" style="background:var(--WH);border:1px solid var(--BD);border-radius:16px;padding:24px;box-shadow:var(--SH);"><div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;"><div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;">س</div><div><strong style="color:var(--TX);font-size:14px;">سارة الغامدي</strong><div style="font-size:12px;color:var(--TX2);">مهندسة مشرف — شركة الإنشاءات</div></div></div><div style="color:var(--G);font-size:14px;margin-bottom:8px;">★★★★☆</div><p style="color:var(--TX2);font-size:13px;line-height:1.8;">"أنظمة الاعتماد خلصتنا من البيروقراطية. الموافقات تصير إلكترونياً بسرعة، والكل يقدر يتتبع طلباته بدون أوراق."</p></div>
+    </div>
+  </section>
+  <div class="l-how">
+    <div class="l-how-head"><h2>كيف يعمل النظام؟</h2><p>ثلاث خطوات بسيطة لبدء إدارة مشاريعك بكفاءة</p></div>
+    <div class="l-steps">
+      <div class="l-step"><div class="l-step-num"><i class="ti ti-building-plus l-step-icon"></i></div><h4>سجّل شركتك</h4><p>أنشئ حساب الشركة في دقيقة واحدة وابدأ الفترة التجريبية المجانية لشهر كامل</p></div>
+      <div class="l-step"><div class="l-step-num"><i class="ti ti-users-group l-step-icon"></i></div><h4>أضف فريقك</h4><p>سجّل الموظفين وصلاحياتهم، وأنشئ مشروعك الأول مع البنود والمهام</p></div>
+      <div class="l-step"><div class="l-step-num"><i class="ti ti-chart-arrows-vertical l-step-icon"></i></div><h4>تابع واعتمد</h4><p>راقب التقدم، حلل التكاليف، واعتمد المهام — كل شيء في لوحة واحدة</p></div>
+    </div>
+  </div>
+  <section class="l-roles">
+    <div class="l-section-head"><h2>صلاحيات مصممة لكل دور</h2><p>كل عضو في الفريق يرى فقط ما يحتاجه، لا أكثر ولا أقل</p></div>
+    <div class="l-roles-grid">
+      <div class="l-role"><div class="l-role-icon"><i class="ti ti-user-shield"></i></div><h4>مدير المشروع</h4><p>إدارة المشاريع والبنود والمهام والاعتمادات والتقارير الكاملة.</p></div>
+      <div class="l-role"><div class="l-role-icon" style="background:#dcfce7;color:#166534"><i class="ti ti-users"></i></div><h4>مهندس</h4><p>تحديث المهام، تسجيل الساعات، وإضافة التقارير اليومية.</p></div>
+      <div class="l-role"><div class="l-role-icon" style="background:var(--GL);color:#854f0b"><i class="ti ti-report-money"></i></div><h4>محاسب</h4><p>مراجعة التكاليف والميزانيات واعتماد المصروفات.</p></div>
+      <div class="l-role"><div class="l-role-icon" style="background:var(--PL);color:var(--P)"><i class="ti ti-eye"></i></div><h4>مشرف</h4><p>متابعة سير العمل وتقارير الأداء والموافقات المبدئية.</p></div>
+    </div>
+  </section>
+  <section class="l-section reveal" style="background:#fff;">
+    <div class="l-section-head"><h2>نظام موثوق من أكثر من ١٠٠ شركة</h2><p>أرقام تعكس التزامنا بتقديم أفضل حلول إدارة المشاريع</p></div>
+    <div class="l-stat-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:24px;max-width:800px;margin:0 auto;">
+      <div class="l-stat-card" style="text-align:center;padding:24px 12px;background:var(--WH);border:1px solid var(--BD);border-radius:16px;box-shadow:var(--SH);transition:transform .3s,box-shadow .3s;"><div style="font-size:36px;font-weight:800;color:var(--P);line-height:1;"><span class="counter" data-count="120">0</span><span style="font-size:18px;">+</span></div><div style="font-size:14px;color:var(--TX2);margin-top:8px;">شركة مسجلة</div></div>
+      <div class="l-stat-card" style="text-align:center;padding:24px 12px;background:var(--WH);border:1px solid var(--BD);border-radius:16px;box-shadow:var(--SH);transition:transform .3s,box-shadow .3s;"><div style="font-size:36px;font-weight:800;color:var(--G);line-height:1;"><span class="counter" data-count="1500">0</span><span style="font-size:18px;">+</span></div><div style="font-size:14px;color:var(--TX2);margin-top:8px;">مشروع مكتمل</div></div>
+      <div class="l-stat-card" style="text-align:center;padding:24px 12px;background:var(--WH);border:1px solid var(--BD);border-radius:16px;box-shadow:var(--SH);transition:transform .3s,box-shadow .3s;"><div style="font-size:36px;font-weight:800;color:#7c3aed;line-height:1;"><span class="counter" data-count="98">0</span><span style="font-size:18px;">%</span></div><div style="font-size:14px;color:var(--TX2);margin-top:8px;">رضا العملاء</div></div>
+      <div class="l-stat-card" style="text-align:center;padding:24px 12px;background:var(--WH);border:1px solid var(--BD);border-radius:16px;box-shadow:var(--SH);transition:transform .3s,box-shadow .3s;"><div style="font-size:36px;font-weight:800;color:var(--RE);line-height:1;"><span class="counter" data-count="5">0</span><span style="font-size:18px;">+</span></div><div style="font-size:14px;color:var(--TX2);margin-top:8px;">سنوات خبرة</div></div>
+    </div>
+  </section>
+  <div class="l-cta">
+    <h2>جاهز لبدء إدارة مشاريعك بكفاءة؟</h2>
+    <p>سجّل شركتك الآن وجرّب تبر فلو مجانًا لمدة شهر كامل</p>
+        <div class="l-cta-btns">
+                <button class="btn btn-g" style="padding:13px 28px;font-size:var(--fs-xl)" onclick="showAuth('register')"><i class="ti ti-building-plus"></i>تسجيل شركة جديدة</button>
+                <button class="btn" style="background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.3);color:#fff;padding:13px 24px;font-size:var(--fs-lg)" onclick="showAuth('login')"><i class="ti ti-login"></i>دخول النظام</button>
+            </div>
+        </div>
+        <!-- FAQ -->
+        <section class="l-section" style="background:#fff">
+            <div class="l-section-head reveal"><h2>الأسئلة الشائعة</h2><p>أجوبة لأكثر الأسئلة تكراراً عن نظام تبر فلو</p></div>
+            <div class="l-faq reveal-stagger" style="max-width:700px;margin:0 auto;">
+                <details><summary><i class="ti ti-help"></i> هل النظام مجاني؟</summary><p>نعم، الفترة التجريبية مجانية لمدة 30 يوماً كاملة بدون حاجة لبطاقة ائتمان. بعدها يمكنك الاشتراك للاستمرار.</p></details>
+                <details><summary><i class="ti ti-help"></i> هل أحتاج تحميل برنامج؟</summary><p>لا، كل شيء يعمل عبر المتصفح. يمكنك أيضاً تثبيت التطبيق على جوالك أو جهازك لاستخدام أسرع (PWA).</p></details>
+                <details><summary><i class="ti ti-help"></i> هل بياناتي آمنة؟</summary><p>نعم، جميع البيانات محفوظة محلياً في متصفحك باستخدام IndexedDB. لا يتم إرسال أي بيانات لخوادم خارجية.</p></details>
+                <details><summary><i class="ti ti-help"></i> كم عدد الموظفين المسموح؟</summary><p>غير محدود. يمكنك إضافة عدد غير محدود من الموظفين والصلاحيات حسب حاجة شركتك.</p></details>
+                <details><summary><i class="ti ti-help"></i> هل يدعم النظام التقارير؟</summary><p>نعم، يحتوي على 6 تقارير احترافية قابلة للتصدير PDF و CSV و JSON.</p></details>
+            </div>
+        </section>
+        <section class="l-section reveal">
+            <div class="l-section-head"><h2>تواصل معنا</h2><p>عندك استفسار أو اقتراح؟ احنا هنا لمساعدتك</p></div>
+            <div style="max-width:520px;margin:0 auto;background:var(--WH);border:1px solid var(--BD);border-radius:16px;padding:32px;box-shadow:var(--SH);">
+                <div class="form-row"><label><i class="ti ti-mail"></i> بريدك الإلكتروني</label><input id="contactEmail" type="email" placeholder="name@company.com" style="width:100%;padding:10px 14px;border:1px solid var(--BD);border-radius:10px;font-family:inherit;font-size:14px;"></div>
+                <div class="form-row" style="margin-top:12px;"><label><i class="ti ti-message"></i> رسالتك</label><textarea id="contactMsg" rows="4" placeholder="اكتب رسالتك هنا..." style="width:100%;padding:10px 14px;border:1px solid var(--BD);border-radius:10px;font-family:inherit;font-size:14px;resize:vertical;"></textarea></div>
+                <button class="btn btn-p" style="width:100%;justify-content:center;padding:12px;margin-top:14px;font-size:var(--fs-md);" onclick="submitContact()"><i class="ti ti-send"></i> إرسال الرسالة</button>
+                <div id="contactMsgBox" style="margin-top:10px;font-size:13px;text-align:center;"></div>
+            </div>
+        </section>
+        <footer class="l-footer">
+    <div style="display:flex;align-items:center;gap:var(--sp-3)"><div class="brand-icon" style="width:30px;height:30px;border-radius:8px;font-size:15px"><i class="ti ti-helmet"></i></div><strong style="color:var(--TX)">NEXORA تبر فلو</strong></div>
+    <span>نظام إدارة مشاريع المقاولات &copy; 2026</span>
+  </footer>
+</div>
+
+<!-- ════════════════════════════ AUTH PAGE ════════════════════════════ -->
+<section class="auth-page" id="authPage" style="display:none;">
+  <div class="auth-hero">
+    <div class="auth-logo">
+      <div class="brand-icon"><i class="ti ti-helmet"></i></div>
+      <div><div class="brand-name" style="color:#fff;font-size:var(--fs-2xl)">NEXORA</div><div class="brand-sub" style="color:rgba(255,255,255,.75)">تبر فلو</div></div>
+    </div>
+    <div class="auth-copy">
+      <h1>نظام متكامل لإدارة مشاريع المقاولات</h1>
+      <p>من توزيع المهام إلى تحليل التكاليف والاعتماد — كل شيء في مكان واحد.</p>
+      <div class="auth-points">
+        <div class="auth-point"><i class="ti ti-folder-open"></i><strong>مشاريع وبنود</strong><span>ميزانية وجدول زمني ونسبة إنجاز.</span></div>
+        <div class="auth-point"><i class="ti ti-checklist"></i><strong>لوحة المهام</strong><span>Kanban مع إسناد وتسجيل ساعات.</span></div>
+        <div class="auth-point"><i class="ti ti-coin"></i><strong>تحليل التكاليف</strong><span>أرباح وخسائر لكل بند.</span></div>
+        <div class="auth-point"><i class="ti ti-checks"></i><strong>نظام اعتماد</strong><span>سير عمل كامل للموافقات.</span></div>
+      </div>
+    </div>
+    <div class="auth-foot">NEXORA تبر فلو &copy; 2026</div>
+  </div>
+  <div class="auth-panel-wrap">
+    <div class="auth-panel">
+      <button class="auth-back" onclick="showLanding()"><i class="ti ti-arrow-right"></i>العودة للرئيسية</button>
+      <div class="auth-tabs">
+        <button id="loginTab" class="active" onclick="switchAuth('login')">دخول الشركة</button>
+        <button id="registerTab" onclick="switchAuth('register')">تسجيل شركة</button>
+      </div>
+      <div class="auth-form active" id="loginForm">
+        <div class="auth-title">دخول نظام إدارة المشاريع</div>
+        <div class="auth-sub">أدخل بريدك الإلكتروني المسجل في الشركة.</div>
+        <div id="loginMsg" class="message-box"></div>
+        <div class="form-row"><label>البريد الإلكتروني</label><input id="loginEmail" type="email" value="admin@company.com" placeholder="name@company.com"></div>
+        <button class="btn btn-p" style="width:100%;justify-content:center;padding:12px var(--sp-5);font-size:var(--fs-lg)" onclick="doLogin()"><i class="ti ti-login"></i>دخول</button>
+        <div class="demo-box" style="margin-top:14px;">
+          <strong>حسابات تجريبية:</strong><br>
+          <span style="color:var(--G);">👑 owner@tibrflow.com</span> — مالك التطبيق<br>
+          <span style="color:var(--P);">admin@company.com</span> — مدير شركة الأفق<br>
+          <span style="color:var(--PS);">eng@company.com</span> — مهندس<br>
+          جديد؟ سجّل شركتك من تبويب <strong>تسجيل شركة</strong>
+        </div>
+      </div>
+      <div class="auth-form" id="registerForm">
+        <div class="auth-title">تسجيل شركة جديدة</div>
+        <div class="auth-sub">سجّل شركتك وابدأ الفترة التجريبية المجانية لمدة شهر.</div>
+        <div id="regMsg" class="message-box"></div>
+        <div class="form-row"><label>اسم الشركة <span style="color:var(--RE)">*</span></label><input id="regCompany" placeholder="مثال: شركة الأفق للمقاولات"></div>
+        <div class="form-row"><label>بريد الشركة الإلكتروني <span style="color:var(--RE)">*</span></label><input id="regCompanyEmail" type="email" placeholder="info@company.com"></div>
+        <div class="form-row"><label>اسم مسؤول الحساب <span style="color:var(--RE)">*</span></label><input id="regName" placeholder="مثال: أحمد المدير"></div>
+        <div class="form-row"><label>بريد مسؤول الحساب <span style="color:var(--RE)">*</span></label><input id="regEmail" type="email" placeholder="admin@company.com"></div>
+        <button class="btn btn-g" style="width:100%;justify-content:center;padding:12px var(--sp-5);font-size:var(--fs-lg)" onclick="registerCompany()"><i class="ti ti-building-plus"></i>إنشاء حساب تجريبي</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== شاشة انتهاء الفترة التجريبية ===== -->
+<div class="app" id="expiredPage" style="display:none;">
+    <div class="header">
+        <h1><i class="ti ti-helmet"></i> <span style="font-weight:300;opacity:.7;font-size:var(--fs-md);letter-spacing:.04em;">NEXORA</span> تبر فلو</h1>
+    </div>
+    <div class="card" style="max-width:500px;margin:40px auto;text-align:center;">
+        <div style="font-size:60px;margin-bottom:16px;">⏳</div>
+        <h2 style="color:var(--G);margin-bottom:10px;">انتهت الفترة التجريبية</h2>
+        <p style="color:var(--TX2);margin-bottom:20px;">للأسف، انتهت الفترة التجريبية المجانية لشركتك. اشترك الآن لاستعادة جميع الميزات.</p>
+        <div style="background:var(--BG);border-radius:8px;padding:16px;margin-bottom:16px;">
+            <div style="font-size:13px;color:var(--TX2);">شركة: <strong id="expiredCompanyName" style="color:var(--TX);"></strong></div>
+            <div style="font-size:13px;color:var(--TX2);">انتهت في: <strong id="expiredDate" style="color:var(--TX);"></strong></div>
+        </div>
+        <button class="btn btn-primary" style="width:100%;justify-content:center;padding:12px;font-size:15px;" onclick="alert('📞 تواصل مع مالك التطبيق على البريد owner@tibrflow.com لتجديد الاشتراك.')"><i class="ti ti-credit-card"></i> تجديد الاشتراك</button>
+        <button class="btn" style="width:100%;justify-content:center;margin-top:8px;" onclick="doLogout()">تسجيل الخروج</button>
+    </div>
+</div>
+
+<div class="app" id="mainApp" style="display:none;">
+    <div class="header">
+        <div><h1><i class="ti ti-helmet"></i> <span style="font-weight:300;opacity:.7;font-size:var(--fs-md);letter-spacing:.04em;">NEXORA</span> تبر فلو</h1></div>
+        <div class="header-left">
+            <span><i class="ti ti-user-circle" style="color:var(--G);"></i> <span id="hdrName"></span></span>
+            <span class="user-badge" id="hdrRole"></span>
+            <span id="trialInfo" style="display:none;"></span>
+            <button class="btn btn-sm" onclick="toggleNotifications()" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;position:relative;" title="الإشعارات"><i class="ti ti-bell"></i><span id="notifBadge" style="position:absolute;top:-4px;right:-4px;background:var(--RE);color:#fff;border-radius:50%;width:16px;height:16px;font-size:9px;display:flex;align-items:center;justify-content:center;font-weight:700;display:none;">0</span></button>
+            <button class="btn btn-sm" onclick="showGlobalSearch()" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;" title="بحث (Ctrl+K)"><i class="ti ti-search"></i></button>
+            <button class="btn btn-danger btn-sm" onclick="doLogout()"><i class="ti ti-logout"></i></button>
+            <button class="btn btn-sm" onclick="toggleTheme()" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;" title="الوضع المظلم (Ctrl+D)"><i class="ti ti-moon-stars"></i></button>
+        </div>
+    </div>
+    <div class="nav" id="mainNav">
+        <button class="nav-btn active" onclick="showView('dashboard')"><i class="ti ti-chart-pie"></i> لوحة القيادة</button>
+        <button class="nav-btn" onclick="showView('projects')"><i class="ti ti-folder-open"></i> المشاريع</button>
+        <button class="nav-btn" onclick="showView('approvals')"><i class="ti ti-check-double"></i> الاعتماد <span class="count" id="approvalsCount">0</span></button>
+        <button class="nav-btn" onclick="showView('costs')"><i class="ti ti-coin"></i> التكاليف</button>
+        <button class="nav-btn" onclick="showView('reports')"><i class="ti ti-chart-bar"></i> التقارير</button>
+        <button class="nav-btn" onclick="showView('employees')"><i class="ti ti-users"></i> الموظفون</button>
+        <button class="nav-btn" onclick="showView('admin')" id="adminNavBtn" style="display:none;"><i class="ti ti-settings"></i> الإدارة</button>
+        <button class="nav-btn" onclick="showView('owner')" id="ownerNavBtn" style="display:none;"><i class="ti ti-crown"></i> لوحة المالك</button>
+    </div>
+
+    <!-- ===== DASHBOARD ===== -->
+    <div id="view-dashboard" class="section active"><div id="dashContent"></div></div>
+
+    <!-- ===== PROJECTS ===== -->
+    <div id="view-projects" class="section"><div id="projectsContent"></div></div>
+
+    <!-- ===== PROJECT DETAIL ===== -->
+    <div id="view-project" class="section"><div id="projectContent"></div></div>
+
+    <!-- ===== ITEM DETAIL ===== -->
+    <div id="view-item" class="section"><div id="itemContent"></div></div>
+
+    <!-- ===== APPROVALS ===== -->
+    <div id="view-approvals" class="section"><div id="approvalsContent"></div></div>
+
+    <!-- ===== COSTS ===== -->
+    <div id="view-costs" class="section"><div id="costsContent"></div></div>
+
+    <!-- ===== REPORTS ===== -->
+    <div id="view-reports" class="section"><div id="reportsContent"></div></div>
+
+    <!-- ===== EMPLOYEES ===== -->
+    <div id="view-employees" class="section"><div id="employeesContent"></div></div>
+
+    <!-- ===== ADMIN ===== -->
+    <div id="view-admin" class="section"><div id="adminContent"></div></div>
+
+    <!-- ===== OWNER DASHBOARD ===== -->
+    <div id="view-owner" class="section"><div id="ownerContent"></div></div>
+
+    <!-- ===== TASK MODAL ===== -->
+    <div class="modal-overlay" id="taskModal"><div class="modal" id="taskModalBody"></div></div>
+    <!-- ===== EDIT EMPLOYEE MODAL ===== -->
+    <div class="modal-overlay" id="empModal">
+        <div class="modal" style="max-width:450px;">
+            <div class="modal-title"><i class="ti ti-user-edit"></i> تعديل بيانات الموظف</div>
+            <div id="empModalMsg" class="message-box"></div>
+            <input type="hidden" id="editEmpId">
+            <div class="grid-2">
+                <div><label>الاسم</label><input type="text" id="editEmpName"></div>
+                <div><label>البريد</label><input type="email" id="editEmpEmail"></div>
+            </div>
+            <div class="grid-2">
+                <div><label>الدور</label>
+                    <select id="editEmpRole" style="padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;font-family:inherit;width:100%;margin-bottom:10px;">
+                        <option value="مدير مشروع">مدير مشروع</option>
+                        <option value="مهندس موقع">مهندس موقع</option>
+                        <option value="مشرف">مشرف</option>
+                        <option value="محاسب">محاسب</option>
+                        <option value="أمين مستودع">أمين مستودع</option>
+                        <option value="عامل">عامل</option>
+                    </select>
+                </div>
+                <div><label>الساعة (ريال)</label><input type="number" id="editEmpRate"></div>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:4px;">
+                <button class="btn btn-primary" onclick="saveEditEmployee()"><i class="ti ti-device-floppy"></i> حفظ التغييرات</button>
+                <button class="btn" onclick="closeEmpModal()">إلغاء</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- ═══════════ TOAST CONTAINER ═══════════ -->
+    <div id="toastContainer" style="position:fixed;bottom:20px;right:20px;z-index:200;display:flex;flex-direction:column;gap:8px;pointer-events:none;"></div>
+
+    <!-- External scripts loaded here for performance -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/frappe-gantt@0.6.1/dist/frappe-gantt.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
+<!-- ═══════════ NOTIFICATION PANEL ═══════════ -->
+<div id="notifPanel" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:90;background:rgba(11,20,40,.3);backdrop-filter:blur(2px);" onclick="if(event.target===this)closeNotifications()">
+    <div style="position:absolute;top:80px;left:20px;width:380px;max-width:calc(100vw - 40px);max-height:70vh;background:var(--WH);border:1px solid var(--BD);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.15);overflow:hidden;display:flex;flex-direction:column;animation:modalIn .2s ease;">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--BD);">
+            <strong style="font-size:var(--fs-md);color:var(--TX);"><i class="ti ti-bell" style="color:var(--G);margin-left:6px;"></i>الإشعارات</strong>
+            <button onclick="closeNotifications()" style="background:none;border:0;color:var(--TX2);font-size:18px;cursor:pointer;padding:4px;"><i class="ti ti-x"></i></button>
+        </div>
+        <div id="notifList" style="padding:8px;overflow-y:auto;flex:1;max-height:50vh;">
+            <div class="empty-state" style="padding:24px;"><i class="ti ti-bell-off"></i><strong>لا توجد إشعارات</strong></div>
+        </div>
+    </div>
+</div>
+
+<script>
+// ===================== GLOBAL ERROR HANDLERS =====================
+window.onerror = function(msg, url, line, col, err) {
+  var p = document.getElementById('preloader');
+  if(p && p.style.visibility !== 'hidden'){ p.style.opacity = '0'; p.style.visibility = 'hidden'; }
+  return false;
+};
+window.addEventListener('unhandledrejection', function(e) {
+  var p = document.getElementById('preloader');
+  if(p && p.style.visibility !== 'hidden'){ p.style.opacity = '0'; p.style.visibility = 'hidden'; }
+});
+// ===================== INDEXED DB LAYER =====================
+const DB_STORE = 'tibrflow';
+const DB_VER = 2;
+const DB_TABLES = ['companies','employees','projects','items','tasks','assignments','dailylogs','approvals','costs'];
+let __dbReady = false;
+let __dbQueue = [];
+
+function openDB(){
+  return new Promise((res,rej)=>{
+    if(!window.indexedDB) return res(null);
+    var timedOut = false;
+    var timer = setTimeout(function(){ timedOut = true; __dbReady = false; res(null); }, 3000);
+    const r = indexedDB.open(DB_STORE,DB_VER);
+    r.onupgradeneeded = e => {
+      const db = e.target.result;
+      DB_TABLES.forEach(t => { if(!db.objectStoreNames.contains(t)) db.createObjectStore(t,{keyPath:'id'}); });
+    };
+    r.onsuccess = e => { if(!timedOut){ clearTimeout(timer); __dbReady = true; res(e.target.result); } };
+    r.onerror = e => { clearTimeout(timer); __dbReady = false; res(null); };
+  });
+}
+function dbTx(mode,fn){
+  return new Promise((res,rej)=>{
+    if(!__dbReady){ __dbQueue.push(()=>dbTx(mode,fn).then(res).catch(rej)); return; }
+    openDB().then(db=>{
+      if(!db) return res();
+      const tx = db.transaction(DB_TABLES,mode);
+      const stores = {};
+      DB_TABLES.forEach(t => { stores[t] = tx.objectStore(t); });
+      tx.oncomplete = () => { db.close(); res(); };
+      tx.onerror = e => { db.close(); rej(e.target.error); };
+      fn(stores,tx);
+    }).catch(rej);
+  });
+}
+function dbGetAll(){
+  return new Promise((res,rej)=>{
+    const result = {};
+    DB_TABLES.forEach(t => result[t] = []);
+    if(!window.indexedDB) { DB_TABLES.forEach(t => result[t]=JSON.parse(localStorage.getItem('tbr_'+t)||'[]')); return res(result); }
+    openDB().then(db=>{
+      if(!db){ DB_TABLES.forEach(t => result[t]=JSON.parse(localStorage.getItem('tbr_'+t)||'[]')); return res(result); }
+      let pending = DB_TABLES.length;
+      DB_TABLES.forEach(t => {
+        const s = db.transaction(t,'readonly').objectStore(t).getAll();
+        s.onsuccess = () => { result[t] = s.result||[]; if(!--pending){ db.close(); res(result); } };
+        s.onerror = () => { result[t] = []; if(!--pending){ db.close(); res(result); } };
+      });
+    }).catch(rej);
+  });
+}
+async function migrateFromLocal(){
+  if(!window.indexedDB) return;
+  // Check if already migrated
+  if(localStorage.getItem('tbr_migrated')) return;
+  // Check if there's data in localStorage to migrate
+  const hasData = DB_TABLES.some(t => localStorage.getItem('tbr_'+t));
+  if(!hasData){ localStorage.setItem('tbr_migrated','1'); return; }
+  try {
+    await dbTx('readwrite',(stores)=>{
+      DB_TABLES.forEach(t => {
+        const data = JSON.parse(localStorage.getItem('tbr_'+t)||'[]');
+        data.forEach(item => stores[t].put(item));
+      });
+    });
+    localStorage.setItem('tbr_migrated','1');
+  } catch(e){ console.warn('Migration error:',e); }
+}
+
+// ===================== DATA MODEL =====================
+const DB = {
+    companies: [],
+    employees: [],
+    projects: [],
+    items: [],
+    tasks: [],
+    assignments: [],
+    dailylogs: [],
+    approvals: [],
+    costs: [],
+    _ready: false,
+    save(){
+      this._saveToDB();
+      // Also keep localStorage for backward compatibility
+      Object.keys(this).forEach(k=>{if(Array.isArray(this[k]))localStorage.setItem('tbr_'+k,JSON.stringify(this[k]))});
+    },
+    async _saveToDB(){
+      if(!window.indexedDB) return;
+      try {
+        await dbTx('readwrite',(stores)=>{
+          DB_TABLES.forEach(t => {
+            const ob = stores[t];
+            ob.clear();
+            this[t].forEach(item => ob.put(item));
+          });
+        });
+      } catch(e){ console.warn('DB save error:',e); }
+    },
+    nextId(arr){return arr.length?Math.max(...arr.map(x=>x.id))+1:1}
+};
+// Load from IndexedDB (or localStorage fallback) before any operation
+(async function initDB(){
+  const data = await dbGetAll();
+  DB_TABLES.forEach(t => { DB[t] = data[t]; });
+  await migrateFromLocal();
+  DB._ready = true;
+  // Process queued operations
+  __dbQueue.forEach(fn => fn());
+  __dbQueue = [];
+})();
+const ROLES = {'مدير مشروع':'badge-manager','مهندس موقع':'badge-engineer','مشرف':'badge-supervisor','محاسب':'badge-accountant','أمين مستودع':'badge-warehouse','عامل':'badge-worker'};
+const OWNER_EMAIL = 'owner@tibrflow.com';
+const TRIAL_DAYS = 30;
+let cu = null, curProjId = null, curItemId = null, curTaskId = null;
+
+// ===================== AUTH & SUBSCRIPTION =====================
+var _DB_LOADING = false;
+function init(){
+    // Show landing page immediately (no waiting for DB)
+    showLanding();
+    // Load user from localStorage instantly
+    try {
+        var s = localStorage.getItem('tbr_user');
+        if(s) { try { cu = JSON.parse(s); } catch(e) { cu = null; } }
+    } catch(e) { cu = null; }
+    if(cu){
+        // Wait for DB in background, then switch to app
+        _DB_LOADING = true;
+        var check = setInterval(function(){
+            if(DB._ready){
+                clearInterval(check); _DB_LOADING = false;
+                var co = DB.companies.find(function(c){ return c.id === cu.company_id; });
+                if(cu.is_owner) { showApp(); return; }
+                if(co && co.subscription === 'expired') { showExpired(co); return; }
+                showApp();
+            }
+        }, 50);
+        setTimeout(function(){ clearInterval(check); _DB_LOADING = false;
+            // Timeout: show app with whatever data we have (localStorage fallback)
+            if(cu.is_owner) { showApp(); return; }
+            showApp();
+}, 1500);
+    }
+}
+
+function registerCompany(){
+    const coName = document.getElementById('regCompany').value.trim();
+    const coEmail = document.getElementById('regCompanyEmail').value.trim();
+    const adName = document.getElementById('regName').value.trim();
+    const adEmail = document.getElementById('regEmail').value.trim();
+    if(!coName || !coEmail || !adName || !adEmail)
+        return msg('regMsg','الرجاء إدخال جميع الحقول','error');
+    if(DB.companies.find(c=>c.email===coEmail))
+        return msg('regMsg','❌ البريد الإلكتروني للشركة موجود مسبقاً','error');
+    if(DB.employees.find(e=>e.email===adEmail))
+        return msg('regMsg','❌ بريد المسؤول موجود مسبقاً','error');
+    const now = new Date();
+    const trialEnd = new Date(now); trialEnd.setDate(trialEnd.getDate() + TRIAL_DAYS);
+    const cid = DB.nextId(DB.companies);
+    DB.companies.push({
+        id: cid, name: coName, email: coEmail, address: '',
+        subscription: 'trial', trial_start: now.toISOString(), trial_end: trialEnd.toISOString(),
+        subscribed_at: null, created_at: now.toISOString()
+    });
+    const uid = DB.nextId(DB.employees);
+    DB.employees.push({
+        id: uid, company_id: cid, full_name: adName, email: adEmail,
+        role: 'مدير مشروع', is_admin: 1, hour_rate: 100
+    });
+    DB.save();
+    cu = DB.employees.find(e=>e.id===uid);
+    localStorage.setItem('tbr_user', JSON.stringify(cu));
+    msg('regMsg','✅ تم تسجيل الشركة بنجاح! فترة تجريبية '+TRIAL_DAYS+' يوم.', 'success');
+    setTimeout(showApp, 600);
+}
+
+function doLogin(){
+    const e = document.getElementById('loginEmail').value.trim();
+    if(!e)return msg('loginMsg','أدخل البريد','error');
+    // Owner login shortcut
+    if(e === OWNER_EMAIL){
+        cu = { id:0, full_name:'مالك التطبيق', email:OWNER_EMAIL, role:'Owner', is_owner:1 };
+        localStorage.setItem('tbr_user', JSON.stringify(cu));
+        showApp(); return;
+    }
+    const u = DB.employees.find(x=>x.email===e);
+    if(!u)return msg('loginMsg','❌ هذا البريد غير مسجل. تأكد من أن شركتك مسجلة أو تواصل مع مسؤول الشركة.','error');
+    cu = u; localStorage.setItem('tbr_user',JSON.stringify(u));
+    // Check subscription
+    const co = DB.companies.find(c => c.id === u.company_id);
+    if(co && co.subscription === 'expired') { showExpired(co); return; }
+    showApp();
+}
+
+function showLanding(){
+    document.body.className='show-landing';
+}
+
+function showAuth(mode){
+    document.body.classList.remove('show-landing','authed');
+    document.body.classList.add('show-auth');
+    const l = document.getElementById('loginForm');
+    const r = document.getElementById('registerForm');
+    const lt = document.getElementById('loginTab');
+    const rt = document.getElementById('registerTab');
+    l.classList.toggle('active',mode==='login');
+    r.classList.toggle('active',mode==='register');
+    lt.classList.toggle('active',mode==='login');
+    rt.classList.toggle('active',mode==='register');
+}
+
+function switchAuth(mode){
+    showAuth(mode);
+}
+
+function doLogout(){
+    localStorage.removeItem('tbr_user'); cu=null;
+    document.getElementById('mainApp').style.display='none';
+    document.getElementById('expiredPage').style.display='none';
+    document.getElementById('ownerNavBtn').style.display='none';
+    showLanding();
+}
+
+function showExpired(co){
+    document.getElementById('mainApp').style.display='none';
+    document.body.className='';
+    document.getElementById('expiredPage').style.display='block';
+    document.getElementById('expiredCompanyName').textContent = co ? co.name : '—';
+    document.getElementById('expiredDate').textContent = co ? new Date(co.trial_end).toLocaleDateString('ar-SA') : '—';
+}
+
+function showApp(){
+    document.body.className='authed';
+    document.getElementById('expiredPage').style.display='none';
+    document.getElementById('mainApp').style.display='block';
+    document.getElementById('hdrName').textContent = cu.full_name;
+    document.getElementById('hdrRole').textContent = cu.role || '';
+    document.getElementById('adminNavBtn').style.display = (cu.is_admin && !cu.is_owner) ? 'inline-flex' : 'none';
+    document.getElementById('ownerNavBtn').style.display = cu.is_owner ? 'inline-flex' : 'none';
+    // Show trial info in header for company users
+    if(!cu.is_owner && cu.company_id){
+        const co = DB.companies.find(c=>c.id===cu.company_id);
+        if(co){
+            const daysLeft = Math.ceil((new Date(co.trial_end) - new Date()) / (1000*60*60*24));
+            const infoEl = document.getElementById('trialInfo');
+            if(infoEl){
+                if(co.subscription === 'trial' && daysLeft > 0){
+                    infoEl.innerHTML = `<span class="user-badge" style="background:var(--G);color:var(--TX);">تجربة: ${daysLeft} يوم</span>`;
+                    infoEl.style.display = 'inline';
+                } else if(co.subscription === 'active'){
+                    infoEl.innerHTML = `<span class="user-badge" style="background:var(--GR);color:#fff;">✔ مفعل</span>`;
+                    infoEl.style.display = 'inline';
+                } else { infoEl.style.display = 'none'; }
+            }
+        }
+    }
+    renderDashboard();
+    if(cu.is_owner) renderOwnerDashboard();
+}
+function $(id){return document.getElementById(id)}
+function msg(id,t,tp){const e=$(id);e.textContent=t;e.className='message-box '+tp}
+function clr(id){const e=$(id);e.className='message-box';e.textContent=''}
+function gf(a){return DB.nextId(a)}
+function emp(n){return DB.employees.find(x=>x.id===n)}
+function proj(n){return DB.projects.find(x=>x.id===n)}
+function itm(n){return DB.items.find(x=>x.id===n)}
+function tsk(n){return DB.tasks.find(x=>x.id===n)}
+function asn(n){return DB.assignments.find(x=>x.id===n)}
+function coProjects(){return cu.is_owner ? DB.projects : DB.projects.filter(p=>true)} // keep simple, all projects visible
+
+// ===================== NOTIFICATIONS =====================
+let notifications = [];
+function generateNotifications(){
+    notifications = [];
+    const tasks = DB.tasks.filter(t => t.status==='pending_approval');
+    tasks.forEach(t => {
+        const it = DB.items.find(i=>i.id===t.item_id);
+        const pr = DB.projects.find(p=>p.id===(it?it.project_id:null));
+        notifications.push({icon:'ti ti-checks',text:`مهمة "${t.title}" بانتظار الاعتماد في ${pr?pr.name:'مشروع'}`,type:'approval',time:Date.now()});
+    });
+    const lateTasks = DB.tasks.filter(t => {
+        const a = DB.assignments.find(x=>x.task_id===t.id);
+        return a && a.due_date && new Date(a.due_date) < new Date() && t.status!=='done' && t.status!=='pending_approval';
+    });
+    lateTasks.forEach(t => {
+        notifications.push({icon:'ti ti-alert-triangle',text:`مهمة "${t.title}" متأخرة!`,type:'late',time:Date.now()});
+    });
+    const highCost = DB.items.filter(i => {
+        const c = (DB.costs||[]).filter(x=>x.item_id===i.id).reduce((s,x)=>s+(x.amount||0),0);
+        return i.budget > 0 && c > i.budget;
+    });
+    highCost.forEach(i => {
+        const pr = DB.projects.find(p=>p.id===i.project_id);
+        notifications.push({icon:'ti ti-coin',text:`تجاوز ميزانية بند "${i.name}" في ${pr?pr.name:'مشروع'}`,type:'budget',time:Date.now()});
+    });
+    DB.tasks.filter(t=>t.status==='done').slice(-3).forEach(t => {
+        notifications.push({icon:'ti ti-circle-check',text:`مهمة "${t.title}" مكتملة ✓`,type:'done',time:Date.now()});
+    });
+    notifications.sort((a,b)=>b.time-a.time);
+    updateNotifBadge();
+}
+function updateNotifBadge(){
+    const el = document.getElementById('notifBadge');
+    if(!el)return;
+    if(notifications.length>0){
+        el.style.display='flex';
+        el.textContent=notifications.length>9?'9+':notifications.length;
+    } else { el.style.display='none'; }
+}
+function toggleNotifications(){
+    const panel = document.getElementById('notifPanel');
+    if(panel.style.display==='flex'){closeNotifications();return}
+    generateNotifications();
+    const list = document.getElementById('notifList');
+    if(notifications.length===0){
+        list.innerHTML = `<div class="empty-state" style="padding:24px;"><i class="ti ti-bell-off"></i><strong>لا توجد إشعارات</strong><p style="font-size:var(--fs-sm);color:var(--TX2);margin-top:4px;">كل شي تمام 👌</p></div>`;
+    } else {
+        list.innerHTML = notifications.map(n => `<div style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-bottom:1px solid var(--BD);transition:background .12s;" onmouseover="this.style.background='var(--PLL)'" onmouseout="this.style.background=''">
+            <i class="${n.icon}" style="font-size:18px;color:${n.type==='late'?'var(--RE)':n.type==='budget'?'var(--G)':n.type==='approval'?'var(--AM)':'var(--GR)'};flex-shrink:0;margin-top:2px;"></i>
+            <div><div style="font-size:var(--fs-sm);font-weight:600;color:var(--TX);">${n.text}</div><div style="font-size:var(--fs-xs);color:var(--TX3);margin-top:2px;">الآن</div></div>
+        </div>`).join('');
+    }
+    panel.style.display='flex';
+}
+function closeNotifications(){document.getElementById('notifPanel').style.display='none';}
+
+// ===================== TOAST SYSTEM =====================
+function showToast(msg, type='info', duration=3000){
+    const container = document.getElementById('toastContainer');
+    if(!container) return;
+    const colors = {info:'var(--P)',success:'var(--GR)',error:'var(--RE)',warning:'var(--G)'};
+    const icons = {info:'ti ti-info-circle',success:'ti ti-circle-check',error:'ti ti-alert-circle',warning:'ti ti-alert-triangle'};
+    const el = document.createElement('div');
+    el.style.cssText = `background:${colors[type]||colors.info};color:#fff;padding:12px 18px;border-radius:999px;font-size:var(--fs-sm);font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,.15);display:flex;align-items:center;gap:8px;pointer-events:auto;animation:toastIn .25s ease;font-family:'IBM Plex Sans Arabic',sans-serif;direction:rtl;`;
+    el.innerHTML = `<i class="${icons[type]||icons.info}" style="font-size:16px;"></i> ${msg}`;
+    container.appendChild(el);
+    setTimeout(() => {
+        el.style.transition = 'opacity .25s, transform .25s';
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(8px)';
+        setTimeout(() => el.remove(), 300);
+    }, duration);
+}
+// Override old msg to use toast for auth messages too
+const origMsg = msg;
+msg = function(id,t,tp){
+    if(id==='loginMsg'||id==='regMsg'){
+        showToast(t, tp==='error'?'error':tp==='success'?'success':'info');
+        const e = $(id);
+        if(e){e.textContent=t;e.className='message-box '+tp}
+    } else { origMsg(id,t,tp) }
+};
+
+// ===================== NAV =====================
+function showView(v){
+    document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(x=>x.classList.remove('active'));
+    const el = document.getElementById('view-'+v);
+    if(el) el.classList.add('active');
+    const map={dashboard:'لوحة',projects:'المشاريع',approvals:'الاعتماد',costs:'التكاليف',reports:'التقارير',employees:'الموظفون',admin:'الإدارة',owner:'المالك'};
+    document.querySelectorAll('.nav-btn').forEach(b=>{if(b.textContent.includes(map[v]||''))b.classList.add('active')});
+    if(v==='dashboard')renderDashboard();
+    if(v==='projects')renderProjects();
+    if(v==='approvals')renderApprovals();
+    if(v==='costs')renderCosts();
+    if(v==='reports')renderReports();
+    if(v==='employees')renderEmployeesView();
+    if(v==='admin')renderAdmin();
+    if(v==='owner')renderOwnerDashboard();
+}
+
+// ===================== WEIGHTED PROGRESS =====================
+function taskProgress(tid){
+    const t = tsk(tid); if(!t)return 0;
+    if(!t.estimated_hours) return (t.status==='done'&&t.approved)?100:0;
+    const as = DB.assignments.filter(x=>x.task_id===tid);
+    const doneH = as.reduce((s,a)=>s+(a.completed_hours||0),0);
+    return Math.min(100,Math.round(doneH/t.estimated_hours*100));
+}
+function itemProgress(iid){
+    const ts = DB.tasks.filter(x=>x.item_id===iid);
+    if(!ts.length)return 0;
+    let wSum=0,pSum=0;
+    ts.forEach(t=>{
+        const w = t.estimated_hours||1;
+        wSum+=w; pSum+=w*taskProgress(t.id);
+    });
+    return wSum?Math.round(pSum/wSum):0;
+}
+function projProgress(pid){
+    const its = DB.items.filter(x=>x.project_id===pid);
+    if(!its.length)return 0;
+    let wSum=0,pSum=0;
+    its.forEach(i=>{
+        const w = i.weight||(i.budget||1);
+        wSum+=w; pSum+=w*itemProgress(i.id);
+    });
+    return wSum?Math.round(pSum/wSum):0;
+}
+function itemCost(iid){
+    return DB.costs.filter(x=>x.item_id===iid).reduce((s,x)=>s+(x.cost||0),0);
+}
+function itemProfit(iid){
+    const i = itm(iid); if(!i)return{profit:0,margin:0,status:'none',cost:0,budget:0};
+    const c = itemCost(iid);
+    const p = (i.budget||0)-c;
+    return{profit:p,margin:i.budget?Math.round(p/i.budget*100):0,status:p>=0?'profit':'loss',cost:c,budget:i.budget||0};
+}
+function projCost(pid){
+    return DB.items.filter(x=>x.project_id===pid).reduce((s,i)=>s+itemCost(i.id),0);
+}
+function projProfit(pid){
+    const p = proj(pid); if(!p)return{profit:0,margin:0};
+    const c = projCost(pid);
+    const pf = (p.budget||0)-c;
+    return{profit:pf,margin:p.budget?Math.round(pf/p.budget*100):0,status:pf>=0?'profit':'loss',cost:c,budget:p.budget||0};
+}
+function fmt(n){return (n||0).toLocaleString('en-US')}
+
+// ===================== DASHBOARD =====================
+function renderDashboard(){
+    destroyCharts();
+    const scope = cu.is_owner ? (id=>true) : (id=>DB.projects.find(p=>p.id===id));
+    const allTasks = cu.is_owner ? DB.tasks : DB.tasks.filter(t=>{const i=itm(t.item_id);return i&&scope(i.project_id)});
+    const doneT = allTasks.filter(x=>x.status==='done'&&x.approved), pendA = allTasks.filter(x=>x.status==='done'&&x.approved===null);
+    const scopedProjects = cu.is_owner ? DB.projects : DB.projects;
+    const totalB = scopedProjects.reduce((s,p)=>s+(p.budget||0),0);
+    const totalC = scopedProjects.reduce((s,p)=>s+projCost(p.id),0);
+    const netP = totalB-totalC;
+    const activeP = scopedProjects.filter(p=>p.status==='active').length;
+    const lateP = scopedProjects.filter(p=>p.status==='active' && new Date(p.end_date) < new Date() && projProgress(p.id)<100).length;
+    const lateTasks = allTasks.filter(t => {
+        const a = DB.assignments.find(x=>x.task_id===t.id);
+        return a && a.due_date && new Date(a.due_date) < new Date() && t.status!=='done' && t.status!=='pending_approval';
+    });
+    const totalCosts = (DB.costs||[]).reduce((s,x)=>s+(x.amount||0),0);
+    const losses = scopedProjects.filter(p=>{const c=projCost(p.id);return p.budget>0&&c>p.budget});
+    const totalLoss = losses.reduce((s,p)=>{const c=projCost(p.id);return s+(c-p.budget)},0);
+    const profits = scopedProjects.filter(p=>{const c=projCost(p.id);return p.budget>0&&c<=p.budget});
+    const totalProfit = profits.reduce((s,p)=>{const c=projCost(p.id);return s+(p.budget-c)},0);
+
+    let html = `<div class="stats">
+        <div class="stat-card blue"><div class="num">${scopedProjects.length}</div><div class="lbl">إجمالي المشاريع</div></div>
+        <div class="stat-card gold"><div class="num">${activeP}</div><div class="lbl">مشاريع نشطة</div></div>
+        <div class="stat-card red"><div class="num">${lateP}</div><div class="lbl">متأخرة</div></div>
+        <div class="stat-card green"><div class="num">${fmt(totalProfit)}</div><div class="lbl">الأرباح</div></div>
+        <div class="stat-card red"><div class="num">${fmt(totalLoss)}</div><div class="lbl">الخسائر</div></div>
+        <div class="stat-card gold"><div class="num">${fmt(totalCosts)}</div><div class="lbl">إجمالي المصروفات</div></div>
+    </div>`;
+
+    // Charts row
+    html += `<div class="grid-2" style="margin-bottom:16px;">
+        <div class="card"><div class="card-title"><i class="ti ti-chart-bar"></i> تقدم المشاريع</div>
+            <div style="position:relative;height:220px;"><canvas id="chartProgress"></canvas></div>
+        </div>
+        <div class="card"><div class="card-title"><i class="ti ti-chart-pie"></i> توزيع المهام</div>
+            <div style="position:relative;height:220px;"><canvas id="chartTasks"></canvas></div>
+        </div>
+    </div>`;
+
+    // Financial summary
+    html += `<div class="grid-2" style="margin-bottom:16px;">
+        <div class="card"><div class="card-title"><i class="ti ti-trending-up"></i> الملخص المالي</div>
+            <div class="list-item"><div class="info"><strong>إجمالي الميزانية</strong></div><span>${fmt(totalB)}</span></div>
+            <div class="list-item"><div class="info"><strong>إجمالي التكاليف</strong></div><span style="color:var(--G);">${fmt(totalC)}</span></div>
+            <div class="list-item"><div class="info"><strong style="color:${netP>=0?'var(--GR)':'var(--RE)'};">${netP>=0?'الربح الصافي':'الخسارة الصافية'}</strong></div><span style="font-weight:700;color:${netP>=0?'var(--GR)':'var(--RE)'};">${fmt(Math.abs(netP))} ريال</span></div>
+        </div>
+        <div class="card"><div class="card-title"><i class="ti ti-clock"></i> بانتظار الاعتماد</div>
+            ${!pendA.length ? '<div class="empty-state" style="padding:16px;"><i class="ti ti-check-circle"></i>لا توجد مهام بانتظار الاعتماد</div>'
+            : pendA.slice(0,5).map(t=>{
+                const u=emp(t.assigned_to);
+                return `<div class="list-item"><div class="info"><strong>${t.title}</strong><small>${u?u.full_name:''}</small></div><span class="badge badge-pending">بانتظار</span></div>`;
+            }).join('')}
+        </div>
+    </div>`;
+
+    // Projects list
+    html += `<div class="card"><div class="card-title"><i class="ti ti-list"></i> المشاريع</div>`;
+    if(!DB.projects.length) html += `<div class="empty-state"><i class="ti ti-folder-open"></i>لا توجد مشاريع</div>`;
+    else html += DB.projects.map(p=>{
+        const pr=projProgress(p.id), pc=pr>=75?'green':pr>=40?'gold':'blue';
+        return `<div class="list-item" style="cursor:pointer;" onclick="openProject(${p.id})">
+            <div class="info"><strong>${p.name}</strong><small>${fmt(p.budget)} ريال</small></div>
+            <div style="text-align:left;min-width:120px;"><span style="font-weight:700;color:${pr>=75?'var(--GR)':pr>=40?'var(--G)':'var(--P)'};">${pr}%</span><div class="progress-bar"><div class="progress-fill ${pc}" style="width:${pr}%"></div></div></div>
+        </div>`;
+    }).join('');
+    html += `</div>`;
+
+    // Late tasks
+    html += `<div class="card"><div class="card-title"><i class="ti ti-alert-triangle" style="color:var(--RE);"></i> المهام المتأخرة</div>`;
+    if(!lateTasks.length) html += `<div class="empty-state" style="padding:16px;"><i class="ti ti-check-circle"></i>لا توجد مهام متأخرة</div>`;
+    else html += lateTasks.slice(0,5).map(t=>{
+        const u=emp(t.assigned_to), a=DB.assignments.find(x=>x.task_id===t.id);
+        return `<div class="list-item"><div class="info"><strong>${t.title}</strong><small>${u?u.full_name:''} ${a&&a.due_date?'— '+new Date(a.due_date).toLocaleDateString('ar-SA'):''}</small></div><span class="badge badge-rejected">متأخرة</span></div>`;
+    }).join('');
+    html += `</div>`;
+
+    // Trial notice
+    if(!cu.is_owner && cu.company_id){
+        const co = DB.companies.find(c=>c.id===cu.company_id);
+        if(co && co.subscription === 'trial'){
+            const daysLeft = Math.ceil((new Date(co.trial_end) - new Date()) / (1000*60*60*24));
+            if(daysLeft <= 7 && daysLeft > 0){
+                html = `<div class="message-box ${daysLeft<=3?'warning':'warning'}" style="display:block;">⏳ الفترة التجريبية متبقى عليها <strong>${daysLeft}</strong> يوم. ${daysLeft<=3?'اشترك الآن لضمان استمرارية الخدمة.':''}</div>` + html;
+            }
+        }
+    }
+    document.getElementById('dashContent').innerHTML = html;
+    document.getElementById('approvalsCount').textContent = pendA.length;
+
+    // Initialize charts
+    setTimeout(() => {
+        if(typeof Chart === 'undefined') return;
+        try {
+            // Progress chart
+            const ctx1 = document.getElementById('chartProgress');
+            if(ctx1 && scopedProjects.length > 0){
+                chartInstances.progress = new Chart(ctx1, {
+                    type: 'bar',
+                    data: {
+                        labels: scopedProjects.slice(0,10).map(p=>p.name.substring(0,12)),
+                        datasets: [{
+                            label: 'نسبة الإنجاز %',
+                            data: scopedProjects.slice(0,10).map(p=>projProgress(p.id)),
+                            backgroundColor: scopedProjects.slice(0,10).map(p=>{
+                                const pr = projProgress(p.id);
+                                return pr>=75?'rgba(34,197,94,.7)':pr>=40?'rgba(212,175,55,.7)':'rgba(30,58,138,.7)';
+                            }),
+                            borderColor: scopedProjects.slice(0,10).map(p=>{
+                                const pr = projProgress(p.id);
+                                return pr>=75?'rgba(34,197,94,1)':pr>=40?'rgba(212,175,55,1)':'rgba(30,58,138,1)';
+                            }),
+                            borderWidth: 1,
+                            borderRadius: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: { y: { beginAtZero: true, max: 100, grid: { color: 'rgba(0,0,0,.05)' } }, x: { grid: { display: false } } }
+                    }
+                });
+            }
+            // Tasks chart
+            const ctx2 = document.getElementById('chartTasks');
+            if(ctx2){
+                const todo = allTasks.filter(t=>t.status==='todo').length;
+                const progress = allTasks.filter(t=>t.status==='in_progress').length;
+                const done = doneT.length;
+                const pending = pendA.length;
+                chartInstances.tasks = new Chart(ctx2, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['معلق', 'قيد العمل', 'مكتمل', 'بانتظار الاعتماد'],
+                        datasets: [{
+                            data: [todo, progress, done, pending],
+                            backgroundColor: ['rgba(254,243,199,.9)', 'rgba(219,234,254,.9)', 'rgba(220,252,231,.9)', 'rgba(254,202,202,.9)'],
+                            borderColor: ['#f59e0b', '#3b82f6', '#22c55e', '#ef4444'],
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'bottom', labels: { font: { family: 'IBM Plex Sans Arabic' }, padding: 12 } } }
+                    }
+                });
+            }
+        } catch(e){ console.warn('Chart error:', e); }
+    }, 50);
+}
+
+// ===================== PROJECTS =====================
+function renderProjects(){
+    let h = `<div class="card"><div class="card-title"><i class="ti ti-plus"></i> مشروع جديد</div>
+        <div id="projMsg" class="message-box"></div>
+        <div class="grid-4">
+            <div><label>الاسم</label><input type="text" id="fProjName" placeholder="مشروع برج سكني"></div>
+            <div><label>الميزانية</label><input type="number" id="fProjBudget" placeholder="2000000"></div>
+            <div><label>البداية</label><input type="date" id="fProjStart"></div>
+            <div><label>النهاية</label><input type="date" id="fProjEnd"></div>
+        </div>
+        <button class="btn btn-primary" onclick="createProject()"><i class="ti ti-device-floppy"></i> إنشاء</button>
+    </div><div class="card"><div class="card-title"><i class="ti ti-list"></i> جميع المشاريع</div><div id="projList"></div></div>`;
+    document.getElementById('projectsContent').innerHTML = h;
+    if(!DB.projects.length){document.getElementById('projList').innerHTML='<div class="empty-state"><i class="ti ti-folder-open"></i>لا توجد</div>';return}
+    document.getElementById('projList').innerHTML = DB.projects.map(p=>{
+        const pr=projProgress(p.id), pc=pr>=75?'green':pr>=40?'orange':'purple';
+        const its = DB.items.filter(x=>x.project_id===p.id).length;
+        return `<div class="list-item" style="cursor:pointer;" onclick="openProject(${p.id})">
+            <div class="info"><strong>${p.name}</strong><small>${its} بنود</small><small>${fmt(p.budget)} ريال</small></div>
+            <div style="text-align:left;min-width:120px;"><span style="font-weight:700;">${pr}%</span><div class="progress-bar"><div class="progress-fill ${pc}" style="width:${pr}%"></div></div></div>
+        </div>`;
+    }).join('');
+}
+function createProject(){
+    const n = document.getElementById('fProjName').value.trim();
+    const b = parseFloat(document.getElementById('fProjBudget').value)||0;
+    if(!n)return msg('projMsg','أدخل الاسم','error');
+    DB.projects.push({id:gf(DB.projects),company_id:cu.company_id||1,name:n,budget:b,start_date:document.getElementById('fProjStart').value,end_date:document.getElementById('fProjEnd').value,status:'active'});
+    DB.save();
+    msg('projMsg','✅ تم','success');
+    document.getElementById('fProjName').value='';document.getElementById('fProjBudget').value='';
+    document.getElementById('fProjStart').value='';document.getElementById('fProjEnd').value='';
+    renderProjects();renderDashboard();
+}
+
+// ===================== PROJECT DETAIL =====================
+function openProject(pid){
+    curProjId = pid; const p = proj(pid); if(!p)return;
+    showView('project');
+    const pr=projProgress(pid), pf=projProfit(pid), its=DB.items.filter(x=>x.project_id===pid);
+    let h = `<div class="back-link" onclick="showView('projects')"><i class="ti ti-arrow-right"></i> رجوع</div>
+        <div class="card" style="border-right:5px solid var(--G);">
+            <div class="flex-between"><h2 style="color:var(--P);">${p.name}</h2></div>
+            <div style="color:var(--TX2);font-size:12px;">الميزانية: ${fmt(p.budget)} ريال | التكلفة: ${fmt(pf.cost)} ريال | ${p.start_date||''} → ${p.end_date||''}</div>
+        </div>
+        <div class="stats">
+            <div class="stat-card purple"><div class="num">${its.length}</div><div class="lbl">البنود</div></div>
+            <div class="stat-card teal"><div class="num">${pr}%</div><div class="lbl">الإنجاز</div></div>
+            <div class="stat-card orange"><div class="num">${fmt(pf.cost)}</div><div class="lbl">التكلفة</div></div>
+            <div class="stat-card ${pf.status==='profit'?'green':'red'}"><div class="num">${fmt(Math.abs(pf.profit))}</div><div class="lbl">${pf.status==='profit'?'ربح':'خسارة'}</div></div>
+        </div>
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="switchProjTab('items',this)"><i class="ti ti-layers-union"></i> البنود</button>
+            <button class="tab-btn" onclick="switchProjTab('gantt',this)"><i class="ti ti-chart-Infographic"></i> المخطط الزمني</button>
+        </div>
+        <div id="projItemsTab" class="tab-content active"><div class="card"><div class="card-title"><i class="ti ti-layers-union"></i> البنود (المراحل)</div>
+        <div id="projItemMsg" class="message-box"></div>
+        <div class="grid-3"><div><label>اسم البند</label><input type="text" id="fItemName" placeholder="مرحلة الأساسات"></div>
+        <div><label>الميزانية</label><input type="number" id="fItemBudget" placeholder="500000"></div>
+        <div><label>الوزن</label><input type="number" id="fItemWeight" placeholder="10" value="10"></div>
+        <div style="display:flex;align-items:end;"><button class="btn btn-primary" onclick="addItem()"><i class="ti ti-plus"></i> إضافة بند</button></div></div>
+        <div id="itemsList"></div></div></div>
+        <div id="projGanttTab" class="tab-content"><div class="card"><div class="card-title"><i class="ti ti-chart-Infographic"></i> المخطط الزمني للمشروع</div><div id="ganttChart" style="overflow-x:auto;direction:ltr;"></div></div></div>`;
+    document.getElementById('projectContent').innerHTML = h;
+    renderItems();
+}
+function switchProjTab(tab,btn){
+    document.querySelectorAll('#projectContent .tab-content').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('#projectContent .tab-btn').forEach(x=>x.classList.remove('active'));
+    btn.classList.add('active');
+    const el = document.getElementById('proj'+(tab==='items'?'Items':'Gantt')+'Tab');
+    if(el) el.classList.add('active');
+    if(tab==='gantt') renderGantt();
+}
+function renderGantt(){
+    const el = document.getElementById('ganttChart');
+    if(!el) return;
+    const tasks = [];
+    const p = proj(curProjId);
+    if(!p) return;
+    // Project as parent
+    tasks.push({
+        id: 'p_'+p.id, name: p.name, start: p.start_date||new Date(), end: p.end_date||new Date(Date.now()+864e5*30),
+        progress: projProgress(p.id)/100, dependencies: '', custom_class: 'gantt-project'
+    });
+    const its = DB.items.filter(x=>x.project_id===curProjId);
+    its.forEach(i => {
+        const iTasks = DB.tasks.filter(t=>t.item_id===i.id);
+        // Item as summary
+        if(iTasks.length){
+            const dates = getTaskDateRange(i.id);
+            tasks.push({
+                id: 'i_'+i.id, name: i.name, start: dates.start, end: dates.end,
+                progress: itemProgress(i.id)/100, dependencies: '', custom_class: 'gantt-item'
+            });
+            iTasks.forEach(t => {
+                const a = DB.assignments.find(x=>x.task_id===t.id);
+                if(!a) return;
+                tasks.push({
+                    id: 't_'+t.id, name: t.title, start: a.start_date||dates.start, end: a.due_date||dates.end,
+                    progress: taskProgress(t.id)/100,                     dependencies: iTasks.indexOf(t)>0?'t_'+iTasks[iTasks.indexOf(t)-1].id:'i_'+i.id,
+                    custom_class: t.status==='done'?'gantt-done':t.status==='in_progress'?'gantt-progress':'gantt-todo'
+                });
+            });
+        } else {
+            // Item without tasks
+            tasks.push({
+                id: 'i_'+i.id, name: i.name, start: p.start_date||new Date(), end: p.end_date||new Date(Date.now()+864e5*30),
+                progress: itemProgress(i.id)/100, dependencies: '', custom_class: 'gantt-item'
+            });
+        }
+    });
+    if(!tasks.length || !window.Gantt) return;
+    el.innerHTML = '';
+    try {
+        const g = new Gantt(el, tasks, {
+            view_mode: 'Month',
+            date_format: 'YYYY-MM-DD',
+            on_click: function(t){ if(t.id.startsWith('t_')){ const tid = parseInt(t.id.replace('t_','')); openTaskModal(tid); } },
+            on_date_change: function(t, start, end){ updateTaskDate(t.id, start, end); },
+            on_progress_change: function(t, progress){ updateTaskProgress(t.id, progress); },
+            custom_popup_html: function(t){ return '<div style="padding:8px;font-family:IBM Plex Sans Arabic;direction:rtl;"><strong>'+t.name+'</strong><br>التقدم: '+(t.progress*100).toFixed(0)+'%</div>'; },
+            language: 'ar'
+        });
+        g.change_view_mode('Month');
+        // Style overrides
+        const style = document.createElement('style');
+        style.textContent = '.gantt .bar-progress{fill:var(--P)!important}.gantt .bar-label{font-family:IBM Plex Sans Arabic}.gantt-project .bar-progress{fill:var(--G)!important}.gantt-done .bar-progress{fill:var(--GR)!important}.gantt-progress .bar-progress{fill:var(--PS)!important}.gantt-todo .bar-progress{fill:var(--TX3)!important}';
+        document.head.appendChild(style);
+    } catch(e){ el.innerHTML = '<div class="empty-state"><i class="ti ti-chart-Infographic"></i>تعذر تحميل المخطط</div>'; }
+}
+function getTaskDateRange(iid){
+    const iTasks = DB.tasks.filter(t=>t.item_id===iid);
+    let start = null, end = null;
+    iTasks.forEach(t => {
+        const a = DB.assignments.find(x=>x.task_id===t.id);
+        if(a){
+            if(a.start_date && (!start || a.start_date<start)) start = a.start_date;
+            if(a.due_date && (!end || a.due_date>end)) end = a.due_date;
+        }
+    });
+    if(!start) start = new Date(); else start = new Date(start);
+    if(!end) end = new Date(Date.now()+864e5*7); else end = new Date(end);
+    return {start,end};
+}
+function updateTaskDate(id, start, end){
+    const tid = parseInt(id.replace('t_',''));
+    let a = DB.assignments.find(x=>x.task_id===tid);
+    if(!a){
+        a = {id:gf(DB.assignments),task_id:tid,employee_id:0,start_date:start.toISOString().split('T')[0],due_date:end.toISOString().split('T')[0],completed_hours:0};
+        DB.assignments.push(a);
+    } else {
+        a.start_date = start.toISOString().split('T')[0];
+        a.due_date = end.toISOString().split('T')[0];
+    }
+    DB.save();
+}
+function updateTaskProgress(id, progress){
+    const tid = parseInt(id.replace('t_',''));
+    const t = DB.tasks.find(x=>x.id===tid);
+    if(!t) return;
+    // Sync with existing task progress mechanism
+    if(t.estimated_hours){
+        const a = DB.assignments.find(x=>x.task_id===tid);
+        if(a) a.completed_hours = Math.round(t.estimated_hours * progress);
+    }
+    if(progress >= 1) { t.status = 'done'; t.approved = null; }
+    else if(progress > 0) { t.status = 'in_progress'; }
+    DB.save();
+}
+function openTaskModal(tid){
+    curTaskId = tid;
+    const t = tsk(tid); if(!t)return;
+    const i = itm(t.item_id);
+    const overlay = document.getElementById('taskModal');
+    const body = document.getElementById('taskModalBody');
+    if(!overlay||!body)return;
+    const a = DB.assignments.find(x=>x.task_id===tid);
+    const log = DB.dailylogs.filter(x=>x.task_id===tid).slice(-5);
+    body.innerHTML = `<div class="modal-title"><i class="ti ti-checklist"></i> ${t.title}</div>
+        <div style="font-size:13px;color:var(--TX2);margin-bottom:12px;">${i?i.name:''}</div>
+        <div class="list-item"><div class="info"><strong>الحالة</strong></div><span class="badge badge-${t.status==='done'?'done':t.status==='in_progress'?'progress':'todo'}">${t.status==='done'?'مكتمل':t.status==='in_progress'?'قيد العمل':'معلق'}</span></div>
+        ${a?`<div class="list-item"><div class="info"><strong>الساعات المنجزة</strong></div><span>${a.completed_hours||0} / ${t.estimated_hours||'—'} ساعة</span></div>`:''}
+        ${log.length?`<div class="list-item"><div class="info"><strong>آخر تسجيلات</strong></div></div>${log.map(l=>`<div style="font-size:12px;padding:4px 0;border-bottom:1px solid var(--BD);">${l.hours||0}س - ${l.notes||''} - ${l.date?new Date(l.date).toLocaleDateString('ar-SA'):''}</div>`).join('')}`:''}
+        <button class="btn btn-sm" onclick="document.getElementById('taskModal').classList.remove('active');" style="margin-top:12px;">إغلاق</button>`;
+    overlay.classList.add('active');
+}
+// Cleanup duplicate tasks/task modal leftovers
+function renderItems(){
+    const its = DB.items.filter(x=>x.project_id===curProjId);
+    const c = document.getElementById('itemsList');
+    if(!c) return;
+    if(!its.length){c.innerHTML='<div class="empty-state"><i class="ti ti-layers-union"></i>أضف البند الأول</div>';return}
+    c.innerHTML = its.map(i => {
+        const pr = itemProgress(i.id), pf = itemProfit(i.id);
+        return `<div class="list-item" style="cursor:pointer;border-right:4px solid var(--PS);padding-right:10px;margin-bottom:6px;background:var(--BG);border-radius:6px;padding:10px;" onclick="openItem(${i.id})">
+            <div class="info"><strong>${i.name}</strong><small>ميزانية: ${fmt(i.budget)}</small><small>تكلفة: ${fmt(pf.cost)}</small>
+                <span class="badge ${pf.status==='profit'?'badge-profit':'badge-loss'}">${pf.status==='profit'?'ربح +'+fmt(pf.profit):pf.status==='loss'?'خسارة -'+fmt(Math.abs(pf.profit)):'بلا ميزانية'}</span>
+            </div>
+            <div style="text-align:left;min-width:100px;"><span style="font-weight:700;">${pr}%</span><div class="progress-bar"><div class="progress-fill ${pr>=75?'green':pr>=40?'orange':'teal'}" style="width:${pr}%"></div></div></div>
+        </div>`;
+    }).join('');
+}
+function addItem(){
+    const n = document.getElementById('fItemName')?.value.trim();
+    const b = parseFloat(document.getElementById('fItemBudget')?.value)||0;
+    const w = parseFloat(document.getElementById('fItemWeight')?.value)||10;
+    if(!n)return msg('projItemMsg','أدخل اسم البند','error');
+    DB.items.push({id:gf(DB.items),project_id:curProjId,name:n,budget:b,weight:w,manager_id:cu.id,status:'pending'});
+    DB.save();
+    msg('projItemMsg','✅ تم','success');
+    document.getElementById('fItemName').value='';document.getElementById('fItemBudget').value='';
+    renderItems();renderDashboard();
+}
+
+// ===================== ITEM DETAIL (KANBAN) =====================
+function openItem(iid){
+    curItemId = iid; const i = itm(iid); if(!i)return;
+    showView('item');
+    const pr = itemProgress(iid), pf = itemProfit(iid);
+    const p = proj(i.project_id);
+    let h = `<div class="back-link" onclick="openProject(${i.project_id})"><i class="ti ti-arrow-right"></i> رجوع للمشروع</div>
+        <div class="card" style="border-right:5px solid var(--PS);">
+            <h2 style="color:var(--P);">${i.name}</h2>
+            <div style="color:var(--TX2);font-size:12px;">المشروع: ${p?p.name:''} | الميزانية: ${fmt(i.budget)} | الوزن: ${i.weight||10}</div>
+        </div>
+        <div class="grid-2"><div class="card"><div class="card-title"><i class="ti ti-checklist"></i> إضافة مهمة</div>
+        <div id="taskFormMsg" class="message-box"></div>
+        <div class="grid-2"><div><label>المهمة</label><input type="text" id="fTaskTitle" placeholder="صبة الأساسات"></div>
+        <div><label>الساعات المقدرة</label><input type="number" id="fTaskEst" placeholder="40" value="8"></div></div>
+        <button class="btn btn-primary" onclick="addTask()"><i class="ti ti-plus"></i> إضافة</button></div>
+        <div class="card"><div class="card-title"><i class="ti ti-coin"></i> تحليل التكاليف</div>
+        <div class="list-item"><div class="info"><strong>الميزانية</strong></div><span>${fmt(i.budget)} ريال</span></div>
+        <div class="list-item"><div class="info"><strong>التكلفة الفعلية</strong></div><span style="color:var(--G);">${fmt(pf.cost)} ريال</span></div>
+        <div style="background:${pf.status==='profit'?'var(--GR)':'var(--RE)'};color:#fff;border-radius:6px;padding:10px;margin-top:8px;display:flex;justify-content:space-between;">
+            <strong>${pf.status==='profit'?'ربح':'خسارة'}</strong>
+            <span>${fmt(Math.abs(pf.profit))} ريال (${pf.margin}%)</span>
+        </div></div></div>
+        <div class="card"><div class="card-title"><i class="ti ti-columns-3"></i> لوحة المهام (Kanban)</div>
+        <div class="kanban" id="kanbanBoard"></div></div>
+        <div class="card"><div class="card-title"><i class="ti ti-users"></i> الموظفون في البند</div><div id="itemEmps"></div></div>`;
+    document.getElementById('itemContent').innerHTML = h;
+    renderKanban(); renderItemEmps();
+}
+function addTask(){
+    const t = document.getElementById('fTaskTitle')?.value.trim();
+    const e = parseFloat(document.getElementById('fTaskEst')?.value)||8;
+    if(!t)return msg('taskFormMsg','أدخل اسم المهمة','error');
+    DB.tasks.push({id:gf(DB.tasks),item_id:curItemId,title:t,description:'',estimated_hours:e,actual_hours:0,status:'todo',approved:null,assigned_to:null});
+    DB.save();
+    msg('taskFormMsg','✅ تم','success');
+    document.getElementById('fTaskTitle').value='';
+    renderKanban();renderDashboard();
+}
+function renderKanban(){
+    const ts = DB.tasks.filter(x=>x.item_id===curItemId);
+    const cols = {todo:[],in_progress:[],done:[]};
+    ts.forEach(t=>{cols[t.status||'todo'].push(t)});
+    const labels = {todo:'📋 معلقة',in_progress:'🔧 قيد العمل',done:'✅ منجزة'};
+    let h = '';
+    Object.keys(labels).forEach(k=>{
+        h += `<div class="kanban-col"><h4>${labels[k]} <span class="badge">${cols[k].length}</span></h4>`;
+        if(!cols[k].length) h += `<div style="color:var(--TX2);font-size:11px;text-align:center;padding:10px;">—</div>`;
+        else cols[k].forEach(t=>{
+            const pr = taskProgress(t.id);
+            h += `<div class="kanban-card" onclick="openTask(${t.id})">
+                <div class="k-title">${t.title}</div>
+                <div class="k-meta">${t.estimated_hours||0}س | ${pr}%</div>
+                <div class="progress-bar"><div class="progress-fill ${pr>=75?'green':pr>=40?'orange':'purple'}" style="width:${pr}%"></div></div>
+                <div class="k-meta">${t.approved===true?'✓ معتمدة':t.approved===false?'✗ مرفوضة':t.status==='done'?'🕐 بانتظار':'—'}</div>
+            </div>`;
+        });
+        h += `</div>`;
+    });
+    const board = document.getElementById('kanbanBoard');
+    if(board) board.innerHTML = h;
+}
+function renderItemEmps(){
+    const ts = DB.tasks.filter(x=>x.item_id===curItemId);
+    const as = DB.assignments.filter(x=>ts.map(t=>t.id).includes(x.task_id));
+    const map = {};
+    as.forEach(a=>{if(!map[a.employee_id])map[a.employee_id]={tasks:0,done:0,hours:0};map[a.employee_id].hours+=a.completed_hours||0});
+    ts.forEach(t=>{if(t.assigned_to){if(!map[t.assigned_to])map[t.assigned_to]={tasks:0,done:0,hours:0};map[t.assigned_to].tasks++;if(t.status==='done'&&t.approved)map[t.assigned_to].done++}});
+    const c = document.getElementById('itemEmps');
+    if(!c)return;
+    const keys=Object.keys(map);
+    if(!keys.length){c.innerHTML='<div style="color:var(--TX2);font-size:12px;">لم يسند أحد بعد</div>';return}
+    c.innerHTML = keys.map(k=>{
+        const u=emp(parseInt(k)),d=map[k],pct=d.tasks?Math.round(d.done/d.tasks*100):0;
+        return `<div class="list-item"><div class="info"><strong>${u?u.full_name:'?'}</strong><small>${d.done}/${d.tasks} مهام</small><small>${d.hours}س</small></div>
+        <div style="text-align:left;min-width:80px;"><span>${pct}%</span><div class="progress-bar"><div class="progress-fill ${pct>=75?'green':pct>=40?'orange':'teal'}" style="width:${pct}%"></div></div></div></div>`;
+    }).join('');
+}
+
+// ===================== TASK MODAL =====================
+function openTask(tid){
+    curTaskId = tid; const t = tsk(tid); if(!t)return;
+    const i = itm(t.item_id), u = emp(t.assigned_to);
+    const canApprove = cu.is_admin || cu.role==='مدير مشروع';
+    const as = DB.assignments.filter(x=>x.task_id===tid);
+    const app = DB.approvals.filter(x=>x.task_id===tid);
+    let h = `<div class="modal-title"><i class="ti ti-checklist"></i> ${t.title}</div>
+        <div style="margin-bottom:8px;"><strong>الحالة:</strong> <span class="badge ${t.status==='done'?(t.approved?'badge-approved':'badge-pending'):t.status==='in_progress'?'badge-progress':'badge-todo'}">${t.status==='done'?(t.approved?'معتمدة':'بانتظار'):t.status==='in_progress'?'قيد العمل':'معلقة'}</span></div>
+        <div style="margin-bottom:6px;"><strong>الساعات المقدرة:</strong> ${t.estimated_hours||0}س</div>
+        <div style="margin-bottom:6px;"><strong>الساعات الفعلية:</strong> ${t.actual_hours||0}س</div>
+        <div style="margin-bottom:6px;"><strong>التقدم:</strong> ${taskProgress(t.id)}%</div>
+        <div class="progress-bar" style="margin-bottom:10px;"><div class="progress-fill ${taskProgress(t.id)>=75?'green':taskProgress(t.id)>=40?'orange':'purple'}" style="width:${taskProgress(t.id)}%"></div></div>
+        <div style="margin-bottom:10px;"><strong>المسند إلى (assigned_to):</strong> <select id="modalAssign" style="width:auto;min-width:180px;margin:0 8px 0 0;display:inline-block;">
+            <option value="">— اختر —</option>
+            ${DB.employees.filter(x=>!x.is_admin).map(e=>`<option value="${e.id}" ${t.assigned_to===e.id?'selected':''}>${e.full_name} (${e.role})</option>`).join('')}
+        </select>
+        <button class="btn btn-primary btn-sm" onclick="assignTask()"><i class="ti ti-user-check"></i> إسناد</button></div>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0;">
+        <div><strong>تسجيل ساعات العمل:</strong></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 10px;">
+            <input type="number" id="modalHours" placeholder="ساعات" style="width:100px;margin:0;" value="1">
+            <input type="date" id="modalDate" style="width:140px;margin:0;" value="${new Date().toISOString().split('T')[0]}">
+            <input type="text" id="modalNote" placeholder="ملاحظة" style="width:160px;margin:0;">
+            <button class="btn btn-primary btn-sm" onclick="logHours()"><i class="ti ti-clock"></i> تسجيل</button>
+        </div>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0;">
+        <div><strong>سجل العمل اليومي:</strong></div>
+        <div id="modalLogs"></div>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0;">`;
+    // approvals history
+    if(app.length){
+        h += `<div><strong>سجل الاعتماد:</strong></div>`;
+        app.forEach(a=>{
+            const who = emp(a.approved_by);
+            h += `<div style="font-size:12px;margin:4px 0;">${a.status==='approved'?'✅':'❌'} ${who?who.full_name:''} — ${new Date(a.approved_at).toLocaleDateString('ar-SA')} ${a.comment?'('+a.comment+')':''}</div>`;
+        });
+    }
+    // action buttons
+    h += `<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;">`;
+    if(t.status==='todo') h += `<button class="btn btn-warning btn-sm" onclick="changeTaskStatus('in_progress')"><i class="ti ti-player-play"></i> بدء العمل</button>`;
+    if(t.status==='in_progress') h += `<button class="btn btn-success btn-sm" onclick="changeTaskStatus('done')"><i class="ti ti-check"></i> إتمام</button>`;
+    if(t.status==='done' && t.approved===null && canApprove){
+        h += `<button class="btn btn-success btn-sm" onclick="approveTask(true)"><i class="ti ti-check-circle"></i> اعتماد</button>`;
+        h += `<button class="btn btn-danger btn-sm" onclick="approveTask(false)"><i class="ti ti-x-circle"></i> رفض</button>`;
+    }
+    h += `<button class="btn btn-sm" onclick="closeTaskModal()">إغلاق</button></div>`;
+    document.getElementById('taskModalBody').innerHTML = h;
+    document.getElementById('taskModal').classList.add('active');
+    renderLogs();
+}
+function closeTaskModal(){document.getElementById('taskModal').classList.remove('active');curTaskId=null}
+function assignTask(){
+    const tid = curTaskId; const t = tsk(tid); if(!t)return;
+    const eid = parseInt(document.getElementById('modalAssign').value);
+    if(!eid)return;
+    t.assigned_to = eid; DB.save();
+    // create assignment record
+    let a = DB.assignments.find(x=>x.task_id===tid&&x.employee_id===eid);
+    if(!a){DB.assignments.push({id:gf(DB.assignments),task_id:tid,employee_id:eid,assigned_hours:t.estimated_hours||0,completed_hours:0,progress:0});DB.save()}
+    openTask(tid); renderKanban();
+}
+function logHours(){
+    const tid = curTaskId; const t = tsk(tid); if(!t)return;
+    const hrs = parseFloat(document.getElementById('modalHours').value);
+    const dt = document.getElementById('modalDate').value;
+    const note = document.getElementById('modalNote').value;
+    if(!hrs||hrs<=0)return;
+    DB.dailylogs.push({id:gf(DB.dailylogs),task_id:tid,employee_id:t.assigned_to,date:dt,hours:hrs,description:note});
+    t.actual_hours = (t.actual_hours||0)+hrs;
+    // update assignment
+    DB.assignments.filter(x=>x.task_id===tid).forEach(a=>{a.completed_hours=(a.completed_hours||0)+hrs;a.progress=t.estimated_hours?Math.min(100,Math.round(a.completed_hours/t.estimated_hours*100)):100});
+    // create cost record
+    const u = emp(t.assigned_to);
+    if(u) DB.costs.push({id:gf(DB.costs),item_id:t.item_id,employee_id:t.assigned_to,hours:hrs,hour_rate:u.hour_rate,cost:hrs*u.hour_rate});
+    DB.save();
+    openTask(tid);
+    if(document.getElementById('view-item').classList.contains('active')) openItem(curItemId);
+    else{renderKanban(); renderItemEmps();}
+}
+function renderLogs(){
+    const c = document.getElementById('modalLogs');
+    const ts = DB.dailylogs.filter(x=>x.task_id===curTaskId).sort((a,b)=>new Date(b.date)-new Date(a.date));
+    if(!ts.length){c.innerHTML='<div style="color:var(--TX2);font-size:12px;">لا يوجد تسجيل بعد</div>';return}
+    c.innerHTML = ts.map(l=>`<div style="font-size:12px;display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border);"><span>${l.date} — ${l.hours}س ${l.description?'('+l.description+')':''}</span></div>`).join('');
+}
+function changeTaskStatus(s){
+    const t = tsk(curTaskId); if(!t)return;
+    t.status = s;
+    if(s==='done') t.approved = null;
+    DB.save(); openTask(curTaskId); renderKanban(); renderDashboard();
+}
+function approveTask(st){
+    const t = tsk(curTaskId); if(!t)return;
+    t.approved = st;
+    DB.approvals.push({id:gf(DB.approvals),task_id:curTaskId,status:st?'approved':'rejected',approved_by:cu.id,approved_at:new Date().toISOString(),comment:''});
+    DB.save(); openTask(curTaskId); renderKanban(); renderDashboard();
+    renderApprovals();
+}
+
+// ===================== APPROVALS =====================
+function renderApprovals(){
+    const pend = DB.tasks.filter(x=>x.status==='done'&&x.approved===null);
+    const c = document.getElementById('approvalsContent');
+    let h = `<div class="card"><div class="card-title"><i class="ti ti-check-double"></i> المهام بانتظار الاعتماد <span class="badge badge-pending">${pend.length}</span></div>`;
+    if(!pend.length) h += `<div class="empty-state"><i class="ti ti-check-circle"></i>لا توجد مهام بانتظار الاعتماد</div>`;
+    else h += pend.map(t=>{
+        const i = itm(t.item_id), u = emp(t.assigned_to);
+        return `<div class="list-item"><div class="info"><strong>${t.title}</strong><small>${i?i.name:''}</small><small>${u?u.full_name:''}</small></div>
+        <div style="display:flex;gap:6px;">
+            <button class="btn btn-success btn-sm" onclick="quickApprove(${t.id},true)"><i class="ti ti-check"></i></button>
+            <button class="btn btn-danger btn-sm" onclick="quickApprove(${t.id},false)"><i class="ti ti-x"></i></button>
+            <button class="btn btn-sm" onclick="openTask(${t.id})"><i class="ti ti-eye"></i></button>
+        </div></div>`;
+    }).join('');
+    h += `</div>`;
+    // Approved history
+    h += `<div class="card"><div class="card-title"><i class="ti ti-history"></i> آخر المعتمدات</div>`;
+    const recent = DB.approvals.slice(-10).reverse();
+    if(!recent.length) h += `<div class="empty-state"><i class="ti ti-history"></i>لا يوجد</div>`;
+    else h += recent.map(a=>{
+        const t = tsk(a.task_id), who = emp(a.approved_by);
+        return `<div class="list-item"><div class="info"><strong>${t?t.title:'—'}</strong><small>${who?who.full_name:''}</small><small>${new Date(a.approved_at).toLocaleDateString('ar-SA')}</small></div><span class="badge ${a.status==='approved'?'badge-approved':'badge-rejected'}">${a.status==='approved'?'معتمدة':'مرفوضة'}</span></div>`;
+    }).join('');
+    h += `</div>`;
+    c.innerHTML = h;
+}
+function quickApprove(tid,st){
+    const t = tsk(tid); if(!t)return;
+    t.approved = st;
+    DB.approvals.push({id:gf(DB.approvals),task_id:tid,status:st?'approved':'rejected',approved_by:cu.id,approved_at:new Date().toISOString(),comment:''});
+    DB.save(); renderApprovals(); renderDashboard();
+}
+
+// ===================== COSTS =====================
+function renderCosts(){
+    let h = `<div class="card"><div class="card-title"><i class="ti ti-coin"></i> تحليل التكاليف حسب البند</div>
+        <div style="overflow-x:auto;"><table><tr><th>البند</th><th>المشروع</th><th>الميزانية</th><th>التكلفة</th><th>الربح/الخسارة</th><th>هامش</th><th>الحالة</th></tr>`;
+    DB.items.forEach(i=>{
+        const p = proj(i.project_id), pf = itemProfit(i.id);
+        h += `<tr><td>${i.name}</td><td style="color:var(--TX2);">${p?p.name:''}</td><td>${fmt(i.budget)}</td><td style="color:var(--G);">${fmt(pf.cost)}</td>
+        <td style="font-weight:700;color:${pf.status==='profit'?'var(--GR)':'var(--RE)'};">${pf.status==='profit'?'+':''}${fmt(pf.profit)}</td>
+        <td>${pf.margin}%</td><td><span class="badge ${pf.status==='profit'?'badge-profit':'badge-loss'}">${pf.status==='profit'?'✔ ربح':'✘ خسارة'}</span></td></tr>`;
+    });
+    const tb = DB.items.reduce((s,i)=>s+(i.budget||0),0);
+    const tc = DB.items.reduce((s,i)=>s+itemCost(i.id),0);
+    const tp = tb-tc;
+    h += `</table></div>
+        <div style="margin-top:12px;display:flex;gap:12px;flex-wrap:wrap;">
+            <div style="flex:1;padding:12px;background:var(--BG);border-radius:6px;text-align:center;"><div style="font-size:11px;color:var(--TX2);">إجمالي الميزانية</div><div style="font-size:20px;font-weight:800;">${fmt(tb)}</div></div>
+            <div style="flex:1;padding:12px;background:var(--BG);border-radius:6px;text-align:center;"><div style="font-size:11px;color:var(--TX2);">إجمالي التكاليف</div><div style="font-size:20px;font-weight:800;color:var(--G);">${fmt(tc)}</div></div>
+            <div style="flex:1;padding:12px;background:${tp>=0?'var(--GR)':'var(--RE)'};border-radius:6px;text-align:center;color:#fff;"><div style="font-size:11px;opacity:.9;">${tp>=0?'صافي الربح':'صافي الخسارة'}</div><div style="font-size:20px;font-weight:800;">${fmt(Math.abs(tp))}</div></div>
+        </div></div>`;
+    document.getElementById('costsContent').innerHTML = h;
+}
+
+// ===================== REPORTS =====================
+function renderReports(){
+    let h = `<div class="card"><div class="card-title"><i class="ti ti-chart-bar"></i> التقارير <span style="font-weight:400;color:var(--TX2);font-size:var(--fs-sm);margin-right:auto;"><button class="btn btn-sm btn-primary" onclick="exportReportPDF('reportsContent','تقرير-المشاريع')"><i class="ti ti-file-pdf"></i></button>
+        <button class="btn btn-sm btn-success" onclick="exportAllData()"><i class="ti ti-database"></i></button>
+        <button class="btn btn-sm btn-warning" onclick="importAllData()"><i class="ti ti-upload"></i></button></span></div>
+        <div class="tab-bar" id="reportTabs">
+            <button class="tab-btn active" onclick="switchReportTab('r1',this)">📋 المشاريع</button>
+            <button class="tab-btn" onclick="switchReportTab('r2',this)">💰 الميزانية vs الفعلي</button>
+            <button class="tab-btn" onclick="switchReportTab('r3',this)">👥 الموظفون</button>
+            <button class="tab-btn" onclick="switchReportTab('r4',this)">⏰ الأعمال المتأخرة</button>
+            <button class="tab-btn" onclick="switchReportTab('r5',this)">🔍 بانتظار الاعتماد</button>
+            <button class="tab-btn" onclick="switchReportTab('r6',this)">🔎 تقارير متقدمة</button>
+        </div>
+        <div id="r1" class="tab-content active">${reportProjects()}</div>
+        <div id="r2" class="tab-content">${reportBudget()}</div>
+        <div id="r3" class="tab-content">${reportEmployees()}</div>
+        <div id="r4" class="tab-content">${reportOverdue()}</div>
+        <div id="r5" class="tab-content">${reportPendingApproval()}</div>
+        <div id="r6" class="tab-content"></div>
+    </div>`;
+    document.getElementById('reportsContent').innerHTML = h;
+    // Init advanced reports tab
+    setTimeout(() => { const r6 = document.getElementById('r6'); if(r6) renderFilteredReportsInTab(); }, 50);
+}
+function renderFilteredReportsInTab(){
+    const el = document.getElementById('r6');
+    if(!el) return;
+    const r = document.getElementById('reportsContent').querySelector('.card');
+    // Build filter UI inside r6
+    el.innerHTML = `<div class="card-title" style="font-size:var(--fs-md);"><i class="ti ti-filter"></i> تقارير متقدمة مع تصفية وتصدير</div>
+        <div class="grid-3" style="margin-bottom:12px;">
+            <div><label>نوع التقرير</label><select id="repType" onchange="applyReportFilter()"><option value="projects">المشاريع</option><option value="costs">التكاليف</option><option value="tasks">المهام</option><option value="employees">الموظفين</option><option value="delays">الأعمال المتأخرة</option></select></div>
+            <div><label>الفترة من</label><input type="date" id="repFrom" onchange="applyReportFilter()"></div>
+            <div><label>إلى</label><input type="date" id="repTo" onchange="applyReportFilter()"></div>
+        </div>
+        <div class="flex-between"><button class="btn btn-sm" onclick="applyReportFilter()"><i class="ti ti-refresh"></i> تطبيق</button>
+            <div style="display:flex;gap:6px;"><button class="btn btn-sm btn-primary" onclick="exportReportPDF('reportTable','تقرير-متقدم')"><i class="ti ti-file-pdf"></i> PDF</button>
+            <button class="btn btn-sm btn-success" onclick="exportReportCSV(window._repRows||[],'تقرير')"><i class="ti ti-file-spreadsheet"></i> CSV</button>
+            <button class="btn btn-sm" onclick="exportReportJSON()"><i class="ti ti-file-code"></i> JSON</button></div>
+        </div>
+        <div id="reportTable" style="margin-top:12px;overflow-x:auto;"></div>`;
+    applyReportFilter();
+}
+function exportReportJSON(){
+    if(!window._repRows) return showToast('❌ لا توجد بيانات','error');
+    const blob = new Blob([JSON.stringify(window._repRows,null,2)], {type:'application/json'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'تقرير-'+new Date().toISOString().split('T')[0]+'.json';
+    a.click();
+    URL.revokeObjectURL(a.href);
+    showToast('✅ تم تصدير JSON بنجاح','success');
+}
+function switchReportTab(id,btn){
+    document.querySelectorAll('.tab-content').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(x=>x.classList.remove('active'));
+    document.getElementById(id).classList.add('active'); btn.classList.add('active');
+}
+function reportProjects(){
+    if(!DB.projects.length) return '<div class="empty-state"><i class="ti ti-folder-open"></i>لا توجد</div>';
+    let h = '<table><tr><th>المشروع</th><th>البنود</th><th>الميزانية</th><th>التكلفة</th><th>الربح</th><th>الإنجاز</th></tr>';
+    DB.projects.forEach(p=>{
+        const pr=projProgress(p.id), pf=projProfit(p.id), its=DB.items.filter(x=>x.project_id===p.id).length;
+        h += `<tr><td>${p.name}</td><td>${its}</td><td>${fmt(p.budget)}</td><td style="color:var(--G);">${fmt(pf.cost)}</td>
+        <td style="color:${pf.status==='profit'?'var(--GR)':'var(--RE)'};">${fmt(pf.profit)}</td><td>${pr}%</td></tr>`;
+    });
+    return h+'</table>';
+}
+function reportBudget(){
+    if(!DB.items.length) return '<div class="empty-state"><i class="ti ti-coin"></i>لا توجد</div>';
+    let h = '<table><tr><th>البند</th><th>المشروع</th><th>الميزانية</th><th>التكلفة</th><th>المتبقي</th><th>الاستهلاك</th></tr>';
+    DB.items.forEach(i=>{
+        const p=proj(i.project_id), c=itemCost(i.id), left=(i.budget||0)-c, pct=i.budget?Math.round(c/i.budget*100):0;
+        h += `<tr><td>${i.name}</td><td style="color:var(--TX2);">${p?p.name:''}</td><td>${fmt(i.budget)}</td><td style="color:var(--G);">${fmt(c)}</td>
+        <td style="color:${left>=0?'var(--GR)':'var(--RE)'};">${fmt(left)}</td><td>${pct}%</td></tr>`;
+    });
+    return h+'</table>';
+}
+function reportEmployees(){
+    const map = {};
+    DB.assignments.forEach(a=>{
+        if(!map[a.employee_id])map[a.employee_id]={tasks:0,hours:0,cost:0};
+        map[a.employee_id].hours+=a.completed_hours||0;
+    });
+    DB.tasks.forEach(t=>{
+        if(t.assigned_to){
+            if(!map[t.assigned_to])map[t.assigned_to]={tasks:0,hours:0,cost:0};
+            map[t.assigned_to].tasks++;
+        }
+    });
+    DB.costs.forEach(c=>{
+        if(!map[c.employee_id])map[c.employee_id]={tasks:0,hours:0,cost:0};
+        map[c.employee_id].cost+=c.cost||0;
+    });
+    const keys = Object.keys(map);
+    if(!keys.length) return '<div class="empty-state"><i class="ti ti-users"></i>لا توجد</div>';
+    let h = '<table><tr><th>الموظف</th><th>الدور</th><th>المهام</th><th>الساعات</th><th>التكلفة</th></tr>';
+    keys.forEach(k=>{
+        const u = emp(parseInt(k)), d = map[k];
+        h += `<tr><td>${u?u.full_name:'?'}</td><td>${u?u.role:'?'}</td><td>${d.tasks||0}</td><td>${d.hours||0}</td><td style="color:var(--G);">${fmt(d.cost||0)}</td></tr>`;
+    });
+    return h+'</table>';
+}
+function reportOverdue(){
+    const now = new Date();
+    const late = DB.tasks.filter(t=>t.status!=='done'&&t.assigned_to);
+    if(!late.length) return '<div class="empty-state"><i class="ti ti-check-circle"></i>لا توجد أعمال متأخرة</div>';
+    let h = '<table><tr><th>المهمة</th><th>المسند إلى</th><th>الحالة</th><th>الساعات</th></tr>';
+    late.forEach(t=>{
+        const u = emp(t.assigned_to);
+        h += `<tr><td>${t.title}</td><td>${u?u.full_name:''}</td><td><span class="badge ${t.status==='in_progress'?'badge-progress':'badge-todo'}">${t.status==='in_progress'?'قيد العمل':'معلقة'}</span></td><td>${t.estimated_hours||0}</td></tr>`;
+    });
+    return h+'</table>';
+}
+function reportPendingApproval(){
+    const pend = DB.tasks.filter(x=>x.status==='done'&&x.approved===null);
+    if(!pend.length) return '<div class="empty-state"><i class="ti ti-check-circle"></i>لا توجد</div>';
+    let h = '<table><tr><th>المهمة</th><th>البند</th><th>الموظف</th><th>الساعات</th></tr>';
+    pend.forEach(t=>{
+        const i = itm(t.item_id), u = emp(t.assigned_to);
+        h += `<tr><td>${t.title}</td><td>${i?i.name:''}</td><td>${u?u.full_name:''}</td><td>${t.actual_hours||0}</td></tr>`;
+    });
+    return h+'</table>';
+}
+
+// ===================== EMPLOYEES VIEW =====================
+function renderEmployeesView(){
+    const scopeEmps = cu.is_owner ? DB.employees : DB.employees.filter(e=>e.company_id===cu.company_id);
+    let h = `<div class="card"><div class="card-title"><i class="ti ti-users"></i> الموظفون</div>
+    <div style="overflow-x:auto;"><table><tr><th>#</th><th>الاسم</th><th>البريد</th><th>الدور</th><th>الساعة (ريال)</th><th>المهام</th><th>الساعات</th><th>التكلفة</th></tr>`;
+    scopeEmps.forEach(e=>{
+        const tCount = DB.tasks.filter(x=>x.assigned_to===e.id).length;
+        const hCount = DB.dailylogs.filter(x=>x.employee_id===e.id).reduce((s,x)=>s+(x.hours||0),0);
+        const cCost = DB.costs.filter(x=>x.employee_id===e.id).reduce((s,x)=>s+(x.cost||0),0);
+        const canEdit = cu.is_admin || cu.role === 'مدير مشروع';
+        h += `<tr><td>${e.id}</td><td><strong>${e.full_name}</strong>${e.is_admin?' <span class="badge badge-admin">مدير</span>':''}
+            ${!e.is_admin && canEdit ? `<button class="btn btn-sm" onclick="showEditEmployee(${e.id})" style="padding:2px 6px;font-size:10px;color:var(--PS);margin-right:4px;"><i class="ti ti-edit"></i></button>` : ''}
+            </td><td style="color:var(--TX2);">${e.email}</td>
+            <td><span class="badge ${ROLES[e.role]||''}">${e.role}</span></td>
+            <td>${e.hour_rate}</td><td>${tCount}</td><td>${hCount}</td><td style="color:var(--G);">${fmt(cCost)}</td></tr>`;
+    });
+    h += `</table></div></div>`;
+    document.getElementById('employeesContent').innerHTML = h;
+}
+
+// ===================== ADMIN =====================
+function renderAdmin(){
+    let h = `<div class="card"><div class="card-title"><i class="ti ti-users-cog"></i> إدارة المستخدمين</div>
+        <div id="adminMsg" class="message-box"></div>
+        <div class="grid-4">
+            <div><label>الاسم</label><input type="text" id="fAdmName" placeholder="أحمد"></div>
+            <div><label>البريد</label><input type="email" id="fAdmEmail" placeholder="ahmed@site.com"></div>
+            <div><label>الدور</label><select id="fAdmRole" style="padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;font-family:inherit;width:100%;margin-bottom:10px;">
+                <option value="مدير مشروع">مدير مشروع</option>
+                <option value="مهندس موقع" selected>مهندس موقع</option>
+                <option value="مشرف">مشرف</option>
+                <option value="محاسب">محاسب</option>
+                <option value="أمين مستودع">أمين مستودع</option>
+                <option value="عامل">عامل</option>
+            </select></div>
+            <div><label>الساعة (ريال)</label><input type="number" id="fAdmRate" value="50"></div>
+        </div>
+        <button class="btn btn-primary" onclick="addEmployee()"><i class="ti ti-user-plus"></i> إضافة</button>
+        <div style="border-top:1px solid var(--border);margin:14px 0;"></div>
+        <div id="adminUsersList"></div>
+    </div>`;
+    document.getElementById('adminContent').innerHTML = h;
+    renderAdminUsers();
+}
+function addEmployee(){
+    if(!cu.is_admin)return;
+    const n = document.getElementById('fAdmName').value.trim();
+    const e = document.getElementById('fAdmEmail').value.trim();
+    const r = document.getElementById('fAdmRole').value;
+    const rate = parseFloat(document.getElementById('fAdmRate').value)||50;
+    if(!n||!e)return msg('adminMsg','أدخل البيانات','error');
+    if(DB.employees.find(x=>x.email===e))return msg('adminMsg','❌ البريد موجود','error');
+    DB.employees.push({id:gf(DB.employees),company_id:cu.company_id||null,full_name:n,email:e,role:r,is_admin:0,hour_rate:rate});
+    DB.save();
+    msg('adminMsg','✅ تم','success');
+    document.getElementById('fAdmName').value='';document.getElementById('fAdmEmail').value='';document.getElementById('fAdmRate').value='50';
+    renderAdminUsers();
+}
+function renderAdminUsers(){
+    const c = document.getElementById('adminUsersList');
+    if(!c)return;
+    const scopeEmps = cu.is_owner ? DB.employees : DB.employees.filter(e=>e.company_id===cu.company_id);
+    c.innerHTML = scopeEmps.map(u=>{
+        const isU = cu&&u.id===cu.id;
+        return `<div class="list-item"><div class="info"><strong>${u.full_name} ${isU?'<span style="color:var(--G);font-size:11px;">(أنت)</span>':''}</strong>
+            <small>${u.email}</small><span class="badge ${ROLES[u.role]||''}">${u.role}</span>
+            ${u.is_admin?'<span class="badge badge-admin">مدير</span>':''}<small>${u.hour_rate} ريال/س</small></div>
+            <div style="display:flex;gap:6px;align-items:center;"><span class="badge">#${u.id}</span>
+            <button class="btn btn-sm" onclick="showEditEmployee(${u.id})" style="color:var(--PS);"><i class="ti ti-edit"></i></button>
+            ${!u.is_admin?`<button class="btn btn-danger btn-sm" onclick="removeEmployee(${u.id})"><i class="ti ti-trash"></i></button>`:''}</div></div>`;
+    }).join('');
+}
+function removeEmployee(id){
+    if(!cu.is_admin)return;
+    if(!confirm('حذف الموظف؟'))return;
+    const u = DB.employees.find(x=>x.id===id);
+    if(u&&u.is_admin)return msg('adminMsg','❌ لا يمكن','error');
+    DB.employees = DB.employees.filter(x=>x.id!==id);
+    DB.save(); msg('adminMsg','✅ تم','success'); renderAdminUsers();
+}
+function showEditEmployee(id){
+    const u = DB.employees.find(x=>x.id===id);
+    if(!u)return;
+    document.getElementById('editEmpId').value = id;
+    document.getElementById('editEmpName').value = u.full_name;
+    document.getElementById('editEmpEmail').value = u.email;
+    document.getElementById('editEmpRole').value = u.role;
+    document.getElementById('editEmpRate').value = u.hour_rate;
+    document.getElementById('empModalMsg').className = 'message-box';
+    document.getElementById('empModalMsg').textContent = '';
+    document.getElementById('empModal').classList.add('active');
+}
+function closeEmpModal(){
+    document.getElementById('empModal').classList.remove('active');
+}
+function saveEditEmployee(){
+    if(!cu.is_admin)return;
+    const id = parseInt(document.getElementById('editEmpId').value);
+    const u = DB.employees.find(x=>x.id===id);
+    if(!u)return;
+    const name = document.getElementById('editEmpName').value.trim();
+    const email = document.getElementById('editEmpEmail').value.trim();
+    const role = document.getElementById('editEmpRole').value;
+    const rate = parseFloat(document.getElementById('editEmpRate').value)||0;
+    if(!name||!email)return msg('empModalMsg','الرجاء إدخال البيانات','error');
+    if(email !== u.email && DB.employees.find(x=>x.email===email&&x.id!==id))
+        return msg('empModalMsg','❌ البريد مستخدم بالفعل','error');
+    u.full_name = name;
+    u.email = email;
+    u.role = role;
+    u.hour_rate = rate;
+    DB.save();
+    msg('empModalMsg','✅ تم حفظ التغييرات','success');
+    renderAdminUsers();
+    // Update header if editing self
+    if(cu.id === id){
+        cu.full_name = name; cu.email = email; cu.role = role;
+        document.getElementById('hdrName').textContent = name;
+        document.getElementById('hdrRole').textContent = role;
+    }
+    setTimeout(closeEmpModal, 800);
+}
+
+// ===================== OWNER DASHBOARD =====================
+function renderOwnerDashboard(){
+    const cos = DB.companies;
+    let h = `<div class="card"><div class="card-title"><i class="ti ti-crown" style="color:var(--G);"></i> لوحة مالك التطبيق — جميع الشركات</div>
+        <div class="stats">
+            <div class="stat-card purple"><div class="num">${cos.length}</div><div class="lbl">إجمالي الشركات</div></div>
+            <div class="stat-card teal"><div class="num">${cos.filter(c=>c.subscription==='trial').length}</div><div class="lbl">تجريبية</div></div>
+            <div class="stat-card green"><div class="num">${cos.filter(c=>c.subscription==='active').length}</div><div class="lbl">مشتركة</div></div>
+            <div class="stat-card red"><div class="num">${cos.filter(c=>c.subscription==='expired').length}</div><div class="lbl">منتهية</div></div>
+        </div>
+        <div style="overflow-x:auto;"><table><tr><th>#</th><th>الشركة</th><th>البريد</th><th>الاشتراك</th><th>تاريخ البدء</th><th>تاريخ الانتهاء</th><th>الأيام المتبقية</th><th>الموظفون</th><th>المشاريع</th><th>إجراء</th></tr>`;
+    cos.forEach(c=>{
+        const empCount = DB.employees.filter(e=>e.company_id===c.id).length;
+        const projCount = DB.projects.filter(p=>p.company_id===c.id).length;
+        const daysLeft = c.subscription === 'expired' ? 0 :
+            Math.ceil((new Date(c.trial_end) - new Date()) / (1000*60*60*24));
+        const sClass = c.subscription==='active'?'badge-approved':c.subscription==='trial'?'badge-pending':'badge-rejected';
+        const sText = c.subscription==='active'?'✔ مفعل':c.subscription==='trial'?'تجربة':'منتهي';
+        h += `<tr><td>${c.id}</td><td><strong>${c.name}</strong></td><td style="color:var(--TX2);">${c.email||''}</td>
+            <td><span class="badge ${sClass}">${sText}</span></td>
+            <td>${c.trial_start ? new Date(c.trial_start).toLocaleDateString('ar-SA') : '—'}</td>
+            <td>${c.trial_end ? new Date(c.trial_end).toLocaleDateString('ar-SA') : '—'}</td>
+            <td style="font-weight:700;color:${daysLeft<=0?'var(--RE)':daysLeft<=7?'var(--G)':'var(--GR)'};">${daysLeft>0?daysLeft+' يوم':'—'}</td>
+            <td>${empCount}</td>
+            <td>${projCount}</td>
+            <td>
+                <select onchange="changeSubscription(${c.id},this.value)" style="padding:4px 6px;border:1px solid var(--border);border-radius:4px;font-size:11px;font-family:inherit;">
+                    <option value="trial" ${c.subscription==='trial'?'selected':''}>تجربة</option>
+                    <option value="active" ${c.subscription==='active'?'selected':''}>تفعيل</option>
+                    <option value="expired" ${c.subscription==='expired'?'selected':''}>إنهاء</option>
+                </select>
+            </td></tr>`;
+    });
+    h += `</table></div></div>`;
+    // Quick actions
+    h += `<div class="card"><div class="card-title"><i class="ti ti-bolt"></i> إجراءات سريعة</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="extendAllTrials()"><i class="ti ti-circle-plus"></i> تمديد تجربة جميع الشركات 30 يوم</button>
+            <button class="btn btn-danger" onclick="if(confirm('مسح جميع البيانات؟')){localStorage.clear();location.reload()}"><i class="ti ti-trash"></i> مسح جميع البيانات</button>
+        </div>
+    </div>`;
+    document.getElementById('ownerContent').innerHTML = h;
+}
+
+function changeSubscription(cid, status){
+    const c = DB.companies.find(x=>x.id===cid);
+    if(!c) return;
+    c.subscription = status;
+    if(status === 'active'){
+        c.subscribed_at = new Date().toISOString();
+        // Set trial_end far in future
+        const far = new Date(); far.setFullYear(far.getFullYear()+1);
+        c.trial_end = far.toISOString();
+    }
+    if(status === 'expired'){
+        // If re-expiring, set end to now
+        c.trial_end = new Date().toISOString();
+    }
+    DB.save();
+    renderOwnerDashboard();
+}
+
+function extendAllTrials(){
+    const now = new Date();
+    DB.companies.forEach(c => {
+        if(c.subscription === 'trial' || c.subscription === 'expired'){
+            c.subscription = 'trial';
+            const end = new Date(); end.setDate(end.getDate() + 30);
+            c.trial_end = end.toISOString();
+            if(!c.trial_start) c.trial_start = now.toISOString();
+        }
+    });
+    DB.save();
+    renderOwnerDashboard();
+}
+
+// ===================== KEYBOARD SHORTCUTS =====================
+document.addEventListener('keydown', function(e){
+    if(!document.body.classList.contains('authed')) return;
+    if(e.ctrlKey && e.key === 'k'){
+        e.preventDefault();
+        showGlobalSearch();
+    }
+    if(e.ctrlKey && e.key === 'd'){
+        e.preventDefault();
+        toggleTheme();
+    }
+    if(e.key === 'Escape'){
+        closeNotifications();
+        const mo = document.getElementById('taskModal');
+        if(mo) mo.classList.remove('active');
+        const em = document.getElementById('empModal');
+        if(em) em.classList.remove('active');
+        const gs = document.getElementById('globalSearchOverlay');
+        if(gs) gs.style.display = 'none';
+    }
+});
+
+// ===================== GLOBAL SEARCH =====================
+function showGlobalSearch(){
+    let overlay = document.getElementById('globalSearchOverlay');
+    if(!overlay){
+        overlay = document.createElement('div');
+        overlay.id = 'globalSearchOverlay';
+        overlay.style.cssText = 'display:none;position:fixed;inset:0;z-index:150;background:rgba(11,20,40,.5);backdrop-filter:blur(4px);justify-content:center;align-items:flex-start;padding-top:80px;';
+        overlay.innerHTML = `<div style="width:560px;max-width:calc(100vw-40px);background:var(--WH);border:1px solid var(--BD);border-radius:16px;box-shadow:0 24px 80px rgba(0,0,0,.22);overflow:hidden;animation:modalIn .2s ease;">
+            <div style="padding:4px;border-bottom:1px solid var(--BD);">
+                <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--BG);border-radius:10px;">
+                    <i class="ti ti-search" style="color:var(--TX2);font-size:18px;"></i>
+                    <input id="globalSearchInput" placeholder="ابحث عن مشروع، بند، مهمة، موظف..." style="flex:1;border:0;background:transparent;font-size:var(--fs-md);outline:0;padding:8px 0;font-family:inherit;" autofocus>
+                    <button onclick="document.getElementById('globalSearchOverlay').style.display='none'" style="background:none;border:0;color:var(--TX2);cursor:pointer;padding:4px;"><i class="ti ti-x"></i></button>
+                </div>
+            </div>
+            <div id="globalSearchResults" style="max-height:400px;overflow-y:auto;padding:8px;">
+                <div class="empty-state" style="padding:20px;"><i class="ti ti-search"></i><strong>ابدأ الكتابة للبحث</strong></div>
+            </div>
+        </div>`;
+        const input = overlay.querySelector('#globalSearchInput');
+        input.addEventListener('input', function(){
+            const q = this.value.trim().toLowerCase();
+            const results = document.getElementById('globalSearchResults');
+            if(!q){
+                results.innerHTML = '<div class="empty-state" style="padding:20px;"><i class="ti ti-search"></i><strong>ابدأ الكتابة للبحث</strong></div>';
+                return;
+            }
+            const matches = [];
+            const escQ = q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+            const re = new RegExp(escQ,'gi');
+            DB.projects.forEach(p => { if(p.name.toLowerCase().includes(q)) matches.push({type:'مشروع',name:p.name,icon:'ti ti-folder-open',id:p.id,view:'projects'}); });
+            DB.items.forEach(i => { if(i.name.toLowerCase().includes(q)) matches.push({type:'بند',name:i.name+' (مشروع: '+(DB.projects.find(p=>p.id===i.project_id)?.name||'')+')',icon:'ti ti-layers-union',id:i.id,view:'projects'}); });
+            DB.tasks.forEach(t => { if(t.title.toLowerCase().includes(q)) matches.push({type:'مهمة',name:t.title,icon:'ti ti-checklist',id:t.id,view:'projects'}); });
+            DB.employees.forEach(e => { if(e.full_name.toLowerCase().includes(q)||e.email.toLowerCase().includes(q)) matches.push({type:'موظف',name:e.full_name+' ('+e.email+')',icon:'ti ti-users',id:e.id,view:'employees'}); });
+            if(matches.length === 0){
+                results.innerHTML = '<div class="empty-state" style="padding:20px;"><i class="ti ti-file-off"></i><strong>لا نتائج</strong><p style="font-size:var(--fs-sm);color:var(--TX2);">لا يوجد نتائج لـ "'+q+'"</p></div>';
+            } else {
+                results.innerHTML = matches.slice(0,20).map(m => `<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;cursor:pointer;transition:background .12s;" onmouseover="this.style.background='var(--PLL)'" onmouseout="this.style.background=''" onclick="document.getElementById('globalSearchOverlay').style.display='none';showView('${m.view}');">
+                    <i class="${m.icon}" style="color:var(--P);font-size:18px;"></i>
+                    <div><div style="font-weight:600;font-size:var(--fs-sm);color:var(--TX);">${m.name.replace(re,'<span style="color:var(--P);background:var(--PL);padding:1px 4px;border-radius:4px;">$&</span>')}</div><div style="font-size:var(--fs-xs);color:var(--TX2);">${m.type}</div></div>
+                </div>`).join('');
+            }
+        });
+        input.addEventListener('keydown', function(ev){ if(ev.key==='Escape'){ overlay.style.display='none'; } });
+        document.body.appendChild(overlay);
+    }
+    overlay.style.display='flex';
+    setTimeout(() => document.getElementById('globalSearchInput')?.focus(), 100);
+}
+
+// ===================== BREADCRUMB HELPER =====================
+function breadcrumb(items){
+    return `<div style="display:flex;align-items:center;gap:4px;font-size:var(--fs-sm);color:var(--TX2);margin-bottom:10px;flex-wrap:wrap;">${items.map((item,i) => {
+        if(i === items.length-1) return `<span style="font-weight:700;color:var(--TX);">${item.label}</span>`;
+        return `<a href="#" onclick="${item.onclick||'return false'}" style="color:var(--P);text-decoration:none;font-weight:600;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">${item.label}</a><span style="color:var(--TX3);">/</span>`;
+    }).join('')}</div>`;
+}
+
+// ===================== IMAGE UPLOAD =====================
+function compressImage(file, maxW, cb){
+    const r = new FileReader();
+    r.onload = function(e){
+        const img = new Image();
+        img.onload = function(){
+            let w=img.width,h=img.height;
+            if(w>maxW){h=h*maxW/w;w=maxW;}
+            const c = document.createElement('canvas');
+            c.width=w;c.height=h;
+            const ctx=c.getContext('2d');
+            ctx.drawImage(img,0,0,w,h);
+            cb(c.toDataURL('image/jpeg',0.7));
+        };
+        img.src = e.target.result;
+    };
+    r.readAsDataURL(file);
+}
+function setupImageUpload(inputId, previewId, cb){
+    const inp = document.getElementById(inputId);
+    const preview = document.getElementById(previewId);
+    if(!inp) return;
+    inp.addEventListener('change', function(e){
+        const f = e.target.files[0];
+        if(!f) return;
+        compressImage(f, 800, function(data){
+            if(preview) preview.src = data;
+            cb(data);
+        });
+    });
+}
+function triggerImageUpload(inputId){ const inp = document.getElementById(inputId); if(inp) inp.click(); }
+
+// ===================== IMPORT / EXPORT =====================
+function exportAllData(){
+    const data = {};
+    DB_TABLES.forEach(t => { data[t] = DB[t]; });
+    data._version = 2;
+    data._exported_at = new Date().toISOString();
+    const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'tibrflow-backup-'+new Date().toISOString().split('T')[0]+'.json';
+    a.click();
+    URL.revokeObjectURL(a.href);
+    showToast('✅ تم تصدير البيانات بنجاح','success');
+}
+function importAllData(){
+    const inp = document.createElement('input');
+    inp.type = 'file';
+    inp.accept = '.json';
+    inp.onchange = function(e){
+        const f = e.target.files[0];
+        if(!f) return;
+        const r = new FileReader();
+        r.onload = function(ev){
+            try {
+                const data = JSON.parse(ev.target.result);
+                if(!data._version) return showToast('❌ ملف غير صالح','error');
+                // Validate structure
+                let valid = true;
+                DB_TABLES.forEach(t => { if(!Array.isArray(data[t])) valid = false; });
+                if(!valid) return showToast('❌ بنية الملف غير صحيحة','error');
+                // Deduplicate by ID
+                DB_TABLES.forEach(t => {
+                    const existing = new Set(DB[t].map(x=>x.id));
+                    data[t].forEach(item => {
+                        if(!existing.has(item.id)){ DB[t].push(item); existing.add(item.id); }
+                        else {
+                            const idx = DB[t].findIndex(x=>x.id===item.id);
+                            if(idx>=0) DB[t][idx] = item;
+                        }
+                    });
+                });
+                DB.save();
+                showToast('✅ تم استيراد البيانات بنجاح ('+data[DB_TABLES[0]].length+' سجل)','success');
+                if(typeof renderDashboard === 'function') renderDashboard();
+            } catch(e){ showToast('❌ فشل الاستيراد: '+e.message,'error'); }
+        };
+        r.readAsText(f);
+    };
+    inp.click();
+}
+function exportReportPDF(elementId, title){
+    const el = document.getElementById(elementId);
+    if(!el) return showToast('❌ العنصر غير موجود','error');
+    if(typeof html2canvas === 'undefined' || typeof jspdf === 'undefined')
+        return showToast('❌ مكتبات PDF غير محملة','error');
+    showToast('⏳ جارٍ إنشاء PDF...','info');
+    html2canvas(el, {scale:2,useCORS:true,backgroundColor:'#fff'}).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const {jsPDF} = window.jspdf;
+        const pdf = new jsPDF('p','mm','a4');
+        const pw = pdf.internal.pageSize.getWidth();
+        const ph = (canvas.height * pw) / canvas.width;
+        pdf.addImage(imgData,'PNG',0,0,pw,ph);
+        pdf.save((title||'report')+'-'+new Date().toISOString().split('T')[0]+'.pdf');
+        showToast('✅ تم تصدير PDF بنجاح','success');
+    }).catch(e => showToast('❌ فشل إنشاء PDF: '+e.message,'error'));
+}
+function exportReportCSV(rows, filename){
+    if(!rows||!rows.length) return showToast('❌ لا توجد بيانات للتصدير','error');
+    const headers = Object.keys(rows[0]);
+    const csv = [headers.join(','), ...rows.map(r => headers.map(h => '"'+(r[h]||'').toString().replace(/"/g,'""')+'"').join(','))].join('\n');
+    const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = (filename||'export')+'.csv';
+    a.click();
+    URL.revokeObjectURL(a.href);
+    showToast('✅ تم تصدير CSV بنجاح','success');
+}
+
+// ===================== ENHANCED DASHBOARD =====================
+function renderEnhancedKPI(){
+    // Called from renderDashboard to add extra KPI metrics
+    const scopedProjects = cu.is_owner ? DB.projects : DB.projects;
+    const allTasks = cu.is_owner ? DB.tasks : DB.tasks;
+    const totalB = scopedProjects.reduce((s,p)=>s+(p.budget||0),0);
+    const totalC = scopedProjects.reduce((s,p)=>s+projCost(p.id),0);
+    const doneT = allTasks.filter(x=>x.status==='done'&&x.approved);
+    const lateTasks = allTasks.filter(t => {
+        const a = DB.assignments.find(x=>x.task_id===t.id);
+        return a && a.due_date && new Date(a.due_date) < new Date() && t.status!=='done' && t.status!=='pending_approval';
+    });
+    // Budget burn rate
+    const activeP = scopedProjects.filter(p=>p.status==='active');
+    const avgBurn = activeP.length ? activeP.reduce((s,p)=>{
+        const start = p.start_date ? new Date(p.start_date) : new Date(p.created_at||Date.now());
+        const days = Math.max(1, Math.ceil((Date.now()-start)/(864e5)));
+        return s + (projCost(p.id)/days);
+    },0) / activeP.length : 0;
+    // Productivity (tasks done per employee)
+    const empProd = {};
+    DB.employees.forEach(e => {
+        const done = allTasks.filter(t => t.assigned_to===e.id && t.status==='done' && t.approved).length;
+        if(done>0) empProd[e.full_name] = done;
+    });
+    return { avgBurn, totalB, totalC, doneT: doneT.length, lateTasks: lateTasks.length, empProd };
+}
+
+// ===================== FILTERABLE REPORTS =====================
+function renderFilteredReports(){
+    const r = document.getElementById('reportsContent');
+    if(!r) return;
+    const html = `<div class="card"><div class="card-title"><i class="ti ti-filter"></i> تصفية التقارير</div>
+        <div class="grid-3" style="margin-bottom:12px;">
+            <div><label>نوع التقرير</label><select id="repType" onchange="applyReportFilter()"><option value="projects">المشاريع</option><option value="costs">التكاليف</option><option value="tasks">المهام</option><option value="employees">الموظفين</option><option value="delays">الأعمال المتأخرة</option></select></div>
+            <div><label>الفترة من</label><input type="date" id="repFrom" onchange="applyReportFilter()"></div>
+            <div><label>إلى</label><input type="date" id="repTo" onchange="applyReportFilter()"></div>
+        </div>
+        <div class="flex-between"><button class="btn btn-sm" onclick="applyReportFilter()"><i class="ti ti-refresh"></i> تطبيق</button>
+            <div style="display:flex;gap:6px;"><button class="btn btn-sm btn-primary" onclick="exportReportPDF('reportTable','تقرير')"><i class="ti ti-file-pdf"></i> PDF</button>
+            <button class="btn btn-sm btn-success" onclick="exportReportCSV(window._repRows||[],'تقرير')"><i class="ti ti-file-spreadsheet"></i> CSV</button></div>
+        </div>
+        <div id="reportTable" style="margin-top:12px;"></div></div>`;
+    r.innerHTML = html;
+    applyReportFilter();
+}
+function applyReportFilter(){
+    const type = document.getElementById('repType')?.value||'projects';
+    const from = document.getElementById('repFrom')?.value||'';
+    const to = document.getElementById('repTo')?.value||'';
+    const tbl = document.getElementById('reportTable');
+    if(!tbl) return;
+    let rows = [], headers = [];
+    const scoped = cu.is_owner ? DB : DB;
+    if(type==='projects'){
+        headers = ['#','المشروع','الميزانية','التكلفة','الإنجاز%','الحالة'];
+        rows = scoped.projects.map((p,i) => ({
+            '#':i+1,'المشروع':p.name,'الميزانية':p.budget||0,'التكلفة':projCost(p.id),
+            'الإنجاز%':projProgress(p.id),'الحالة':p.status||''
+        }));
+    } else if(type==='costs'){
+        headers = ['#','المشروع','البند','المبلغ','الوصف','التاريخ'];
+        rows = [];
+        scoped.costs.forEach((c,i) => {
+            const it = scoped.items.find(x=>x.id===c.item_id);
+            const pr = it ? scoped.projects.find(x=>x.id===it.project_id) : null;
+            rows.push({'#':i+1,'المشروع':pr?pr.name:'','البند':it?it.name:'','المبلغ':c.cost||0,'الوصف':c.description||'','التاريخ':c.date?new Date(c.date).toLocaleDateString('ar-SA'):''});
+        });
+    } else if(type==='tasks'){
+        headers = ['#','المهمة','البند','المسؤول','الحالة','الاعتماد'];
+        rows = [];
+        scoped.tasks.forEach((t,i) => {
+            const it = scoped.items.find(x=>x.id===t.item_id);
+            const u = scoped.employees.find(x=>x.id===t.assigned_to);
+            rows.push({'#':i+1,'المهمة':t.title,'البند':it?it.name:'','المسؤول':u?u.full_name:'','الحالة':t.status||'','الاعتماد':t.approved?'معتمد':t.approved===null?'بانتظار':'مرفوض'});
+        });
+    } else if(type==='employees'){
+        headers = ['#','الاسم','البريد','الدور','الساعة','المهام المنجزة'];
+        rows = scoped.employees.map((e,i) => ({
+            '#':i+1,'الاسم':e.full_name,'البريد':e.email,'الدور':e.role||'','الساعة':e.hour_rate||0,
+            'المهام المنجزة':scoped.tasks.filter(t=>t.assigned_to===e.id&&t.status==='done'&&t.approved).length
+        }));
+    } else if(type==='delays'){
+        headers = ['#','المهمة','البند','المسؤول','تاريخ الاستحقاق','التأخير (أيام)'];
+        rows = [];
+        scoped.tasks.filter(t => {
+            const a = DB.assignments.find(x=>x.task_id===t.id);
+            return a && a.due_date && new Date(a.due_date) < new Date() && t.status!=='done' && t.status!=='pending_approval';
+        }).forEach((t,i) => {
+            const a = DB.assignments.find(x=>x.task_id===t.id);
+            const it = scoped.items.find(x=>x.id===t.item_id);
+            const u = scoped.employees.find(x=>x.id===t.assigned_to);
+            const days = Math.ceil((Date.now()-new Date(a.due_date))/(864e5));
+            rows.push({'#':i+1,'المهمة':t.title,'البند':it?it.name:'','المسؤول':u?u.full_name:'','تاريخ الاستحقاق':a.due_date,'التأخير (أيام)':days});
+        });
+    }
+    window._repRows = rows;
+    tbl.innerHTML = rows.length ? `<table><thead><tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${Object.values(r).map(v=>`<td>${v}</td>`).join('')}</tr>`).join('')}</tbody></table>`
+        : '<div class="empty-state"><i class="ti ti-file-off"></i><strong>لا توجد نتائج</strong></div>';
+}
+let theme='light';
+function toggleTheme(){
+    theme=theme==='dark'?'light':'dark';
+    document.documentElement.setAttribute('data-theme',theme);
+    localStorage.setItem('tibr_theme',theme);
+}
+function restoreTheme(){
+    try{theme=localStorage.getItem('tibr_theme')||'light'}catch(e){}
+    document.documentElement.setAttribute('data-theme',theme);
+}
+
+// ===================== PWA =====================
+let deferredPrompt = null;
+function registerSW(){
+  if('serviceWorker' in navigator){
+    navigator.serviceWorker.register('./sw.js').then(r => {
+      r.addEventListener('updatefound', () => {
+        const newSW = r.installing;
+        newSW.addEventListener('statechange', () => {
+          if(newSW.state === 'installed' && navigator.serviceWorker.controller){
+            showToast('🔄 تحديث متوفر. أعد فتح الصفحة للتحديث.','info',6000);
+          }
+        });
+      });
+      // Push notification subscription
+      if('Notification' in window && Notification.permission === 'default'){
+        setTimeout(() => {
+          Notification.requestPermission();
+        }, 10000);
+      }
+    }).catch(() => {});
+  }
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    deferredPrompt = e;
+    setTimeout(() => {
+      if(deferredPrompt) showInstallPrompt();
+    }, 30000);
+  });
+  window.addEventListener('appinstalled', () => {
+    deferredPrompt = null;
+    const ip = document.getElementById('installPrompt');
+    if(ip) ip.style.display = 'none';
+    showToast('✅ تم تثبيت التطبيق بنجاح','success');
+  });
+}
+function showInstallPrompt(){
+  const ip = document.getElementById('installPrompt');
+  if(!ip) return;
+  ip.style.display = 'flex';
+}
+function installApp(){
+  if(!deferredPrompt) return;
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+}
+function dismissInstall(){
+  const ip = document.getElementById('installPrompt');
+  if(ip) ip.style.display = 'none';
+  deferredPrompt = null;
+}
+// Local notification fallback (for non-secure contexts or when SW push unavailable)
+function sendLocalNotification(title, body, icon, tag, onClickUrl){
+  if(!('Notification' in window) || Notification.permission !== 'granted') return;
+  try {
+    const n = new Notification(title, { body, icon: icon||'', tag: tag||'tibrflow', requireInteraction: true });
+    n.onclick = function(){ window.focus(); if(onClickUrl){ showView(onClickUrl); } this.close(); };
+  } catch(e){ /* silent */ }
+}
+function notifyTaskDue(taskId, title){
+  const t = DB.tasks.find(x=>x.id===taskId);
+  if(!t) return;
+  const icon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%231E3A8A'/%3E%3Ctext x='50' y='68' font-size='55' text-anchor='middle' fill='%23D4AF37'%3E%F0%9F%9B%A0%3C/text%3E%3C/svg%3E";
+  sendLocalNotification('🔔 تذكير بمهمة: '+(title||t.title), 'لديك مهمة مستحقة قريباً في NEXORA تبر فلو', icon, 'task-'+taskId, 'approvals');
+}
+
+// ===================== CONTACT FORM =====================
+function submitContact(){
+  const email = document.getElementById('contactEmail')?.value.trim();
+  const msg = document.getElementById('contactMsg')?.value.trim();
+  const box = document.getElementById('contactMsgBox');
+  if(!email || !msg){ box.innerHTML = '<span style="color:var(--RE);">⚠️ الرجاء تعبئة جميع الحقول</span>'; return; }
+  if(!email.includes('@')){ box.innerHTML = '<span style="color:var(--RE);">⚠️ البريد الإلكتروني غير صحيح</span>'; return; }
+  box.innerHTML = '<span style="color:var(--G);">✅ تم إرسال رسالتك. سنتواصل معك قريباً.</span>';
+  document.getElementById('contactEmail').value = '';
+  document.getElementById('contactMsg').value = '';
+}
+// ===================== INTERACTIVE FEATURES =====================
+function initInteractive(){
+  // Preloader - CSS animation handles fade, JS accelerates if ready
+  const preloader = document.getElementById('preloader');
+  if(preloader && preloader.style.visibility !== 'hidden'){
+    preloader.style.opacity = '0';
+    preloader.style.visibility = 'hidden';
+  }
+  // Scroll progress
+  const sp = document.getElementById('scrollProgress');
+  if(sp){
+    window.addEventListener('scroll', function(){
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      sp.style.transform = 'scaleX('+(h>0?Math.min(window.scrollY/h,1):0)+')';
+    }, {passive:true});
+  }
+  // Back to top visibility
+  const btt = document.getElementById('backTopBtn');
+  if(btt){
+    window.addEventListener('scroll', function(){ btt.style.display = window.scrollY > 300 ? 'flex' : 'none'; }, {passive:true});
+  }
+  // Scroll reveal (Intersection Observer)
+  if('IntersectionObserver' in window){
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); }
+      });
+    }, {threshold:0.1, rootMargin:'0px 0px -40px 0px'});
+    document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.reveal-scale,.reveal-stagger').forEach(el => observer.observe(el));
+  }
+  // Ripple effect on all buttons
+  document.addEventListener('click', function(e){
+    const btn = e.target.closest('.btn');
+    if(!btn) return;
+    const rect = btn.getBoundingClientRect();
+    const x = e.clientX - rect.left, y = e.clientY - rect.top;
+    const ripple = document.createElement('span');
+    ripple.className = 'ripple-effect';
+    ripple.style.left = x+'px';
+    ripple.style.top = y+'px';
+    btn.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 500);
+  });
+  // Custom cursor (desktop only)
+  if(window.innerWidth > 1024 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    const dot = document.createElement('div'); dot.className = 'cursor-dot';
+    const ring = document.createElement('div'); ring.className = 'cursor-ring active';
+    document.body.appendChild(dot); document.body.appendChild(ring);
+    setTimeout(() => { dot.classList.add('active'); }, 100);
+    document.addEventListener('mousemove', function(e){
+      dot.style.left = e.clientX+'px'; dot.style.top = e.clientY+'px';
+      ring.style.left = e.clientX+'px'; ring.style.top = e.clientY+'px';
+    });
+    document.querySelectorAll('a,button,.btn,.nav-btn,.list-item,[onclick]').forEach(el => {
+      el.addEventListener('mouseenter', () => { dot.classList.add('hover'); ring.classList.add('hover'); });
+      el.addEventListener('mouseleave', () => { dot.classList.remove('hover'); ring.classList.remove('hover'); });
+    });
+  }
+  // Card 3D tilt effect
+  document.querySelectorAll('.l-feature,.l-role,.stat-card,.card').forEach(el => {
+    el.addEventListener('mousemove', function(e){
+      if(window.innerWidth <= 1024) return;
+      const rect = this.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      this.style.transform = 'perspective(800px) rotateY('+(x*6)+'deg) rotateX('+(-y*6)+'deg)';
+    });
+    el.addEventListener('mouseleave', function(){ this.style.transform = ''; });
+  });
+  // Animated counters
+  if('IntersectionObserver' in window){
+    const counterObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if(e.isIntersecting){
+          const el = e.target;
+          const target = parseInt(el.dataset.count)||0;
+          if(target <= 0) return;
+          let current = 0;
+          const step = Math.max(1, Math.ceil(target / 30));
+          const interval = setInterval(() => {
+            current += step;
+            if(current >= target){ current = target; clearInterval(interval); }
+            el.textContent = current.toLocaleString('en-US');
+          }, 40);
+          counterObserver.unobserve(el);
+        }
+      });
+    }, {threshold:0.5});
+    document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+  }
+}
+// Override showApp to trigger interactive features after app loads
+const _origShowApp = typeof showApp === 'function' ? showApp : function(){};
+showApp = function(){
+  _origShowApp.apply(this, arguments);
+  initInteractive();
+};
+// Also run on landing page
+if(typeof showLanding === 'function'){
+  const _origShowLanding = showLanding;
+  showLanding = function(){
+    _origShowLanding.apply(this, arguments);
+    initInteractive();
+  };
+}
+
+// ===================== INIT =====================
+restoreTheme();
+registerSW();
+try { init(); } catch(e) { showLanding(); }
+// Safety: force-hide preloader after 2s (CSS animation also handles this)
+var _safetyTimer = setTimeout(function(){
+  var p = document.getElementById('preloader');
+  if(p && p.style.visibility !== 'hidden'){ p.style.opacity = '0'; p.style.visibility = 'hidden'; }
+  if(document.body.className === ''){ document.body.className = 'show-landing'; }
+}, 2000);
+var _origInitInteractive = typeof initInteractive === 'function' ? initInteractive : function(){};
+initInteractive = function(){
+  _origInitInteractive.apply(this, arguments);
+  clearTimeout(_safetyTimer);
+};
+</script>
+    <!-- ═══════════ INSTALL PROMPT ═══════════ -->
+    <div id="installPrompt" style="display:none;position:fixed;bottom:20px;right:20px;z-index:250;background:linear-gradient(135deg,var(--P),var(--PS));color:#fff;padding:16px 20px;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,.2);max-width:360px;animation:modalIn .3s ease;align-items:center;gap:12px;direction:rtl;">
+        <div><strong style="font-size:var(--fs-md);"><i class="ti ti-rocket" style="color:var(--G);"></i> ثبّت التطبيق</strong><p style="font-size:var(--fs-sm);opacity:.85;margin-top:4px;">ثبّت NEXORA تبر فلو على جهازك لاستخدام أسرع.</p></div>
+        <div style="display:flex;gap:8px;margin-top:10px;"><button onclick="installApp()" style="background:var(--G);color:var(--TX);border:0;border-radius:999px;padding:8px 18px;font-weight:700;font-size:var(--fs-sm);cursor:pointer;font-family:inherit;">تثبيت</button><button onclick="dismissInstall()" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:999px;padding:8px 14px;font-weight:600;font-size:var(--fs-sm);cursor:pointer;font-family:inherit;">لاحقاً</button></div>
+    </div>
+    <!-- ═══════════ WHATSAPP + BACK TO TOP ═══════════ -->
+    <button class="whatsapp-btn" onclick="window.open('https://wa.me/966500000000?text=مرحباً،%20استفسار%20عن%20نظام%20تبر%20فلو','_blank')" title="تواصل واتساب" aria-label="تواصل عبر واتساب"><i class="ti ti-brand-whatsapp"></i></button>
+    <button class="back-top-btn" id="backTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="العودة للأعلى" aria-label="العودة للأعلى"><i class="ti ti-arrow-up"></i></button>
+</body>
+</html>
