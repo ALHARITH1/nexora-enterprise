@@ -21,8 +21,8 @@ NEXORA.Components.Modal = {
 };
 
 window.openTaskModal = function(tid) {
-  if (typeof window._openTaskModal === 'function') {
-    window._openTaskModal(tid);
+  if (typeof window.openTask === 'function') {
+    window.openTask(tid);
   } else {
     NEXORA.Components.Modal.open('taskModal');
   }

@@ -37,10 +37,6 @@ NEXORA.Components.Toast = {
   }
 };
 
-window.showToast = function(msg, type, duration) {
-  NEXORA.Components.Toast.show(msg, type, duration);
-};
-
 NEXORA.Toast = NEXORA.Components.Toast;
 
 var _origMsg = window.msg;
