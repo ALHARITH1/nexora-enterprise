@@ -32,7 +32,8 @@ NEXORA.Helpers = {
   coProjects() {
     var cu = NEXORA.App ? NEXORA.App.cu : null;
     if (!cu) return [];
-    return cu.is_owner ? NEXORA.DB.projects : NEXORA.DB.projects;
+    if (cu.role === 'المدير العام' || cu.is_owner) return NEXORA.DB.projects;
+    return NEXORA.DB.projects.filter(function(p) { return p.company_id === cu.company_id; });
   },
 
   fmt(n) { return (n || 0).toLocaleString('en-US'); },

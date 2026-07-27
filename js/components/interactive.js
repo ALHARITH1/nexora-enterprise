@@ -12,12 +12,10 @@ NEXORA.Components.Interactive = {
   init: function() {
     var self = NEXORA.Components.Interactive;
     self._hidePreloader();
-    self.initScrollProgress();
     self.initScrollReveal();
     self.initRippleEffect();
     self.initCustomCursor();
     self.initCardTilt();
-    self.initCounters();
   },
 
   _hidePreloader: function() {
@@ -272,9 +270,9 @@ NEXORA.Components.Interactive = {
     var self = NEXORA.Components.Interactive;
     var panel = document.getElementById('notifPanel');
     if (!panel) return;
-    if (panel.style.display === 'flex') { self.closeNotifications(); return; }
+    if (panel.classList.contains('open')) { self.closeNotifications(); return; }
     self.generateNotifications();
-    var list = document.getElementById('notifList');
+    var list = document.getElementById('notifPanelBody');
     if (!list) return;
     if (self._notifData.length === 0) {
       list.innerHTML = '<div class="empty-state" style="padding:24px;"><i class="ti ti-bell-off"></i><strong>لا توجد إشعارات</strong><p style="font-size:var(--fs-sm);color:var(--TX2);margin-top:4px;">كل شي تمام</p></div>';
@@ -287,12 +285,12 @@ NEXORA.Components.Interactive = {
         '</div>';
       }).join('');
     }
-    panel.style.display = 'flex';
+    panel.classList.add('open');
   },
 
   closeNotifications: function() {
     var panel = document.getElementById('notifPanel');
-    if (panel) panel.style.display = 'none';
+    if (panel) panel.classList.remove('open');
   },
 
   registerSW: function() {

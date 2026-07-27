@@ -297,7 +297,7 @@
   <script src="js/views/changeRequests.js?v=3.3.0" defer></script>
   <script src="js/app.js?v=3.3.0" defer></script>
 
-  <!-- Auth Logic -->
+  <!-- Auth Logic + App Init -->
   <script defer>
     NEXORA.AuthPage = {
       _switchTab(tab, btn) {
@@ -314,6 +314,7 @@
       const pass = document.getElementById('loginPass').value;
       if (!email) return;
       try {
+        if (!NEXORA.DB._ready) await NEXORA.Store.init();
         await NEXORA.Auth.login(email, pass);
         NEXORA.App.cu = NEXORA.Auth.getUser();
         NEXORA.App._showApp();
@@ -330,6 +331,7 @@
       const pass = document.getElementById('regPass').value;
       if (!company || !email || !admin || !pass) return;
       try {
+        if (!NEXORA.DB._ready) await NEXORA.Store.init();
         await NEXORA.Auth.register(company, email, admin, pass);
         NEXORA.App.cu = NEXORA.Auth.getUser();
         NEXORA.App._showApp();
@@ -338,26 +340,9 @@
       }
     });
 
-    if ('IntersectionObserver' in window) {
-      const obs = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-          if (e.isIntersecting) {
-            const el = e.target;
-            const target = parseInt(el.dataset.count) || 0;
-            if (target <= 0) return;
-            let current = 0;
-            const step = Math.max(1, Math.ceil(target / 30));
-            const interval = setInterval(() => {
-              current += step;
-              if (current >= target) { current = target; clearInterval(interval); }
-              el.textContent = current.toLocaleString('en-US');
-            }, 40);
-            obs.unobserve(el);
-          }
-        });
-      }, { threshold: 0.5 });
-      document.querySelectorAll('.counter').forEach(el => obs.observe(el));
-    }
+    document.addEventListener('DOMContentLoaded', function() {
+      NEXORA.App.init();
+    });
   </script>
 </body>
 </html>

@@ -37,7 +37,7 @@ NEXORA.Views.ChangeRequests = {
       '<div class="stat-card gold"><div class="num">' + pending + '</div><div class="lbl">مقدم</div></div>' +
       '<div class="stat-card blue"><div class="num">' + review + '</div><div class="lbl">قيد المراجعة</div></div>' +
       '<div class="stat-card green"><div class="num">' + approved + '</div><div class="lbl">معتمد</div></div>' +
-      '<div class="stat-card"><div class="num" style="color:var(--R);">' + rejected + '</div><div class="lbl">مرفوض</div></div>' +
+      '<div class="stat-card"><div class="num" style="color:var(--RE);">' + rejected + '</div><div class="lbl">مرفوض</div></div>' +
     '</div>';
 
     h += '<div class="card"><div id="crFormArea"></div></div>';
@@ -56,7 +56,7 @@ NEXORA.Views.ChangeRequests = {
           '<td><span class="badge ' + stCls + '">' + H.esc(c.status) + '</span></td>' +
           '<td>' + (canReview ?
             '<button class="btn btn-sm btn-success" onclick="NEXORA.Views.ChangeRequests._updateStatus(' + c.id + ',\'معتمد\')" title="اعتماد"><i class="ti ti-check"></i></button> ' +
-            '<button class="btn btn-sm btn-o" style="color:var(--R);" onclick="NEXORA.Views.ChangeRequests._updateStatus(' + c.id + ',\'مرفوض\')" title="رفض"><i class="ti ti-x"></i></button>'
+            '<button class="btn btn-sm btn-o" style="color:var(--RE);" onclick="NEXORA.Views.ChangeRequests._updateStatus(' + c.id + ',\'مرفوض\')" title="رفض"><i class="ti ti-x"></i></button>'
             : '') +
           '<button class="btn btn-sm btn-o" onclick="NEXORA.Views.ChangeRequests._remove(' + c.id + ')" style="margin-right:4px;"><i class="ti ti-trash"></i></button></td></tr>';
       });

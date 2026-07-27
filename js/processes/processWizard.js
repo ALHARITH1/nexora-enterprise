@@ -206,7 +206,8 @@ NEXORA.ProcessWizard = (function() {
   }
 
   return {
-    currentStep: currentStep,
+    get currentStep() { return currentStep; },
+    set currentStep(v) { currentStep = v; },
     render: render,
     next: next,
     prev: prev,

@@ -54,6 +54,7 @@ NEXORA.App = {
     NEXORA.Sidebar.updateUser(self.cu);
     NEXORA.Header.init();
     NEXORA.Router.init();
+    try { NEXORA.Components.Interactive.init(); } catch(e) {}
   },
 
   toggleTheme: function() {

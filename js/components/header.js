@@ -15,6 +15,14 @@ NEXORA.Header = {
         if (e.key === 'Escape') { search.value = ''; search.blur(); }
       });
     }
+
+    var notifBtn = document.getElementById('notifToggle');
+    if (notifBtn && !notifBtn._bound) {
+      notifBtn._bound = true;
+      notifBtn.addEventListener('click', function() {
+        if (typeof toggleNotifications === 'function') toggleNotifications();
+      });
+    }
   },
 
   setTitle: function(title) {
