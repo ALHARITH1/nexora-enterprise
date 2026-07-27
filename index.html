@@ -579,6 +579,7 @@
         <button class="nav-btn" onclick="showView('costs')"><i class="ti ti-coin"></i> التكاليف</button>
         <button class="nav-btn" onclick="showView('reports')"><i class="ti ti-chart-bar"></i> التقارير</button>
         <button class="nav-btn" onclick="showView('employees')"><i class="ti ti-users"></i> الموظفون</button>
+        <button class="nav-btn" onclick="showView('processes')"><i class="ti ti-engineering"></i> العمليات</button>
         <button class="nav-btn" onclick="showView('admin')" id="adminNavBtn" style="display:none;"><i class="ti ti-settings"></i> الإدارة</button>
         <button class="nav-btn" onclick="showView('owner')" id="ownerNavBtn" style="display:none;"><i class="ti ti-crown"></i> لوحة المالك</button>
     </div>
@@ -612,6 +613,12 @@
 
     <!-- ===== OWNER DASHBOARD ===== -->
     <div id="view-owner" class="section"><div id="ownerContent"></div></div>
+
+    <!-- ===== PROCESSES (PMBOK) ===== -->
+    <div id="view-processes" class="section"><div id="processesContent"></div></div>
+
+    <!-- ===== PROCESS DETAIL ===== -->
+    <div id="view-processDetail" class="section"><div id="processDetailContent"></div></div>
 
     <!-- ===== TASK MODAL ===== -->
     <div class="modal-overlay" id="taskModal"><div class="modal" id="taskModalBody"></div></div>
@@ -681,8 +688,8 @@ window.addEventListener('unhandledrejection', function(e) {
 });
 // ===================== INDEXED DB LAYER =====================
 const DB_STORE = 'tibrflow';
-const DB_VER = 2;
-const DB_TABLES = ['companies','employees','projects','items','tasks','assignments','dailylogs','approvals','costs'];
+const DB_VER = 3;
+const DB_TABLES = ['companies','employees','projects','items','tasks','assignments','dailylogs','approvals','costs','processes','process_logs'];
 let __dbReady = false;
 let __dbQueue = [];
 
@@ -759,6 +766,8 @@ const DB = {
     dailylogs: [],
     approvals: [],
     costs: [],
+    processes: [],
+    process_logs: [],
     _ready: false,
     save(){
       this._saveToDB();
@@ -1038,7 +1047,7 @@ function showView(v){
     document.querySelectorAll('.nav-btn').forEach(x=>x.classList.remove('active'));
     const el = document.getElementById('view-'+v);
     if(el) el.classList.add('active');
-    const map={dashboard:'لوحة',projects:'المشاريع',approvals:'الاعتماد',costs:'التكاليف',reports:'التقارير',employees:'الموظفون',admin:'الإدارة',owner:'المالك'};
+    const map={dashboard:'لوحة',projects:'المشاريع',approvals:'الاعتماد',costs:'التكاليف',reports:'التقارير',employees:'الموظفون',processes:'العمليات',processDetail:'العمليات',admin:'الإدارة',owner:'المالك'};
     document.querySelectorAll('.nav-btn').forEach(b=>{if(b.textContent.includes(map[v]||''))b.classList.add('active')});
     if(v==='dashboard')renderDashboard();
     if(v==='projects')renderProjects();
@@ -1046,6 +1055,8 @@ function showView(v){
     if(v==='costs')renderCosts();
     if(v==='reports')renderReports();
     if(v==='employees')renderEmployeesView();
+    if(v==='processes')renderProcesses();
+    if(v==='processDetail' && typeof openProcessDetail==='function' && curProcessId){} 
     if(v==='admin')renderAdmin();
     if(v==='owner')renderOwnerDashboard();
 }
@@ -2512,7 +2523,420 @@ if(typeof showLanding === 'function'){
   };
 }
 
-// ===================== INIT =====================
+// ===================== PMBOK PROCESS ENGINE =====================
+const PMBOK_CATALOG = [
+  // ═══════════ مجموعة البدء (2 عملية) ═══════════
+  {id:'P1',name:'إصدار ميثاق المشروع',group:'بدء',groupEn:'Initiating',tier:2,icon:'ti ti-file-text',
+   desc:'توثيق الغرض من المشروع ومتطلباته الأساسية وأصحاب المصلحة الرئيسيين في وثيقة رسمية.',
+   inputs:['عقد الشركة','محضر الاجتماع الأولي','بيانات العميل'],
+   outputs:['ميثاق المشروع (Project Charter)','قائمة أصحاب المصلحة الأولية'],
+   construction:'توثيق نطاق العمل الإنشائي والمواصفات الفنية والجدول الزمني التفصيلي للمقاول.'},
+  {id:'P2',name:'تحديد أصحاب المصلحة',group:'بدء',groupEn:'Initiating',tier:2,icon:'ti ti-users',
+   desc:'تحديد جميع الأشخاص والجهات المتأثرة بالمشروع وتحليل تأثيرهم ومصالحهم.',
+   inputs:['ميثاق المشروع','عقد الشركة'],
+   outputs:['سجل أصحاب المصلحة','مصفوفة الصلاحيات'],
+   construction:'تحديد المالك والمستخدم والمهندسين الاستشاريين والجهات الحكومية والموردين الرئيسيين.'},
+  // ═══════════ مجموعة التخطيط (24 عملية) ═══════════
+  {id:'P3',name:'وضع خطة إدارة النطاق',group:'تخطيط',groupEn:'Planning',tier:2,icon:'ti ti-layout-list',
+   desc:'تعريف 모든 العمل المطلوب وإدارة التأكيد والتحكم في نطاق المشروع.',
+   inputs:['ميثاق المشروع','سجل أصحاب المصلحة'],
+   outputs:['وثيقة نطاق المشروع','هيكل تفكيك العمل (WBS)'],
+   construction:'تحديد جميع البنود الإنشائية وال的工作 المرتبطة بها وتفكيك المشروع إلى مراحل وبنود واضحة.'},
+  {id:'P4',name:'جمع المتطلبات',group:'تخطيط',groupEn:'Planning',tier:2,icon:'ti ti-list-check',
+   desc:'تحديد وتوثيق احتياجات أصحاب المصلحة لتلبية أهداف المشروع.',
+   inputs:['سجل أصحاب المصلحة','ميثاق المشروع'],
+   outputs:['وثيقة المتطلبات','سجل تتبع المتطلبات'],
+   construction:'جمع المواصفات الفنية والمواصفات الإنشائية ومتطلبات الجودة من العميل والاستشاري.'},
+  {id:'P5',name:'وضع خطة إدارة النطاق',group:'تخطيط',groupEn:'Planning',tier:1,icon:'ti ti-chart-dots',
+   desc:'إعداد خطة مفصلة لكيفية تنفيذ أنشطة نطاق المشروع والتحقق منه.',
+   inputs:['وثيقة النطاق','WBS'],
+   outputs:['خطة إدارة النطاق الفرعية'],
+   construction:'خطة تنفيذ البنود الإنشائية مع الجداول الزمنية لكل بند ومؤشرات الأداء.'},
+  {id:'P6',name:'تحديد الأنشطة',group:'تخطيط',groupEn:'Planning',tier:1,icon:'ti ti-list-details',
+   desc:'تحديد الأنشطة المطلوب تنفيذها لإنجاز عمل المشروع.',
+   inputs:['WBS','وثائق النطاق'],
+   outputs:['قائمة الأنشطة','سجل الاعتماد'],
+   construction:'تفصيل كل بند إلى أنشطة: تنظيف الموقع، تركيب القوالب، صب الخرسانة، التسليح، الخرسانة.'},
+  {id:'P7',name:'ترتيب الأنشطة',group:'تخطيط',groupEn:'Planning',tier:1,icon:'ti ti-arrows-sort',
+   desc:'تحديد التبعيات والعلاقات بين أنشطة المشروع.',
+   inputs:['قائمة الأنشطة','بيانات الموارد'],
+   outputs:['مخطط الشبكة المنطقية'],
+   construction:'تحديد الترتيب: الأساسات ← هيكل ← كهرباء ← سباكة ← تشطيبات.'},
+  {id:'P8',name:'تقدير موارد الأنشطة',group:'تخطيط',groupEn:'Planning',tier:1,icon:'ti ti-users-group',
+   desc:'تحديد نوعي الكمية من الموارد المطلوبة لكل نشاط.',
+   inputs:['قائمة الأنشطة','بيانات الموارد'],
+   outputs:['تقديرات الموارد'],
+   construction:'حساب عدد العمال (حدادة، نجارة، سباكة) والمعدات (رافعة، خلابة) لكل بند.'},
+  {id:'P9',name:'تقدير مدد الأنشطة',group:'تخطيط',groupEn:'Planning',tier:1,icon:'ti ti-clock',
+   desc:'تقدير عدد فترات العمل المطلوبة لإتمام كل نشاط.',
+   inputs:['قائمة الأنشطة','تقديرات الموارد'],
+   outputs:['تقديرات المدد'],
+   construction:'تقدير مدة كل مرحلة: صب الأساسات 15 يوم، الهيكل 45 يوم... الخ.'},
+  {id:'P10',name:'وضع الجدول الزمني',group:'تخطيط',groupEn:'Planning',tier:2,icon:'ti ti-calendar',
+   desc:'تحليل ترتيب الأنشطة ومدداتها لإنشاء جدول زمني واقعي.',
+   inputs:['مخطط الشبكة','تقديرات المدد'],
+   outputs:['الجدول الزمني للمشروع','مخطط غانت'],
+   construction:'إنشاء جدول غانت بالمشروع مع الميلستونات الرئيسية والمواعيد النهائية لكل بند.'},
+  {id:'P11',name:'تقدير التكاليف',group:'تخطيط',groupEn:'Planning',tier:1,icon:'ti ti-calculator',
+   desc:'تقدير التكاليف المالية لإنجاز أنشطة المشروع.',
+   inputs:['تقديرات الموارد','تقديرات المدد','أسعار السوق'],
+   outputs:['تقديرات التكاليف','aket التكلفة'],
+   construction:'حساب تكلفة المواد (أسمنت، حديد، رمل) + العمالة + المعدات + الإشراف لكل بند.'},
+  {id:'P12',name:'وضع خطة إدارة التكاليف',group:'تخطيط',groupEn:'Planning',tier:2,icon:'ti ti-wallet',
+   desc:'تحديد كيفية رصد ومراقبة وتحكم تكاليف المشروع.',
+   inputs:['تقديرات التكاليف','ميثاق المشروع'],
+   outputs:['خطة إدارة التكاليف','هيكل تكلفة المشروع'],
+   construction:'تحديد منهجية حساب المستخلصات الشهرية ونسبة الاحتفاظ والاستقطاعات.'},
+  {id:'P13',name:'وضع خطة إدارة الجودة',group:'تخطيط',groupEn:'Planning',tier:2,icon:'ti ti-star',
+   desc:'تحديد معايير الجودة وكيفية تحقيقها والتحقق منها.',
+   inputs:['ميثاق المشروع','وثيقة النطاق'],
+   outputs:['خطة إدارة الجودة','معايير الجودة'],
+   construction:'تحديد نسب الخلطات، مقاومة الخرسانة، جودة التسليح، معايير التشطيبات.'},
+  {id:'P14',name:'وضع خطة الموارد البشرية',group:'تخطيط',groupEn:'Planning',tier:1,icon:'ti ti-user',
+   desc:'تحديد الأدوار والمسؤوليات والكفاءات المطلوبة للproject.',
+   inputs:['ميثاق المشروع','تقديرات الموارد'],
+   outputs:['خطة الموارد البشرية','جدول التوظيف'],
+   construction:'تحديد عدد المهندسين والفنيين والعمال ومدير الموقع لكل مرحلة إنشائية.'},
+  {id:'P15',name:'وضع خطة الاتصالات',group:'تخطيط',groupEn:'Planning',tier:2,icon:'ti ti-mail',
+   desc:'تحديد من يحتاج إلى معلومات ومتى وكيف يتم توصيلها.',
+   inputs:['سجل أصحاب المصلحة','ميثاق المشروع'],
+   outputs:['خطة الاتصالات'],
+   construction:'تحديد تقارير أسبوعية للمالك، اجتماعات يومية مع الاستشاري، تحديثات شهرية.'},
+  {id:'P16',name:'وضع خطة إدارة المخاطر',group:'تخطيط',groupEn:'Planning',tier:2,icon:'ti ti-alert-triangle',
+   desc:'تحديد كيفية التعامل مع المخاطر المحتملة على المشروع.',
+   inputs:['ميثاق المشروع','سجل أصحاب المصلحة'],
+   outputs:['خطة إدارة المخاطر','سجل المخاطر'],
+   construction:'مخاطر: تأخر التصاريح، ارتفاع أسعار المواد، ظروف جوية، تأخر الدفعات.'},
+  {id:'P17',name:'تحديد المخاطر',group:'تخطيط',groupEn:'Planning',tier:2,icon:'ti ti-search',
+   desc:'تحديد المخاطر المحتملة وتوثيق خصائصها.',
+   inputs:['خطة إدارة المخاطر','بيانات مشابهة'],
+   outputs:['سجل المخاطر'],
+   construction:'كل مخاطرة: الوصف، الاحتمالية، التأثير، التصنيف (عالي/متوسط/منخفض).'},
+  {id:'P18',name:'تحليل المخاطر النوعية',group:'تخطيط',groupEn:'Planning',tier:2,icon:'ti ti-chart-bar',
+   desc:'ترتيب أولوية المخاطر حسب تأثيرها واحتمالية وقوعها.',
+   inputs:['سجل المخاطر'],
+   outputs:['تحديث سجل المخاطر (أولويات)'],
+   construction:'ترتيب المخاطر: عالية (تأخر التصاريح) ← متوسطة (ارتفاع الأسعار) ← منخفضة (عطل معدات).'},
+  {id:'P19',name:'تحليل المخاطر الكمية',group:'تخطيط',groupEn:'Planning',tier:2,icon:'ti ti-chart-dots-3',
+   desc:'تحليل الأثر المالي لكل خطر على أهداف المشروع.',
+   inputs:['سجل المخاطر (مرتبة)'],
+   outputs:['تحليل التأثير الكمي'],
+   construction:'حساب التكلفة المحتملة لكل خطر: تأخر 30 يوم = خسارة 500,000 ريال.'},
+  {id:'P20',name:'وضع خطة الاستجابة للمخاطر',group:'规划设计',groupEn:'Planning',tier:2,icon:'ti ti-shield',
+   desc:'تحديد خيارات التعامل مع المخاطر (تجنب، نقل، تخفيف، قبول).',
+   inputs:['سجل المخاطر (محلل)'],
+   outputs:['خطة الاستجابة للمخاطر'],
+   construction:'استراتيجيات: عقود ثابتة (نقل)، مخزون مواد إضافية (تخفيف)، جدول احتياطي (تجنب).'},
+  {id:'P21',name:'وضع خطة مشتريات',group:'تخطيط',groupEn:'Planning',tier:1,icon:'ti ti-shopping-cart',
+   desc:'تحديد المشتريات الخارجية المطلوبة وكيفية الحصول عليها.',
+   inputs:['قائمة الأنشطة','تقديرات التكاليف'],
+   outputs:['خطة المشتريات','بيانات المتطلبات'],
+   construction:'جدول مشتريات: الأسمنت من X، الحديد من Y، الألواح من Z — مع الأسعار والمواعيد.'},
+  {id:'P22',name:'تحديد مقاييس الأداء المدمجة',group:'تخطيط',groupEn:'Planning',tier:2,icon:'ti ti-gauge',
+   desc:'تحديد مقاييس الأداء الرئيسية لكل نشاط في المشروع.',
+   inputs:['خطة إدارة النطاق','خطة إدارة التكاليف'],
+   outputs:['مقاييس الأداء المدمجة'],
+   construction:'KPIs: نسبة الإنجاز الشهرية، تكلفة الوحدة، معدل التأخر، مؤشر الجودة.'},
+  {id:'P23',name:'وضع خطة إدارة التغييرات',group:'تخطيط',groupEn:'Planning',tier:2,icon:'ti ti-git-branch',
+   desc:'تحديد كيفية إدارة التغييرات على نطاق المشروع وتوثيقها.',
+   inputs:['ميثاق المشروع','خطة إدارة النطاق'],
+   outputs:['خطة إدارة التغييرات'],
+   construction:'إجراءات التعامل مع طلبات التعديل من المالك مع التأثير على التكلفة والجدول.'},
+  {id:'P24',name:'وضع خطة إغلاق المشروع',group:'تخطيط',groupEn:'Planning',tier:2,icon:'ti ti-package',
+   desc:'تحديد الأنشطة والمعايير اللازمة لإغلاق المشروع أو مرحلة منه.',
+   inputs:['ميثاق المشروع','عقد الشركة'],
+   outputs:['خطة الإغلاق'],
+   construction:'قائمة التسليم: الشهادات الفنية، الضمانات، المخططات التنفيذية، التراخيص.'},
+  {id:'P25',name:'جمع بيانات الأداء الفعلي',group:'تخطيط',groupEn:'Planning',tier:1,icon:'ti ti-database',
+   desc:'جمع وتوثيق بيانات أداء المشروع الفعلية.',
+   inputs:['سجلات العمل اليومية','تقارير الموقع'],
+   outputs:['بيانات الأداء الفعلي'],
+   construction:'تسجيل ساعات العمل اليومية والمواد المستخدمة والإنتاجية الفعلية لكل فريق.'},
+  {id:'P26',name:'وضع خطة إدارة المعرفة',group:'تخطيط',groupEn:'Planning',tier:2,icon:'ti ti-brain',
+   desc:'تحديد كيفية اكتساب ومشاركة واستخدام معرفة المشروع.',
+   inputs:['دروس مستفادة سابقة','بيانات مماثلة'],
+   outputs:['خطة إدارة المعرفة'],
+   construction:'توثيق الدروس المستفادة من مشاريع سابقة: مشاكل الجودة، التأخيرات، الحلول.'},
+  // ═══════════ مجموعة التنفيذ (8 عمليات) ═══════════
+  {id:'P27',name:'إدارة معرفة المشروع',group:'تنفيذ',groupEn:'Executing',tier:2,icon:'ti ti-bulb',
+   desc:'مشاركة المعلومات الدورية وتحديث المعرفة مع فريق المشروع.',
+   inputs:['خطة إدارة المعرفة'],
+   outputs:['تقارير المعرفة'],
+   construction:'اجتماعات التنسيق اليومية، عروض الدروس المستفادة، تحديثات الإجراءات.'},
+  {id:'P28',name:'إدارة فريق المشروع',group:'تنفيذ',groupEn:'Executing',tier:1,icon:'ti ti-users-group',
+   desc:'تحسين أداء الفريق وإدارة التحديات والصراعات.',
+   inputs:['خطة الموارد البشرية','تقييمات الأداء'],
+   outputs:['تحديثات الموارد البشرية'],
+   construction:'تنسيق فرق العمل: فرق الأساسات، فرق الهيكل، فرق التشطيبات — مع متابعة الأداء.'},
+  {id:'P29',name:'إدارة الاتصالات',group:'تنفيذ',groupEn:'Executing',tier:1,icon:'ti ti-message',
+   desc:'مشاركة المعلومات الفعلية مع أصحاب المصلحة المعنيين.',
+   inputs:['خطة الاتصالات'],
+   outputs:['تقارير دورية','محاضر اجتماعات'],
+   construction:'تقارير أسبوعية للمالك، محاضر يومية للموقع، إشعارات رسمية بالتغييرات.'},
+  {id:'P30',name:'إدارة المشتريات',group:'تنفيذ',groupEn:'Executing',tier:1,icon:'ti ti-truck',
+   desc:'تنفيذ عملية الشراء وإدارة العقود مع الموردين.',
+   inputs:['خطة المشتريات','طلبات الشراء'],
+   outputs:['عقود الشراء','أوامر التوريد'],
+   construction:'مشتريات الأسمنت والخشب والحديد والتشطيبات — متابعة التوريد والجودة.'},
+  {id:'P31',name:'تنفيذ مراحل العمل',group:'تنفيذ',groupEn:'Executing',tier:1,icon:'ti ti-hammer',
+   desc:'القيام بالعمل المحدد في خطة النطاق لإنتاج نواتج المشروع.',
+   inputs:['خطة إدارة النطاق','جدول الأنشطة'],
+   outputs:['نواتج العمل الفعلية'],
+   construction:'التنفيذ الفعلي: حفر الأساسات، تركيب القوالب، صب الخرسانة، التسليح، الخرسانة.'},
+  {id:'P32',name:'إدارة جودة المشروع',group:'تنفيذ',groupEn:'Executing',tier:1,icon:'ti ti-checklist',
+   desc:'ترجمة معايير الجودة إلى أنشطة فعالة وضمان الالتزام بها.',
+   inputs:['خطة إدارة الجودة','معايير الجودة'],
+   outputs:['تقارير الجودة','نتائج الفحوصات'],
+   construction:'فحص جودة الخرسانة (Slump Test)، فحص التسليح، جودة التشطيبات، الفحوصات المخبرية.'},
+  {id:'P33',name:'اكتساب الفريق',group:'تنفيذ',groupEn:'Executing',tier:2,icon:'ti ti-user-plus',
+   desc:'تعيين الأفراد المطلوبين للعمل على المشروع.',
+   inputs:['خطة الموارد البشرية'],
+   outputs:['الفريق المعين'],
+   construction:'توظيف عمال إضافيين حسب المرحلة: عمال أساسات، عمال هيكل، فني كهرباء، سباكين.'},
+  {id:'P34',name:'تطوير الفريق',group:'تنفيذ',groupEn:'Executing',tier:2,icon:'ti ti-school',
+   desc:'تحسين كفاءة الفريق ومهاراتهم أثناء العمل.',
+   inputs:['تقييمات الأداء','خطة التدريب'],
+   outputs:['تقارير التدريب','تحسين الأداء'],
+   construction:'تدريب العمال على إجراءات السلامة، استخدام المعدات الحديثة، معايير الجودة الجديدة.'},
+  // ═══════════ مجموعة المتابعة والتحكم (12 عملية) ═══════════
+  {id:'P35',name:'مراقبة وتحكم العمل',group:'متابعة وتحكم',groupEn:'Monitoring',tier:1,icon:'ti ti-eye',
+   desc:'مقارنة التقدم الفعلي بالمخطط واتخاذ إجراءات التصحيح.',
+   inputs:['بيانات الأداء الفعلي','المخطط الزمني'],
+   outputs:['تقارير الانحرافات','إجراءات التصحيح'],
+   construction:'مقارنة نسبة الإنجاز الفعلية مع المخطط — تأخر؟ تجاوز ميزانية؟ إجراء تصحيحي.'},
+  {id:'P36',name:'التحكم في التكاليف',group:'متابعة وتحكم',groupEn:'Monitoring',tier:1,icon:'ti ti-coins',
+   desc:'رصد التكاليف الفعلية ومقارنتها بالمخططة والتحكم في الانحرافات.',
+   inputs:['بيانات التكاليف الفعلية','تقديرات التكاليف'],
+   outputs:['تقارير التكاليف','تحليل الارتياد'],
+   construction:'متابعة مصروفات المواد والعمالة والمعدات مقارنة بالميزانية المخططة لكل بند.'},
+  {id:'P37',name:'التحكم في الجدول الزمني',group:'متابعة وتحكم',groupEn:'Monitoring',tier:1,icon:'ti ti-clock-hour-4',
+   desc:'مقارنة التقدم الزمني الفعلي بالمخطط واتخاذ إجراءات التصحيح.',
+   inputs:['بيانات التقدم الفعلي','الجدول الزمني'],
+   outputs:['تقارير الجدول','إجراءات التسريع'],
+   construction:'متابعة: هل الأساسات انتهت في الوقت؟ هل الهيكل متأخر؟ خطة تسريع إن لزم.'},
+  {id:'P38',name:'التحكم في الجودة',group:'متابعة وتحكم',groupEn:'Monitoring',tier:1,icon:'ti ti-star',
+   desc:'فحص نواتج العمل والتحقق من مطابقتها لمعايير الجودة.',
+   inputs:['معايير الجودة','نواتج العمل الفعلية'],
+   outputs:['نتائج الفحص','تقارير عدم المطابقة'],
+   construction:'فحص عينات الخرسانة، فحص التسليح، اختبار التوصيلات الكهربائية، جودة الدهانات.'},
+  {id:'P39',name:'التحكم في النطاق',group:'متابعة وتحكم',groupEn:'Monitoring',tier:2,icon:'ti ti-layout-list',
+   desc:'مراقبة نطاق المشروع والتحقق من عدم وجود انحرافات.',
+   inputs:['بيانات الأداء الفعلي','WBS'],
+   outputs:['تقارير النطاق','طلبات تغيير النطاق'],
+   construction:'التأكد من أن العمل المنفذ يطابق نطاق العقد — لا زيادة ولا نقصان بدون توثيق.'},
+  {id:'P40',name:'مراقبة المخاطر',group:'متابعة وتحكم',groupEn:'Monitoring',tier:2,icon:'ti ti-alert-triangle',
+   desc:'مراقبة المخاطر المسجلة واكتشاف مخاطر جديدة.',
+   inputs:['سجل المخاطر','بيانات الأداء'],
+   outputs:['تحديث سجل المخاطر','تقرير المخاطر'],
+   construction:'متابعة مخاطر تأخر التصاريح، ارتفاع الأسعار، مشاكل الموقع الجيوتقنية.'},
+  {id:'P41',name:'التحكم في المشتريات',group:'متابعة وتحكم',groupEn:'Monitoring',tier:1,icon:'ti ti-receipt',
+   desc:'مراقبة أداء الموردين والتحقق من مطابقة التوريد للمعايير.',
+   inputs:['عقود الشراء','نواتج التوريد'],
+   outputs:['تقييمات الموردين','تقارير التوريد'],
+   construction:'متابعة جودة التوريد: هل الأسمنت وصل في الوقت؟ هل الجودة مطابقة للمواصفات؟'},
+  {id:'P42',name:'مراقبة أصحاب المصلحة',group:'متابعة وتحكم',groupEn:'Monitoring',tier:2,icon:'ti ti-users',
+   desc:'تتبع مدى مساهمة أصحاب المصلحة واستجابتهم.',
+   inputs:['سجل أصحاب المصلحة','خطة الاتصالات'],
+   outputs:['تحديثات سجل أصحاب المصلحة'],
+   construction:'متابعة رضا المالك، تفاعل الاستشاري، تجاوب الجهات الحكومية.'},
+  {id:'P43',name:'مراقبة وتقييم الأداء',group:'متابعة وتحكم',groupEn:'Monitoring',tier:2,icon:'ti ti-chart-bar',
+   desc:'تحليل وتقييم أداء المشروع و汇总 المؤشرات.',
+   inputs:['بيانات الأداء الفعلي','المقاييس المدمجة'],
+   outputs:['تقارير الأداء الشاملة'],
+   construction:'تقييم شامل: مؤشرات الأداء + التكلفة + الجدول + الجودة في تقرير واحد.'},
+  {id:'P44',name:'إدخال التغييرات',group:'متابعة وتحكم',groupEn:'Monitoring',tier:2,icon:'ti ti-git-branch',
+   desc:'معالجة طلبات التغيير الرسمية عبر لجنة التغيير.',
+   inputs:['طلبات التغيير','تحليل التأثير'],
+   outputs:['قرارات التغيير','تحديثات الوثائق'],
+   construction:'طلب تعديل من المالك → تحليل التأثير على التكلفة والجدول → قرار الاعتماد أو الرفض.'},
+  {id:'P45',name:'اعتماد المستخلصات',group:'متابعة وتحكم',groupEn:'Monitoring',tier:1,icon:'ti ti-file-invoice',
+   desc:'مراجعة واعتماد المستخلصات الدورية للمقاول.',
+   inputs:['المستخلص الشهري','الفواتير'],
+   outputs:['المستخلص المعتمد','أمر الدفع'],
+   construction:'مراجعة كميات العمل المنفذة → مطابقتها مع BOQ → إصدار المستخلص → اعتماد المالك.'},
+  {id:'P46',name:'حساب المستخلصات الشهرية',group:'متابعة وتحكم',groupEn:'Monitoring',tier:1,icon:'ti ti-calculator',
+   desc:'إعداد المستخلصات الشهرية بناءً على العمل المنفذ الفعلي.',
+   inputs:['بيانات العمل المنفذ','جدول الكميات (BOQ)'],
+   outputs:['المستخلص الشهري المُعد'],
+   construction:'حساب الكميات المنفذة هذا الشهر × أسعار BOQ = قيمة المستخلص + الاحتفاظ + الضرائب.'},
+  // ═══════════ مجموعة الإغلاق (3 عمليات) ═══════════
+  {id:'P47',name:'التسليم الابتدائي',group:'إغلاق',groupEn:'Closing',tier:2,icon:'ti ti-package',
+   desc:'تسليم النتاج الأولي وبدء فترة الضمان والصيانة.',
+   inputs:['نواتج العمل المكتملة','تقارير الجودة'],
+   outputs:['محضر التسليم الابتدائي','جدول الملاحظات'],
+   construction:'تسليم المشروع مع قائمة الملاحظات — بدء فترة الضمان (6-12 شهر) — متابعة الإصلاحات.'},
+  {id:'P48',name:'التسليم النهائي',group:'إغلاق',groupEn:'Closing',tier:2,icon:'ti ti-circle-check',
+   desc:'التحقق من إتمام جميع المتطلبات وإغلاق المشروع رسمياً.',
+   inputs:['التسليم الابتدائي','قائمة الملاحظات المكتملة'],
+   outputs:['محضر التسليم النهائي','شهادة الإتمام'],
+   construction:'إتمام جميع البنود → التأكد من إزالة المخزون → التراخيص النهائية → إغلاق العقد.'},
+  {id:'P49',name:'إغلاق العقود وإغلاق المشروع',group:'إغلاق',groupEn:'Closing',tier:2,icon:'ti ti-lock',
+   desc:'إنهاء جميع الالتزامات التعاقدية وأرشفة المشروع.',
+   outputs:['قائمة الإغلاق النهائية','الأرشيف'],
+   inputs:['التسليم النهائي','تسوية المالية'],
+   construction:'تسوية المدفوعات النهائية → استرداد الضمانات → إغلاق تراخيص الموقع → أرشفة.'}
+];
+const PMBOK_GROUPS = [
+  {id:'بدء',label:'بدء',labelEn:'Initiating',icon:'ti ti-rocket',color:'var(--AM)',count:2},
+  {id:'تخطيط',label:'التخطيط',labelEn:'Planning',icon:'ti ti-pencil',color:'var(--P)',count:24},
+  {id:'تنفيذ',label:'التنفيذ',labelEn:'Executing',icon:'ti ti-hammer',color:'var(--GR)',count:8},
+  {id:'متابعة وتحكم',label:'المتابعة والتحكم',labelEn:'Monitoring',icon:'ti ti-eye',color:'var(--G)',count:12},
+  {id:'إغلاق',label:'الإغلاق',labelEn:'Closing',icon:'ti ti-circle-check',color:'var(--RE)',count:3}
+];
+function getTier(){return (cu && cu.tier) || (cu && cu.is_owner && 2) || 2;}
+function getPMBOKProcesses(){
+  const tier = getTier();
+  return PMBOK_CATALOG.filter(p => tier >= p.tier);
+}
+function getProcessStatus(pid,projId){
+  const log = (DB.processes||[]).find(x=>x.process_id===pid && x.project_id===(projId||curProjId));
+  return log ? log.status : 'pending';
+}
+function setProcessStatus(pid,projId,status,note){
+  if(!projId) projId = curProjId;
+  let existing = (DB.processes||[]).find(x=>x.process_id===pid && x.project_id===projId);
+  if(existing){
+    existing.status = status;
+    existing.updated_at = new Date().toISOString();
+    if(note) existing.note = note;
+  } else {
+    if(!DB.processes) DB.processes = [];
+    DB.processes.push({id:gf(DB.processes),process_id:pid,project_id:projId,status:status,note:note||'',updated_at:new Date().toISOString()});
+  }
+  DB.save();
+  DB.process_logs.push({id:gf(DB.process_logs),process_id:pid,project_id:projId,status:status,note:note||'',by:cu.full_name,time:new Date().toISOString()});
+  DB.save();
+}
+function renderProcesses(){
+  const procs = getPMBOKProcesses();
+  const projId = curProjId || (DB.projects[0] ? DB.projects[0].id : null);
+  const tier = getTier();
+  let h = `<div class="card" style="border-right:5px solid var(--G);">
+    <div class="flex-between">
+      <div class="card-title" style="margin-bottom:0;"><i class="ti ti-engineering"></i> محرك إدارة العمليات — PMBOK (${procs.length} عملية)</div>
+      <span class="user-badge" style="background:var(--G);color:var(--TX);">الشريحة ${tier}: ${tier===1?'صغار المقاولين':'شركات المقاولات'}</span>
+    </div>
+    <div style="color:var(--TX2);font-size:13px;margin-top:8px;">إدارة مشاريع المقاولات بناءً على دليل PMBOK — مع التمييز حسب حجم المقاول</div>
+  </div>`;
+  // Project selector
+  h += `<div class="card"><div class="card-title"><i class="ti ti-folder-open"></i> اختر المشروع</div>
+    <select id="procProjectSel" onchange="curProjId=parseInt(this.value);renderProcesses();" style="max-width:400px;">
+      ${DB.projects.map(p=>`<option value="${p.id}" ${p.id===projId?'selected':''}>${p.name}</option>`).join('')}
+    </select></div>`;
+  if(!DB.projects.length){
+    h += `<div class="card"><div class="empty-state"><i class="ti ti-folder-open"></i>أنشئ مشروعاً أولاً لبدء إدارة العمليات</div></div>`;
+    document.getElementById('processesContent').innerHTML = h;
+    return;
+  }
+  // Stats
+  const completed = (DB.processes||[]).filter(x=>x.project_id===projId && x.status==='done').length;
+  const inProgress = (DB.processes||[]).filter(x=>x.project_id===projId && x.status==='in_progress').length;
+  const total = procs.length;
+  const pct = total ? Math.round(completed/total*100) : 0;
+  h += `<div class="stats">
+    <div class="stat-card blue"><div class="num">${total}</div><div class="lbl">إجمالي العمليات</div></div>
+    <div class="stat-card green"><div class="num">${completed}</div><div class="lbl">مكتملة</div></div>
+    <div class="stat-card gold"><div class="num">${inProgress}</div><div class="lbl">قيد التنفيذ</div></div>
+    <div class="stat-card" style="border-left:4px solid ${pct>=75?'var(--GR)':pct>=40?'var(--G)':'var(--P)'};"><div class="num" style="color:${pct>=75?'var(--GR)':pct>=40?'var(--G)':'var(--P)'};">${pct}%</div><div class="lbl">نسبة الإنجاز الكلية</div></div>
+  </div>`;
+  // Overall progress bar
+  h += `<div class="card"><div class="progress-bar" style="height:12px;"><div class="progress-fill blue" style="width:${pct}%"></div></div></div>`;
+  // Group tabs
+  h += `<div class="tab-bar" id="procGroupTabs">`;
+  h += `<button class="tab-btn active" onclick="filterProcGroup('all',this)">الكل (${total})</button>`;
+  PMBOK_GROUPS.forEach(g => {
+    const gProcs = procs.filter(p=>p.group===g.id);
+    if(gProcs.length) h += `<button class="tab-btn" onclick="filterProcGroup('${g.id}',this)"><i class="${g.icon}" style="color:${g.color};"></i> ${g.label} (${gProcs.length})</button>`;
+  });
+  h += `</div>`;
+  // Process list by group
+  PMBOK_GROUPS.forEach(g => {
+    const gProcs = procs.filter(p=>p.group===g.id);
+    if(!gProcs.length) return;
+    const gDone = gProcs.filter(p=>getProcessStatus(p.id,projId)==='done').length;
+    const gProg = gProcs.length ? Math.round(gDone/gProcs.length*100) : 0;
+    h += `<div class="card proc-group-card" data-group="${g.id}">
+      <div class="flex-between" style="margin-bottom:12px;">
+        <div class="card-title" style="margin-bottom:0;"><i class="${g.icon}" style="color:${g.color};"></i> ${g.label} <span style="font-weight:400;color:var(--TX2);font-size:var(--fs-sm);">(${g.labelEn})</span></div>
+        <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:13px;color:var(--TX2);">${gDone}/${gProcs.length}</span>
+          <div style="width:80px;"><div class="progress-bar" style="height:6px;"><div class="progress-fill ${gProg>=75?'green':gProg>=40?'gold':'blue'}" style="width:${gProg}%"></div></div></div></div>
+      </div>`;
+    gProcs.forEach(p => {
+      const st = getProcessStatus(p.id,projId);
+      const stBadge = st==='done'?'badge-done':st==='in_progress'?'badge-progress':'badge-todo';
+      const stText = st==='done'?'✓ مكتملة':st==='in_progress'?'◉ قيد التنفيذ':'○ معلقة';
+      h += `<div class="list-item" style="cursor:pointer;border-right:3px solid ${g.color};" onclick="openProcessDetail('${p.id}')">
+        <div class="info">
+          <strong style="display:flex;align-items:center;gap:6px;"><span style="background:var(--PL);color:var(--P);border-radius:6px;padding:1px 6px;font-size:11px;font-weight:700;">${p.id}</span> ${p.name}</strong>
+          <small style="font-size:12px;">${p.desc.substring(0,80)}${p.desc.length>80?'...':''}</small>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="badge ${stBadge}">${stText}</span>
+          <i class="ti ti-chevron-left" style="color:var(--TX3);"></i>
+        </div>
+      </div>`;
+    });
+    h += `</div>`;
+  });
+  document.getElementById('processesContent').innerHTML = h;
+}
+function filterProcGroup(group,btn){
+  document.querySelectorAll('#procGroupTabs .tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.proc-group-card').forEach(c=>{
+    c.style.display = (group==='all' || c.dataset.group===group) ? 'block' : 'none';
+  });
+}
+function openProcessDetail(pid){
+  const p = PMBOK_CATALOG.find(x=>x.id===pid);
+  if(!p) return;
+  curProcessId = pid;
+  showView('processDetail');
+  const projId = curProjId || (DB.projects[0] ? DB.projects[0].id : null);
+  const status = getProcessStatus(pid,projId);
+  const logs = (DB.process_logs||[]).filter(x=>x.process_id===pid && x.project_id===(projId||0)).slice(-10).reverse();
+  const group = PMBOK_GROUPS.find(g=>g.id===p.group);
+  let h = `<div class="back-link" onclick="showView('processes')"><i class="ti ti-arrow-right"></i> رجوع لمحرك العمليات</div>`;
+  h += `<div class="card" style="border-right:5px solid ${group?group.color:'var(--P)'};">
+    <div class="flex-between">
+      <div><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+        <span style="background:var(--PL);color:var(--P);border-radius:8px;padding:2px 8px;font-size:12px;font-weight:700;">${p.id}</span>
+        <h2 style="color:var(--P);margin:0;">${p.name}</h2>
+      </div>
+      <div style="font-size:13px;color:var(--TX2);">${group?group.label+' ('+group.labelEn+')':''} — الشريحة ${p.tier}: ${p.tier===1?'صغار المقاولين':'شركات المقاولات الكبيرة'}</div></div>
+      <span class="badge ${status==='done'?'badge-done':status==='in_progress'?'badge-progress':'badge-todo'}" style="font-size:var(--fs-sm);">${status==='done'?'✓ مكتملة':status==='in_progress'?'◉ قيد التنفيذ':'○ معلقة'}</span>
+    </div>
+  </div>`;
+  h += `<div class="card"><div class="card-title"><i class="ti ti-info-circle"></i> وصف العملية</div><p style="color:var(--TX2);font-size:var(--fs-md);line-height:1.8;">${p.desc}</p></div>`;
+  h += `<div class="card"><div class="card-title"><i class="ti ti-building-construction"></i> تطبيق في المقاولات</div><p style="color:var(--TX2);font-size:var(--fs-md);line-height:1.8;">${p.construction}</p></div>`;
+  h += `<div class="grid-2">
+    <div class="card"><div class="card-title" style="font-size:var(--fs-md);"><i class="ti ti-upload" style="color:var(--PS);"></i> المدخلات</div>
+      <ul style="list-style:none;padding:0;">${p.inputs.map(i=>`<li style="padding:4px 0;border-bottom:1px solid var(--BD);font-size:13px;">📌 ${i}</li>`).join('')}</ul></div>
+    <div class="card"><div class="card-title" style="font-size:var(--fs-md);"><i class="ti ti-download" style="color:var(--GR);"></i> المخرجات</div>
+      <ul style="list-style:none;padding:0;">${p.outputs.map(o=>`<li style="padding:4px 0;border-bottom:1px solid var(--BD);font-size:13px;">✅ ${o}</li>`).join('')}</ul></div>
+  </div>`;
+  // Status controls
+  h += `<div class="card"><div class="card-title"><i class="ti ti-player-play"></i> تحديث الحالة</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn ${status==='pending'?'btn-warning':'btn-o'}" onclick="setProcessStatus('${pid}',${projId},'pending','');openProcessDetail('${pid}')"><i class="ti ti-clock"></i> معلقة</button>
+      <button class="btn ${status==='in_progress'?'btn-primary':'btn-o'}" onclick="setProcessStatus('${pid}',${projId},'in_progress','');openProcessDetail('${pid}')"><i class="ti ti-player-play"></i> قيد التنفيذ</button>
+      <button class="btn ${status==='done'?'btn-success':'btn-o'}" onclick="setProcessStatus('${pid}',${projId},'done','');openProcessDetail('${pid}')"><i class="ti ti-check"></i> مكتملة</button>
+    </div></div>`;
+  // Logs
+  h += `<div class="card"><div class="card-title"><i class="ti ti-history"></i> سجل التغييرات</div>`;
+  if(!logs.length) h += `<div class="empty-state" style="padding:16px;"><i class="ti ti-history"></i>لا يوجد سجل بعد</div>`;
+  else h += logs.map(l=>{
+    const stIcon = l.status==='done'?'✅':l.status==='in_progress'?'🔄':'⏳';
+    return `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--BD);font-size:13px;">
+      <span>${stIcon} ${l.status==='done'?'مكتملة':l.status==='in_progress'?'قيد التنفيذ':'معلقة'} ${l.note?'— '+l.note:''}</span>
+      <span style="color:var(--TX3);">${l.by} — ${new Date(l.time).toLocaleDateString('ar-SA')}</span>
+    </div>`;
+  }).join('');
+  h += `</div>`;
+  document.getElementById('processDetailContent').innerHTML = h;
+}
+let curProcessId = null;
+
 restoreTheme();
 registerSW();
 try { init(); } catch(e) { showLanding(); }
