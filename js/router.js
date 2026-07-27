@@ -24,7 +24,19 @@ NEXORA.Router = {
     changes: { section: 'view-changes', title: 'طلبات التغيير', render: 'renderChangeRequests' }
   },
 
+  _navigating: false,
+
   navigate: function(view) {
+    if (this._navigating) return;
+    this._navigating = true;
+    try {
+      this._doNavigate(view);
+    } finally {
+      this._navigating = false;
+    }
+  },
+
+  _doNavigate: function(view) {
     if (view === 'landing') {
       document.body.classList.remove('authed');
       var app = document.getElementById('appShell');
@@ -37,19 +49,26 @@ NEXORA.Router = {
       return;
     }
     if (view === 'login') {
-      document.getElementById('landingPage').classList.add('hidden');
-      document.getElementById('authPage').classList.remove('hidden');
+      var lp = document.getElementById('landingPage');
+      if (lp) lp.classList.add('hidden');
+      var ap = document.getElementById('authPage');
+      if (ap) ap.classList.remove('hidden');
+      var as = document.getElementById('appShell');
+      if (as) as.classList.add('hidden');
       window.location.hash = 'login';
       return;
     }
     if (!NEXORA.Auth.isAuthenticated()) {
-      this.navigate('login');
+      this._doNavigate('login');
       return;
     }
 
-    document.getElementById('landingPage').classList.add('hidden');
-    document.getElementById('authPage').classList.add('hidden');
-    document.getElementById('appShell').classList.remove('hidden');
+    var landingEl = document.getElementById('landingPage');
+    if (landingEl) landingEl.classList.add('hidden');
+    var authEl = document.getElementById('authPage');
+    if (authEl) authEl.classList.add('hidden');
+    var shellEl = document.getElementById('appShell');
+    if (shellEl) shellEl.classList.remove('hidden');
     document.body.classList.add('authed');
 
     var route = this._map[view];
@@ -62,7 +81,7 @@ NEXORA.Router = {
     var titleEl = document.getElementById('headerTitle');
     if (titleEl) titleEl.textContent = route.title;
 
-    if (typeof NEXORA.Sidebar !== 'undefined') NEXORA.Sidebar.setActive(view);
+    if (typeof NEXORA.Sidebar !== 'undefined' && NEXORA.Sidebar.setActive) NEXORA.Sidebar.setActive(view);
 
     if (typeof window[route.render] === 'function') {
       if (route.render === 'openProcessDetail' && NEXORA.App.curProcessId) {
@@ -72,23 +91,50 @@ NEXORA.Router = {
       }
     }
 
-    window.location.hash = view;
+    var newHash = '#' + view;
+    if (window.location.hash !== newHash) {
+      window.location.hash = view;
+    }
   },
 
   getCurrent: function() {
     var h = window.location.hash.replace('#', '').split('/')[0];
-    return h || 'dashboard';
+    return h || '';
   },
 
   init: function() {
     var self = this;
     window.addEventListener('hashchange', function() {
+      if (self._navigating) return;
       var v = self.getCurrent();
+      if (!v) {
+        if (NEXORA.Auth.isAuthenticated()) {
+          self.navigate('dashboard');
+        } else {
+          self.navigate('landing');
+        }
+        return;
+      }
+      if (v === 'login') {
+        self.navigate('login');
+        return;
+      }
       if (NEXORA.Auth.isAuthenticated()) {
         self.navigate(v);
       }
     });
+
     var initial = self.getCurrent();
-    self.navigate(initial);
+    if (initial && initial !== 'login') {
+      if (NEXORA.Auth.isAuthenticated()) {
+        self.navigate(initial);
+      } else {
+        self.navigate('landing');
+      }
+    } else if (initial === 'login') {
+      self.navigate('login');
+    } else {
+      self.navigate('dashboard');
+    }
   }
 };

@@ -15,7 +15,7 @@ NEXORA.Auth = {
           NEXORA.DB.employees.push(owner);
           NEXORA.DB.save();
         }
-        var session = { id: owner.id, full_name: owner.full_name, role: owner.role, email: owner.email, company_id: owner.company_id };
+        var session = { id: owner.id, full_name: owner.full_name, role: owner.role, email: owner.email, company_id: owner.company_id, is_owner: true, is_admin: true };
         try { localStorage.setItem('tbr_user', JSON.stringify(session)); } catch(e) {}
         return resolve(session);
       }
@@ -23,7 +23,7 @@ NEXORA.Auth = {
       var emp = NEXORA.DB.employees.find(function(e) { return e.email === email; });
       if (!emp) return reject(new Error('البريد غير مسجل'));
       if (!emp.active) return reject(new Error('الحساب معطّل'));
-      var session = { id: emp.id, full_name: emp.full_name, role: emp.role, email: emp.email, company_id: emp.company_id };
+      var session = { id: emp.id, full_name: emp.full_name, role: emp.role, email: emp.email, company_id: emp.company_id, is_owner: false, is_admin: emp.role === 'المدير العام' || emp.role === 'مدير مشروع' };
       try { localStorage.setItem('tbr_user', JSON.stringify(session)); } catch(e) {}
       resolve(session);
     });

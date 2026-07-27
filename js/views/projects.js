@@ -76,9 +76,7 @@ NEXORA.Views.Projects = {
   open: function(pid) {
     var App = NEXORA.App;
     App.curProjId = pid;
-    if (typeof window._showView === 'function') window._showView('project');
-    else if (typeof showView === 'function') showView('project');
-    if (typeof renderProjectDetail === 'function') renderProjectDetail();
+    NEXORA.Router.navigate('project');
   },
 
   switchTab: function(tab, btn) {

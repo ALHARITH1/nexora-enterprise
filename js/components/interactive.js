@@ -301,7 +301,7 @@ NEXORA.Components.Interactive = {
           var newSW = r.installing;
           newSW.addEventListener('statechange', function() {
             if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
-              showToast('🔄 تحديث متوفر. أعد فتح الصفحة للتحديث.', 'info', 6000);
+              if (typeof NEXORA.Toast !== 'undefined') NEXORA.Toast.show('🔄 تحديث متوفر. أعد فتح الصفحة للتحديث.', 'info', 6000);
             }
           });
         });
@@ -320,7 +320,7 @@ NEXORA.Components.Interactive = {
     window.addEventListener('appinstalled', function() {
       self._deferredPrompt = null;
       self.dismissInstall();
-      showToast('✅ تم تثبيت التطبيق بنجاح', 'success');
+      if (typeof NEXORA.Toast !== 'undefined') NEXORA.Toast.show('✅ تم تثبيت التطبيق بنجاح', 'success');
     });
   },
 

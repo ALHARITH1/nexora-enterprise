@@ -45,16 +45,24 @@ NEXORA.App = {
 
   _showApp: function() {
     var self = NEXORA.App;
-    document.getElementById('landingPage').classList.add('hidden');
-    document.getElementById('authPage').classList.add('hidden');
-    document.getElementById('appShell').classList.remove('hidden');
-    document.body.classList.add('authed');
+    self._augmentSession();
 
     NEXORA.Sidebar.init();
     NEXORA.Sidebar.updateUser(self.cu);
     NEXORA.Header.init();
     NEXORA.Router.init();
     try { NEXORA.Components.Interactive.init(); } catch(e) {}
+  },
+
+  _augmentSession: function() {
+    var self = NEXORA.App;
+    if (!self.cu) return;
+    if (typeof self.cu.is_owner === 'undefined') {
+      self.cu.is_owner = self.cu.email === NEXORA.Config.OWNER_EMAIL;
+    }
+    if (typeof self.cu.is_admin === 'undefined') {
+      self.cu.is_admin = self.cu.is_owner || self.cu.role === 'المدير العام' || self.cu.role === 'مدير مشروع';
+    }
   },
 
   toggleTheme: function() {
@@ -148,8 +156,13 @@ window.showView = function(view) {
     NEXORA.Router.navigate(view);
   }
 };
-window.showLanding = function() { NEXORA.App._showLanding(); };
+window.showLanding = function() { NEXORA.Router.navigate('landing'); };
 window.toggleTheme = function() { NEXORA.App.toggleTheme(); };
+window.showToast = function(msg, type, dur) {
+  if (typeof NEXORA.Toast !== 'undefined' && NEXORA.Toast.show) {
+    NEXORA.Toast.show(msg, type, dur);
+  }
+};
 
 Object.defineProperty(window, 'cu', {
   get: function() { return NEXORA.App.cu; },

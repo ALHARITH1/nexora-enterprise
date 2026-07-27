@@ -14,7 +14,6 @@ NEXORA.Views.ItemDetail = {
     var i = H.itm(curIid);
     if (!i) return;
 
-    NEXORA.Router.navigate('item');
     var pr = H.itemProgress(curIid);
     var pf = H.itemProfit(curIid);
     var p = H.proj(i.project_id);
@@ -149,7 +148,7 @@ NEXORA.Views.ItemDetail = {
 
     var i = H.itm(t.item_id);
     var u = H.emp(t.assigned_to);
-    var canApprove = cu.is_admin || cu.role === 'مدير مشروع';
+    var canApprove = cu.is_admin || cu.role === 'مدير مشروع' || NEXORA.Auth.isAdmin();
     var as = DB.assignments.filter(function(x) { return x.task_id === tid; });
     var app = DB.approvals.filter(function(x) { return x.task_id === tid; });
     var prog = H.taskProgress(tid);
