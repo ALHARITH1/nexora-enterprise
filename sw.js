@@ -1,4 +1,4 @@
-const CACHE = 'tibrflow-v2';
+const CACHE = 'tibrflow-v3';
 const CDN_ASSETS = [
   'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap',
   'https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.44.0/dist/tabler-icons.min.css',

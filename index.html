@@ -41,7 +41,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="NEXORA تبر فلو — نظام إدارة مشاريع المقاولات">
     <meta name="twitter:description" content="نظام متكامل لإدارة مشاريع المقاولات.">
-    <link rel="manifest" href="/manifest.json">
+    <link rel="manifest" href="./manifest.json">
     <script type="application/ld+json">
     [{
       "@context":"https://schema.org",
@@ -122,12 +122,18 @@
         .stat-card.gold .num{color:var(--G);}
         .stat-card.green .num{color:var(--GR);}
         .stat-card.red .num{color:var(--RE);}
+        .stat-card.purple .num{color:#7c3aed;}
+        .stat-card.teal .num{color:#0d9488;}
+        .stat-card.orange .num{color:#ea580c;}
         .progress-bar{height:7px;background:var(--BD);border-radius:999px;overflow:hidden;margin:6px 0;}
         .progress-fill{height:100%;border-radius:999px;transition:width .5s ease;}
         .progress-fill.blue{background:linear-gradient(90deg,var(--P),var(--PS));}
         .progress-fill.gold{background:linear-gradient(90deg,var(--G),#b8911e);}
         .progress-fill.green{background:linear-gradient(90deg,var(--GR),#22c55e);}
         .progress-fill.red{background:linear-gradient(90deg,var(--RE),#ef4444);}
+        .progress-fill.orange{background:linear-gradient(90deg,#ea580c,#f97316);}
+        .progress-fill.purple{background:linear-gradient(90deg,#7c3aed,#a78bfa);}
+        .progress-fill.teal{background:linear-gradient(90deg,#0d9488,#14b8a6);}
         .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
         .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
         .grid-4{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;}
@@ -634,7 +640,7 @@
             </div>
             <div class="grid-2">
                 <div><label>الدور</label>
-                    <select id="editEmpRole" style="padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;font-family:inherit;width:100%;margin-bottom:10px;">
+                    <select id="editEmpRole" style="padding:8px 12px;border:1px solid var(--BD);border-radius:8px;font-size:13px;font-family:inherit;width:100%;margin-bottom:10px;">
                         <option value="مدير مشروع">مدير مشروع</option>
                         <option value="مهندس موقع">مهندس موقع</option>
                         <option value="مشرف">مشرف</option>
@@ -976,7 +982,7 @@ function generateNotifications(){
         notifications.push({icon:'ti ti-alert-triangle',text:`مهمة "${t.title}" متأخرة!`,type:'late',time:Date.now()});
     });
     const highCost = DB.items.filter(i => {
-        const c = (DB.costs||[]).filter(x=>x.item_id===i.id).reduce((s,x)=>s+(x.amount||0),0);
+        const c = (DB.costs||[]).filter(x=>x.item_id===i.id).reduce((s,x)=>s+(x.cost||x.amount||0),0);
         return i.budget > 0 && c > i.budget;
     });
     highCost.forEach(i => {
@@ -1056,7 +1062,7 @@ function showView(v){
     if(v==='reports')renderReports();
     if(v==='employees')renderEmployeesView();
     if(v==='processes')renderProcesses();
-    if(v==='processDetail' && typeof openProcessDetail==='function' && curProcessId){} 
+    if(v==='processDetail' && typeof openProcessDetail==='function' && curProcessId){ openProcessDetail(curProcessId); }
     if(v==='admin')renderAdmin();
     if(v==='owner')renderOwnerDashboard();
 }
@@ -1108,6 +1114,15 @@ function projProfit(pid){
     return{profit:pf,margin:p.budget?Math.round(pf/p.budget*100):0,status:pf>=0?'profit':'loss',cost:c,budget:p.budget||0};
 }
 function fmt(n){return (n||0).toLocaleString('en-US')}
+function esc(s){var d=document.createElement('div');d.appendChild(document.createTextNode(s));return d.innerHTML;}
+
+// ===================== CHART MANAGEMENT =====================
+const chartInstances = {};
+function destroyCharts(){
+  Object.keys(chartInstances).forEach(k=>{
+    if(chartInstances[k] && typeof chartInstances[k].destroy==='function'){chartInstances[k].destroy();delete chartInstances[k];}
+  });
+}
 
 // ===================== DASHBOARD =====================
 function renderDashboard(){
@@ -1125,7 +1140,7 @@ function renderDashboard(){
         const a = DB.assignments.find(x=>x.task_id===t.id);
         return a && a.due_date && new Date(a.due_date) < new Date() && t.status!=='done' && t.status!=='pending_approval';
     });
-    const totalCosts = (DB.costs||[]).reduce((s,x)=>s+(x.amount||0),0);
+    const totalCosts = (DB.costs||[]).reduce((s,x)=>s+(x.cost||x.amount||0),0);
     const losses = scopedProjects.filter(p=>{const c=projCost(p.id);return p.budget>0&&c>p.budget});
     const totalLoss = losses.reduce((s,p)=>{const c=projCost(p.id);return s+(c-p.budget)},0);
     const profits = scopedProjects.filter(p=>{const c=projCost(p.id);return p.budget>0&&c<=p.budget});
@@ -1281,7 +1296,7 @@ function renderProjects(){
         const pr=projProgress(p.id), pc=pr>=75?'green':pr>=40?'orange':'purple';
         const its = DB.items.filter(x=>x.project_id===p.id).length;
         return `<div class="list-item" style="cursor:pointer;" onclick="openProject(${p.id})">
-            <div class="info"><strong>${p.name}</strong><small>${its} بنود</small><small>${fmt(p.budget)} ريال</small></div>
+            <div class="info"><strong>${esc(p.name)}</strong><small>${its} بنود</small><small>${fmt(p.budget)} ريال</small></div>
             <div style="text-align:left;min-width:120px;"><span style="font-weight:700;">${pr}%</span><div class="progress-bar"><div class="progress-fill ${pc}" style="width:${pr}%"></div></div></div>
         </div>`;
     }).join('');
@@ -1305,7 +1320,7 @@ function openProject(pid){
     const pr=projProgress(pid), pf=projProfit(pid), its=DB.items.filter(x=>x.project_id===pid);
     let h = `<div class="back-link" onclick="showView('projects')"><i class="ti ti-arrow-right"></i> رجوع</div>
         <div class="card" style="border-right:5px solid var(--G);">
-            <div class="flex-between"><h2 style="color:var(--P);">${p.name}</h2></div>
+            <div class="flex-between"><h2 style="color:var(--P);">${esc(p.name)}</h2></div>
             <div style="color:var(--TX2);font-size:12px;">الميزانية: ${fmt(p.budget)} ريال | التكلفة: ${fmt(pf.cost)} ريال | ${p.start_date||''} → ${p.end_date||''}</div>
         </div>
         <div class="stats">
@@ -1459,7 +1474,7 @@ function renderItems(){
     c.innerHTML = its.map(i => {
         const pr = itemProgress(i.id), pf = itemProfit(i.id);
         return `<div class="list-item" style="cursor:pointer;border-right:4px solid var(--PS);padding-right:10px;margin-bottom:6px;background:var(--BG);border-radius:6px;padding:10px;" onclick="openItem(${i.id})">
-            <div class="info"><strong>${i.name}</strong><small>ميزانية: ${fmt(i.budget)}</small><small>تكلفة: ${fmt(pf.cost)}</small>
+            <div class="info"><strong>${esc(i.name)}</strong><small>ميزانية: ${fmt(i.budget)}</small><small>تكلفة: ${fmt(pf.cost)}</small>
                 <span class="badge ${pf.status==='profit'?'badge-profit':'badge-loss'}">${pf.status==='profit'?'ربح +'+fmt(pf.profit):pf.status==='loss'?'خسارة -'+fmt(Math.abs(pf.profit)):'بلا ميزانية'}</span>
             </div>
             <div style="text-align:left;min-width:100px;"><span style="font-weight:700;">${pr}%</span><div class="progress-bar"><div class="progress-fill ${pr>=75?'green':pr>=40?'orange':'teal'}" style="width:${pr}%"></div></div></div>
@@ -1529,7 +1544,7 @@ function renderKanban(){
         else cols[k].forEach(t=>{
             const pr = taskProgress(t.id);
             h += `<div class="kanban-card" onclick="openTask(${t.id})">
-                <div class="k-title">${t.title}</div>
+                <div class="k-title">${esc(t.title)}</div>
                 <div class="k-meta">${t.estimated_hours||0}س | ${pr}%</div>
                 <div class="progress-bar"><div class="progress-fill ${pr>=75?'green':pr>=40?'orange':'purple'}" style="width:${pr}%"></div></div>
                 <div class="k-meta">${t.approved===true?'✓ معتمدة':t.approved===false?'✗ مرفوضة':t.status==='done'?'🕐 بانتظار':'—'}</div>
@@ -1564,7 +1579,7 @@ function openTask(tid){
     const canApprove = cu.is_admin || cu.role==='مدير مشروع';
     const as = DB.assignments.filter(x=>x.task_id===tid);
     const app = DB.approvals.filter(x=>x.task_id===tid);
-    let h = `<div class="modal-title"><i class="ti ti-checklist"></i> ${t.title}</div>
+    let h = `<div class="modal-title"><i class="ti ti-checklist"></i> ${esc(t.title)}</div>
         <div style="margin-bottom:8px;"><strong>الحالة:</strong> <span class="badge ${t.status==='done'?(t.approved?'badge-approved':'badge-pending'):t.status==='in_progress'?'badge-progress':'badge-todo'}">${t.status==='done'?(t.approved?'معتمدة':'بانتظار'):t.status==='in_progress'?'قيد العمل':'معلقة'}</span></div>
         <div style="margin-bottom:6px;"><strong>الساعات المقدرة:</strong> ${t.estimated_hours||0}س</div>
         <div style="margin-bottom:6px;"><strong>الساعات الفعلية:</strong> ${t.actual_hours||0}س</div>
@@ -1575,7 +1590,7 @@ function openTask(tid){
             ${DB.employees.filter(x=>!x.is_admin).map(e=>`<option value="${e.id}" ${t.assigned_to===e.id?'selected':''}>${e.full_name} (${e.role})</option>`).join('')}
         </select>
         <button class="btn btn-primary btn-sm" onclick="assignTask()"><i class="ti ti-user-check"></i> إسناد</button></div>
-        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0;">
+        <hr style="border:none;border-top:1px solid var(--BD);margin:10px 0;">
         <div><strong>تسجيل ساعات العمل:</strong></div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 10px;">
             <input type="number" id="modalHours" placeholder="ساعات" style="width:100px;margin:0;" value="1">
@@ -1583,10 +1598,10 @@ function openTask(tid){
             <input type="text" id="modalNote" placeholder="ملاحظة" style="width:160px;margin:0;">
             <button class="btn btn-primary btn-sm" onclick="logHours()"><i class="ti ti-clock"></i> تسجيل</button>
         </div>
-        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0;">
+        <hr style="border:none;border-top:1px solid var(--BD);margin:10px 0;">
         <div><strong>سجل العمل اليومي:</strong></div>
         <div id="modalLogs"></div>
-        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0;">`;
+        <hr style="border:none;border-top:1px solid var(--BD);margin:10px 0;">`;
     // approvals history
     if(app.length){
         h += `<div><strong>سجل الاعتماد:</strong></div>`;
@@ -1641,7 +1656,7 @@ function renderLogs(){
     const c = document.getElementById('modalLogs');
     const ts = DB.dailylogs.filter(x=>x.task_id===curTaskId).sort((a,b)=>new Date(b.date)-new Date(a.date));
     if(!ts.length){c.innerHTML='<div style="color:var(--TX2);font-size:12px;">لا يوجد تسجيل بعد</div>';return}
-    c.innerHTML = ts.map(l=>`<div style="font-size:12px;display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border);"><span>${l.date} — ${l.hours}س ${l.description?'('+l.description+')':''}</span></div>`).join('');
+    c.innerHTML = ts.map(l=>`<div style="font-size:12px;display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--BD);"><span>${l.date} — ${l.hours}س ${l.description?'('+l.description+')':''}</span></div>`).join('');
 }
 function changeTaskStatus(s){
     const t = tsk(curTaskId); if(!t)return;
@@ -1767,8 +1782,9 @@ function exportReportJSON(){
     showToast('✅ تم تصدير JSON بنجاح','success');
 }
 function switchReportTab(id,btn){
-    document.querySelectorAll('.tab-content').forEach(x=>x.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(x=>x.classList.remove('active'));
+    const parent = document.getElementById('reportTabs') || document;
+    parent.querySelectorAll('.tab-content').forEach(x=>x.classList.remove('active'));
+    parent.querySelectorAll('.tab-btn').forEach(x=>x.classList.remove('active'));
     document.getElementById(id).classList.add('active'); btn.classList.add('active');
 }
 function reportProjects(){
@@ -1776,7 +1792,7 @@ function reportProjects(){
     let h = '<table><tr><th>المشروع</th><th>البنود</th><th>الميزانية</th><th>التكلفة</th><th>الربح</th><th>الإنجاز</th></tr>';
     DB.projects.forEach(p=>{
         const pr=projProgress(p.id), pf=projProfit(p.id), its=DB.items.filter(x=>x.project_id===p.id).length;
-        h += `<tr><td>${p.name}</td><td>${its}</td><td>${fmt(p.budget)}</td><td style="color:var(--G);">${fmt(pf.cost)}</td>
+        h += `<tr><td>${esc(p.name)}</td><td>${its}</td><td>${fmt(p.budget)}</td><td style="color:var(--G);">${fmt(pf.cost)}</td>
         <td style="color:${pf.status==='profit'?'var(--GR)':'var(--RE)'};">${fmt(pf.profit)}</td><td>${pr}%</td></tr>`;
     });
     return h+'</table>';
@@ -1786,7 +1802,7 @@ function reportBudget(){
     let h = '<table><tr><th>البند</th><th>المشروع</th><th>الميزانية</th><th>التكلفة</th><th>المتبقي</th><th>الاستهلاك</th></tr>';
     DB.items.forEach(i=>{
         const p=proj(i.project_id), c=itemCost(i.id), left=(i.budget||0)-c, pct=i.budget?Math.round(c/i.budget*100):0;
-        h += `<tr><td>${i.name}</td><td style="color:var(--TX2);">${p?p.name:''}</td><td>${fmt(i.budget)}</td><td style="color:var(--G);">${fmt(c)}</td>
+        h += `<tr><td>${esc(i.name)}</td><td style="color:var(--TX2);">${p?esc(p.name):''}</td><td>${fmt(i.budget)}</td><td style="color:var(--G);">${fmt(c)}</td>
         <td style="color:${left>=0?'var(--GR)':'var(--RE)'};">${fmt(left)}</td><td>${pct}%</td></tr>`;
     });
     return h+'</table>';
@@ -1812,13 +1828,13 @@ function reportEmployees(){
     let h = '<table><tr><th>الموظف</th><th>الدور</th><th>المهام</th><th>الساعات</th><th>التكلفة</th></tr>';
     keys.forEach(k=>{
         const u = emp(parseInt(k)), d = map[k];
-        h += `<tr><td>${u?u.full_name:'?'}</td><td>${u?u.role:'?'}</td><td>${d.tasks||0}</td><td>${d.hours||0}</td><td style="color:var(--G);">${fmt(d.cost||0)}</td></tr>`;
+        h += `<tr><td>${u?esc(u.full_name):'?'}</td><td>${u?u.role:'?'}</td><td>${d.tasks||0}</td><td>${d.hours||0}</td><td style="color:var(--G);">${fmt(d.cost||0)}</td></tr>`;
     });
     return h+'</table>';
 }
 function reportOverdue(){
     const now = new Date();
-    const late = DB.tasks.filter(t=>t.status!=='done'&&t.assigned_to);
+    const late = DB.tasks.filter(t=>{const a=DB.assignments.find(x=>x.task_id===t.id);return t.status!=='done'&&t.status!=='pending_approval'&&a&&a.due_date&&new Date(a.due_date)<new Date();});
     if(!late.length) return '<div class="empty-state"><i class="ti ti-check-circle"></i>لا توجد أعمال متأخرة</div>';
     let h = '<table><tr><th>المهمة</th><th>المسند إلى</th><th>الحالة</th><th>الساعات</th></tr>';
     late.forEach(t=>{
@@ -1865,7 +1881,7 @@ function renderAdmin(){
         <div class="grid-4">
             <div><label>الاسم</label><input type="text" id="fAdmName" placeholder="أحمد"></div>
             <div><label>البريد</label><input type="email" id="fAdmEmail" placeholder="ahmed@site.com"></div>
-            <div><label>الدور</label><select id="fAdmRole" style="padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;font-family:inherit;width:100%;margin-bottom:10px;">
+            <div><label>الدور</label><select id="fAdmRole" style="padding:8px 12px;border:1px solid var(--BD);border-radius:8px;font-size:13px;font-family:inherit;width:100%;margin-bottom:10px;">
                 <option value="مدير مشروع">مدير مشروع</option>
                 <option value="مهندس موقع" selected>مهندس موقع</option>
                 <option value="مشرف">مشرف</option>
@@ -1876,7 +1892,7 @@ function renderAdmin(){
             <div><label>الساعة (ريال)</label><input type="number" id="fAdmRate" value="50"></div>
         </div>
         <button class="btn btn-primary" onclick="addEmployee()"><i class="ti ti-user-plus"></i> إضافة</button>
-        <div style="border-top:1px solid var(--border);margin:14px 0;"></div>
+        <div style="border-top:1px solid var(--BD);margin:14px 0;"></div>
         <div id="adminUsersList"></div>
     </div>`;
     document.getElementById('adminContent').innerHTML = h;
@@ -1987,7 +2003,7 @@ function renderOwnerDashboard(){
             <td>${empCount}</td>
             <td>${projCount}</td>
             <td>
-                <select onchange="changeSubscription(${c.id},this.value)" style="padding:4px 6px;border:1px solid var(--border);border-radius:4px;font-size:11px;font-family:inherit;">
+                <select onchange="changeSubscription(${c.id},this.value)" style="padding:4px 6px;border:1px solid var(--BD);border-radius:4px;font-size:11px;font-family:inherit;">
                     <option value="trial" ${c.subscription==='trial'?'selected':''}>تجربة</option>
                     <option value="active" ${c.subscription==='active'?'selected':''}>تفعيل</option>
                     <option value="expired" ${c.subscription==='expired'?'selected':''}>إنهاء</option>
@@ -2089,14 +2105,14 @@ function showGlobalSearch(){
             const matches = [];
             const escQ = q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
             const re = new RegExp(escQ,'gi');
-            DB.projects.forEach(p => { if(p.name.toLowerCase().includes(q)) matches.push({type:'مشروع',name:p.name,icon:'ti ti-folder-open',id:p.id,view:'projects'}); });
-            DB.items.forEach(i => { if(i.name.toLowerCase().includes(q)) matches.push({type:'بند',name:i.name+' (مشروع: '+(DB.projects.find(p=>p.id===i.project_id)?.name||'')+')',icon:'ti ti-layers-union',id:i.id,view:'projects'}); });
-            DB.tasks.forEach(t => { if(t.title.toLowerCase().includes(q)) matches.push({type:'مهمة',name:t.title,icon:'ti ti-checklist',id:t.id,view:'projects'}); });
-            DB.employees.forEach(e => { if(e.full_name.toLowerCase().includes(q)||e.email.toLowerCase().includes(q)) matches.push({type:'موظف',name:e.full_name+' ('+e.email+')',icon:'ti ti-users',id:e.id,view:'employees'}); });
+            DB.projects.forEach(p => { if(p.name.toLowerCase().includes(q)) matches.push({type:'مشروع',name:p.name,icon:'ti ti-folder-open',id:p.id,view:'projects',action:`openProject(${p.id})`}); });
+            DB.items.forEach(i => { if(i.name.toLowerCase().includes(q)) matches.push({type:'بند',name:i.name+' (مشروع: '+(DB.projects.find(p=>p.id===i.project_id)?.name||'')+')',icon:'ti ti-layers-union',id:i.id,view:'projects',action:`openProject(${i.project_id});setTimeout(()=>openItem(${i.id}),100)`}); });
+            DB.tasks.forEach(t => { if(t.title.toLowerCase().includes(q)) matches.push({type:'مهمة',name:t.title,icon:'ti ti-checklist',id:t.id,view:'projects',action:`openTask(${t.id})`}); });
+            DB.employees.forEach(e => { if(e.full_name.toLowerCase().includes(q)||e.email.toLowerCase().includes(q)) matches.push({type:'موظف',name:e.full_name+' ('+e.email+')',icon:'ti ti-users',id:e.id,view:'employees',action:`showView('employees')`}); });
             if(matches.length === 0){
                 results.innerHTML = '<div class="empty-state" style="padding:20px;"><i class="ti ti-file-off"></i><strong>لا نتائج</strong><p style="font-size:var(--fs-sm);color:var(--TX2);">لا يوجد نتائج لـ "'+q+'"</p></div>';
             } else {
-                results.innerHTML = matches.slice(0,20).map(m => `<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;cursor:pointer;transition:background .12s;" onmouseover="this.style.background='var(--PLL)'" onmouseout="this.style.background=''" onclick="document.getElementById('globalSearchOverlay').style.display='none';showView('${m.view}');">
+                results.innerHTML = matches.slice(0,20).map(m => `<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;cursor:pointer;transition:background .12s;" onmouseover="this.style.background='var(--PLL)'" onmouseout="this.style.background=''" onclick="document.getElementById('globalSearchOverlay').style.display='none';${m.action||"showView('"+m.view+"')"};">
                     <i class="${m.icon}" style="color:var(--P);font-size:18px;"></i>
                     <div><div style="font-weight:600;font-size:var(--fs-sm);color:var(--TX);">${m.name.replace(re,'<span style="color:var(--P);background:var(--PL);padding:1px 4px;border-radius:4px;">$&</span>')}</div><div style="font-size:var(--fs-xs);color:var(--TX2);">${m.type}</div></div>
                 </div>`).join('');
@@ -2541,17 +2557,17 @@ const PMBOK_CATALOG = [
    desc:'تعريف 모든 العمل المطلوب وإدارة التأكيد والتحكم في نطاق المشروع.',
    inputs:['ميثاق المشروع','سجل أصحاب المصلحة'],
    outputs:['وثيقة نطاق المشروع','هيكل تفكيك العمل (WBS)'],
-   construction:'تحديد جميع البنود الإنشائية وال的工作 المرتبطة بها وتفكيك المشروع إلى مراحل وبنود واضحة.'},
+   construction:'تحديد جميع البنود الإنشائية والأنشطة المرتبطة بها وتفكيك المشروع إلى مراحل وبنود واضحة.'},
   {id:'P4',name:'جمع المتطلبات',group:'تخطيط',groupEn:'Planning',tier:2,icon:'ti ti-list-check',
    desc:'تحديد وتوثيق احتياجات أصحاب المصلحة لتلبية أهداف المشروع.',
    inputs:['سجل أصحاب المصلحة','ميثاق المشروع'],
    outputs:['وثيقة المتطلبات','سجل تتبع المتطلبات'],
    construction:'جمع المواصفات الفنية والمواصفات الإنشائية ومتطلبات الجودة من العميل والاستشاري.'},
-  {id:'P5',name:'وضع خطة إدارة النطاق',group:'تخطيط',groupEn:'Planning',tier:1,icon:'ti ti-chart-dots',
-   desc:'إعداد خطة مفصلة لكيفية تنفيذ أنشطة نطاق المشروع والتحقق منه.',
-   inputs:['وثيقة النطاق','WBS'],
-   outputs:['خطة إدارة النطاق الفرعية'],
-   construction:'خطة تنفيذ البنود الإنشائية مع الجداول الزمنية لكل بند ومؤشرات الأداء.'},
+  {id:'P5',name:'التحقق من النطاق',group:'تخطيط',groupEn:'Planning',tier:1,icon:'ti ti-chart-dots',
+   desc:'التأكد من أن نواتج المشروع المكتملة تطابق متطلبات النطاق الموثقة.',
+   inputs:['وثيقة النطاق','نواتج العمل الفعلية'],
+   outputs:['تقارير التحقق من النطاق'],
+   construction:'التأكد من أن العمل المنفذ يطابق المواصفات الفنية ونطاق العقد — تسليم واعتماد كل بند.'},
   {id:'P6',name:'تحديد الأنشطة',group:'تخطيط',groupEn:'Planning',tier:1,icon:'ti ti-list-details',
    desc:'تحديد الأنشطة المطلوب تنفيذها لإنجاز عمل المشروع.',
    inputs:['WBS','وثائق النطاق'],
@@ -2580,7 +2596,7 @@ const PMBOK_CATALOG = [
   {id:'P11',name:'تقدير التكاليف',group:'تخطيط',groupEn:'Planning',tier:1,icon:'ti ti-calculator',
    desc:'تقدير التكاليف المالية لإنجاز أنشطة المشروع.',
    inputs:['تقديرات الموارد','تقديرات المدد','أسعار السوق'],
-   outputs:['تقديرات التكاليف','aket التكلفة'],
+   outputs:['تقديرات التكاليف','جدول تفاصيل التكلفة'],
    construction:'حساب تكلفة المواد (أسمنت، حديد، رمل) + العمالة + المعدات + الإشراف لكل بند.'},
   {id:'P12',name:'وضع خطة إدارة التكاليف',group:'تخطيط',groupEn:'Planning',tier:2,icon:'ti ti-wallet',
    desc:'تحديد كيفية رصد ومراقبة وتحكم تكاليف المشروع.',
@@ -2622,7 +2638,7 @@ const PMBOK_CATALOG = [
    inputs:['سجل المخاطر (مرتبة)'],
    outputs:['تحليل التأثير الكمي'],
    construction:'حساب التكلفة المحتملة لكل خطر: تأخر 30 يوم = خسارة 500,000 ريال.'},
-  {id:'P20',name:'وضع خطة الاستجابة للمخاطر',group:'规划设计',groupEn:'Planning',tier:2,icon:'ti ti-shield',
+  {id:'P20',name:'وضع خطة الاستجابة للمخاطر',group:'تخطيط',groupEn:'Planning',tier:2,icon:'ti ti-shield',
    desc:'تحديد خيارات التعامل مع المخاطر (تجنب، نقل، تخفيف، قبول).',
    inputs:['سجل المخاطر (محلل)'],
    outputs:['خطة الاستجابة للمخاطر'],
@@ -2740,7 +2756,7 @@ const PMBOK_CATALOG = [
    outputs:['تحديثات سجل أصحاب المصلحة'],
    construction:'متابعة رضا المالك، تفاعل الاستشاري، تجاوب الجهات الحكومية.'},
   {id:'P43',name:'مراقبة وتقييم الأداء',group:'متابعة وتحكم',groupEn:'Monitoring',tier:2,icon:'ti ti-chart-bar',
-   desc:'تحليل وتقييم أداء المشروع و汇总 المؤشرات.',
+   desc:'تحليل وتقييم أداء المشروع وجمع المؤشرات.',
    inputs:['بيانات الأداء الفعلي','المقاييس المدمجة'],
    outputs:['تقارير الأداء الشاملة'],
    construction:'تقييم شامل: مؤشرات الأداء + التكلفة + الجدول + الجودة في تقرير واحد.'},
@@ -2804,6 +2820,7 @@ function setProcessStatus(pid,projId,status,note){
     DB.processes.push({id:gf(DB.processes),process_id:pid,project_id:projId,status:status,note:note||'',updated_at:new Date().toISOString()});
   }
   DB.save();
+  if(!DB.process_logs) DB.process_logs = [];
   DB.process_logs.push({id:gf(DB.process_logs),process_id:pid,project_id:projId,status:status,note:note||'',by:cu.full_name,time:new Date().toISOString()});
   DB.save();
 }
@@ -2811,17 +2828,90 @@ function renderProcesses(){
   const procs = getPMBOKProcesses();
   const projId = curProjId || (DB.projects[0] ? DB.projects[0].id : null);
   const tier = getTier();
-  let h = `<div class="card" style="border-right:5px solid var(--G);">
+  const isTurbo = tier === 1;
+  // ═══════════ TURBO MODE (Tier 1 — صغار المقاولين) ═══════════
+  if(isTurbo){
+    let h = `<div class="card" style="border-right:5px solid var(--GR);background:linear-gradient(135deg,#f0fdf4,#ecfdf5);">
+      <div class="flex-between">
+        <div class="card-title" style="margin-bottom:0;"><i class="ti ti-rocket" style="color:var(--GR);"></i> وضع التوربو — العمليات الأساسية (${procs.length} عملية)</div>
+        <span class="user-badge" style="background:var(--GR);color:#fff;">⚡ Turbo Mode</span>
+      </div>
+      <div style="color:var(--TX2);font-size:13px;margin-top:8px;">واجهة سريعة مبسطة لصغار المقاولين — اليوميات، المشتريات، السيولة</div>
+    </div>`;
+    h += `<div class="card"><div class="card-title"><i class="ti ti-folder-open"></i> اختر المشروع</div>
+      <select id="procProjectSel" onchange="curProjId=parseInt(this.value);renderProcesses();" style="max-width:400px;">
+        ${DB.projects.map(p=>`<option value="${p.id}" ${p.id===projId?'selected':''}>${esc(p.name)}</option>`).join('')}
+      </select></div>`;
+    if(!DB.projects.length){
+      h += `<div class="card"><div class="empty-state"><i class="ti ti-rocket"></i>أنشئ مشروعاً أولاً لبدء وضع التوربو</div></div>`;
+      document.getElementById('processesContent').innerHTML = h;
+      return;
+    }
+    const completed = (DB.processes||[]).filter(x=>x.project_id===projId && x.status==='done').length;
+    const inProgress = (DB.processes||[]).filter(x=>x.project_id===projId && x.status==='in_progress').length;
+    const total = procs.length;
+    const pct = total ? Math.round(completed/total*100) : 0;
+    h += `<div class="stats">
+      <div class="stat-card green"><div class="num">${completed}</div><div class="lbl">✓ مكتملة</div></div>
+      <div class="stat-card gold"><div class="num">${inProgress}</div><div class="lbl">◉ جارية</div></div>
+      <div class="stat-card blue"><div class="num">${total-completed-inProgress}</div><div class="lbl">○ معلقة</div></div>
+      <div class="stat-card" style="border-left:4px solid ${pct>=75?'var(--GR)':pct>=40?'var(--G)':'var(--P)'};"><div class="num" style="color:${pct>=75?'var(--GR)':pct>=40?'var(--G)':'var(--P)'};">${pct}%</div><div class="lbl">الإنجاز</div></div>
+    </div>`;
+    h += `<div class="card"><div class="progress-bar" style="height:12px;"><div class="progress-fill green" style="width:${pct}%"></div></div></div>`;
+    // Quick action cards for turbo
+    h += `<div class="grid-2" style="margin-bottom:16px;">
+      <div class="card" style="cursor:pointer;border-right:4px solid var(--GR);" onclick="filterProcGroup('all',document.querySelector('#procGroupTabs .tab-btn'))">
+        <div style="display:flex;align-items:center;gap:12px;"><div style="width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,var(--GR),#16a34a);display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff;"><i class="ti ti-bolt"></i></div>
+        <div><strong style="font-size:15px;">العمليات السريعة</strong><p style="font-size:12px;color:var(--TX2);margin-top:2px;">${procs.length} عملية جاهزة للتطبيق</p></div></div>
+      </div>
+      <div class="card" style="cursor:pointer;border-right:4px solid var(--G);">
+        <div style="display:flex;align-items:center;gap:12px;"><div style="width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,var(--G),#b8911e);display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff;"><i class="ti ti-coins"></i></div>
+        <div><strong style="font-size:15px;">المشتريات اليومية</strong><p style="font-size:12px;color:var(--TX2);margin-top:2px;">تسجيل المشتريات والعمالة</p></div></div>
+      </div>
+    </div>`;
+    // Compact process list — turbo style (quick inline status toggle)
+    h += `<div class="tab-bar" id="procGroupTabs">
+      <button class="tab-btn active" onclick="filterProcGroup('all',this)">الكل (${total})</button>`;
+    PMBOK_GROUPS.forEach(g => {
+      const gProcs = procs.filter(p=>p.group===g.id);
+      if(gProcs.length) h += `<button class="tab-btn" onclick="filterProcGroup('${esc(g.id)}',this)"><i class="${g.icon}" style="color:${g.color};"></i> ${g.label} (${gProcs.length})</button>`;
+    });
+    h += `</div>`;
+    PMBOK_GROUPS.forEach(g => {
+      const gProcs = procs.filter(p=>p.group===g.id);
+      if(!gProcs.length) return;
+      h += `<div class="proc-group-card" data-group="${g.id}">
+        <div style="font-weight:700;font-size:14px;margin-bottom:8px;color:var(--TX);display:flex;align-items:center;gap:6px;"><i class="${g.icon}" style="color:${g.color};"></i> ${g.label}</div>`;
+      gProcs.forEach(p => {
+        const st = getProcessStatus(p.id,projId);
+        h += `<div class="list-item" style="cursor:pointer;border-right:3px solid ${g.color};padding:8px 10px;" onclick="openProcessDetail('${p.id}')">
+          <div class="info">
+            <strong style="font-size:13px;">${esc(p.name)}</strong>
+          </div>
+          <div style="display:flex;align-items:center;gap:4px;">
+            <button class="btn btn-sm ${st==='done'?'btn-success':st==='in_progress'?'btn-primary':'btn-o'}" onclick="event.stopPropagation();setProcessStatus('${p.id}',${projId||0},(function(s){return s==='done'?'pending':s==='pending'?'in_progress':'done'})('${st}'));renderProcesses();" style="padding:4px 10px;font-size:11px;min-width:60px;text-align:center;">
+              ${st==='done'?'✓ نعم':st==='in_progress'?'◉ جاري':'○ لا'}
+            </button>
+            <i class="ti ti-chevron-left" style="color:var(--TX3);font-size:14px;"></i>
+          </div>
+        </div>`;
+      });
+      h += `</div>`;
+    });
+    document.getElementById('processesContent').innerHTML = h;
+    return;
+  }
+  // ═══════════ ENTERPRISE MODE (Tier 2 — شركات المقاولات) ═══════════
+  let h = `<div class="card" style="border-right:5px solid var(--P);background:linear-gradient(135deg,#eaf0fc,#f0f4ff);">
     <div class="flex-between">
-      <div class="card-title" style="margin-bottom:0;"><i class="ti ti-engineering"></i> محرك إدارة العمليات — PMBOK (${procs.length} عملية)</div>
-      <span class="user-badge" style="background:var(--G);color:var(--TX);">الشريحة ${tier}: ${tier===1?'صغار المقاولين':'شركات المقاولات'}</span>
+      <div class="card-title" style="margin-bottom:0;"><i class="ti ti-building" style="color:var(--P);"></i> المحرك المؤسسي — PMBOK (${procs.length} عملية)</div>
+      <span class="user-badge" style="background:var(--P);color:#fff;">🏢 Enterprise Mode</span>
     </div>
-    <div style="color:var(--TX2);font-size:13px;margin-top:8px;">إدارة مشاريع المقاولات بناءً على دليل PMBOK — مع التمييز حسب حجم المقاول</div>
+    <div style="color:var(--TX2);font-size:13px;margin-top:8px;">إدارة شاملة للمشاريع — ربط المخططات والكميات مع 49 عملية بدقة متناهية</div>
   </div>`;
-  // Project selector
   h += `<div class="card"><div class="card-title"><i class="ti ti-folder-open"></i> اختر المشروع</div>
     <select id="procProjectSel" onchange="curProjId=parseInt(this.value);renderProcesses();" style="max-width:400px;">
-      ${DB.projects.map(p=>`<option value="${p.id}" ${p.id===projId?'selected':''}>${p.name}</option>`).join('')}
+      ${DB.projects.map(p=>`<option value="${p.id}" ${p.id===projId?'selected':''}>${esc(p.name)}</option>`).join('')}
     </select></div>`;
   if(!DB.projects.length){
     h += `<div class="card"><div class="empty-state"><i class="ti ti-folder-open"></i>أنشئ مشروعاً أولاً لبدء إدارة العمليات</div></div>`;
@@ -2846,7 +2936,7 @@ function renderProcesses(){
   h += `<button class="tab-btn active" onclick="filterProcGroup('all',this)">الكل (${total})</button>`;
   PMBOK_GROUPS.forEach(g => {
     const gProcs = procs.filter(p=>p.group===g.id);
-    if(gProcs.length) h += `<button class="tab-btn" onclick="filterProcGroup('${g.id}',this)"><i class="${g.icon}" style="color:${g.color};"></i> ${g.label} (${gProcs.length})</button>`;
+    if(gProcs.length) h += `<button class="tab-btn" onclick="filterProcGroup('${esc(g.id)}',this)"><i class="${g.icon}" style="color:${g.color};"></i> ${g.label} (${gProcs.length})</button>`;
   });
   h += `</div>`;
   // Process list by group
@@ -2867,8 +2957,8 @@ function renderProcesses(){
       const stText = st==='done'?'✓ مكتملة':st==='in_progress'?'◉ قيد التنفيذ':'○ معلقة';
       h += `<div class="list-item" style="cursor:pointer;border-right:3px solid ${g.color};" onclick="openProcessDetail('${p.id}')">
         <div class="info">
-          <strong style="display:flex;align-items:center;gap:6px;"><span style="background:var(--PL);color:var(--P);border-radius:6px;padding:1px 6px;font-size:11px;font-weight:700;">${p.id}</span> ${p.name}</strong>
-          <small style="font-size:12px;">${p.desc.substring(0,80)}${p.desc.length>80?'...':''}</small>
+          <strong style="display:flex;align-items:center;gap:6px;"><span style="background:var(--PL);color:var(--P);border-radius:6px;padding:1px 6px;font-size:11px;font-weight:700;">${p.id}</span> ${esc(p.name)}</strong>
+          <small style="font-size:12px;">${esc(p.desc.substring(0,80))}${p.desc.length>80?'...':''}</small>
         </div>
         <div style="display:flex;align-items:center;gap:8px;">
           <span class="badge ${stBadge}">${stText}</span>
@@ -2901,19 +2991,19 @@ function openProcessDetail(pid){
     <div class="flex-between">
       <div><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
         <span style="background:var(--PL);color:var(--P);border-radius:8px;padding:2px 8px;font-size:12px;font-weight:700;">${p.id}</span>
-        <h2 style="color:var(--P);margin:0;">${p.name}</h2>
+        <h2 style="color:var(--P);margin:0;">${esc(p.name)}</h2>
       </div>
       <div style="font-size:13px;color:var(--TX2);">${group?group.label+' ('+group.labelEn+')':''} — الشريحة ${p.tier}: ${p.tier===1?'صغار المقاولين':'شركات المقاولات الكبيرة'}</div></div>
       <span class="badge ${status==='done'?'badge-done':status==='in_progress'?'badge-progress':'badge-todo'}" style="font-size:var(--fs-sm);">${status==='done'?'✓ مكتملة':status==='in_progress'?'◉ قيد التنفيذ':'○ معلقة'}</span>
     </div>
   </div>`;
-  h += `<div class="card"><div class="card-title"><i class="ti ti-info-circle"></i> وصف العملية</div><p style="color:var(--TX2);font-size:var(--fs-md);line-height:1.8;">${p.desc}</p></div>`;
-  h += `<div class="card"><div class="card-title"><i class="ti ti-building-construction"></i> تطبيق في المقاولات</div><p style="color:var(--TX2);font-size:var(--fs-md);line-height:1.8;">${p.construction}</p></div>`;
+  h += `<div class="card"><div class="card-title"><i class="ti ti-info-circle"></i> وصف العملية</div><p style="color:var(--TX2);font-size:var(--fs-md);line-height:1.8;">${esc(p.desc)}</p></div>`;
+  h += `<div class="card"><div class="card-title"><i class="ti ti-building-construction"></i> تطبيق في المقاولات</div><p style="color:var(--TX2);font-size:var(--fs-md);line-height:1.8;">${esc(p.construction)}</p></div>`;
   h += `<div class="grid-2">
     <div class="card"><div class="card-title" style="font-size:var(--fs-md);"><i class="ti ti-upload" style="color:var(--PS);"></i> المدخلات</div>
-      <ul style="list-style:none;padding:0;">${p.inputs.map(i=>`<li style="padding:4px 0;border-bottom:1px solid var(--BD);font-size:13px;">📌 ${i}</li>`).join('')}</ul></div>
+      <ul style="list-style:none;padding:0;">${p.inputs.map(i=>`<li style="padding:4px 0;border-bottom:1px solid var(--BD);font-size:13px;">📌 ${esc(i)}</li>`).join('')}</ul></div>
     <div class="card"><div class="card-title" style="font-size:var(--fs-md);"><i class="ti ti-download" style="color:var(--GR);"></i> المخرجات</div>
-      <ul style="list-style:none;padding:0;">${p.outputs.map(o=>`<li style="padding:4px 0;border-bottom:1px solid var(--BD);font-size:13px;">✅ ${o}</li>`).join('')}</ul></div>
+      <ul style="list-style:none;padding:0;">${p.outputs.map(o=>`<li style="padding:4px 0;border-bottom:1px solid var(--BD);font-size:13px;">✅ ${esc(o)}</li>`).join('')}</ul></div>
   </div>`;
   // Status controls
   h += `<div class="card"><div class="card-title"><i class="ti ti-player-play"></i> تحديث الحالة</div>
