@@ -45,63 +45,91 @@ NEXORA.Router = {
   },
 
   _doNavigate: function(view) {
-    if (view === 'landing') {
-      document.body.classList.remove('authed');
-      var app = document.getElementById('appShell');
-      if (app) app.classList.add('hidden');
-      var auth = document.getElementById('authPage');
-      if (auth) auth.classList.add('hidden');
-      var landing = document.getElementById('landingPage');
-      if (landing) landing.classList.remove('hidden');
-      window.location.hash = '';
-      return;
-    }
-    if (view === 'login') {
-      var lp = document.getElementById('landingPage');
-      if (lp) lp.classList.add('hidden');
-      var ap = document.getElementById('authPage');
-      if (ap) ap.classList.remove('hidden');
-      var as = document.getElementById('appShell');
-      if (as) as.classList.add('hidden');
-      window.location.hash = 'login';
-      return;
-    }
-    if (!NEXORA.Auth.isAuthenticated()) {
-      this._doNavigate('login');
-      return;
-    }
-
-    var landingEl = document.getElementById('landingPage');
-    if (landingEl) landingEl.classList.add('hidden');
-    var authEl = document.getElementById('authPage');
-    if (authEl) authEl.classList.add('hidden');
-    var shellEl = document.getElementById('appShell');
-    if (shellEl) shellEl.classList.remove('hidden');
-    document.body.classList.add('authed');
-
-    var route = this._map[view];
-    if (!route) { view = 'dashboard'; route = this._map.dashboard; }
-
-    document.querySelectorAll('.view-section').forEach(function(s) { s.classList.remove('active'); });
-    var el = document.getElementById(route.section);
-    if (el) el.classList.add('active');
-
-    var titleEl = document.getElementById('headerTitle');
-    if (titleEl) titleEl.textContent = route.title;
-
-    if (typeof NEXORA.Sidebar !== 'undefined' && NEXORA.Sidebar.setActive) NEXORA.Sidebar.setActive(view);
-
-    if (typeof window[route.render] === 'function') {
-      if (route.render === 'openProcessDetail' && NEXORA.App.curProcessId) {
-        window[route.render](NEXORA.App.curProcessId);
-      } else {
-        window[route.render]();
+    try {
+      if (view === 'landing') {
+        if (NEXORA.App && typeof NEXORA.App._showLanding === 'function') {
+          NEXORA.App._showLanding();
+        } else {
+          document.body.classList.remove('authed');
+          var app = document.getElementById('appShell');
+          if (app) app.classList.add('hidden');
+          var auth = document.getElementById('authPage');
+          if (auth) auth.classList.add('hidden');
+          var landing = document.getElementById('landingPage');
+          if (landing) landing.classList.remove('hidden');
+        }
+        window.location.hash = '';
+        return;
       }
-    }
 
-    var newHash = '#' + view;
-    if (window.location.hash !== newHash) {
-      window.location.hash = view;
+      if (view === 'login') {
+        if (NEXORA.App && typeof NEXORA.App.isBeforeLaunch === 'function' && NEXORA.App.isBeforeLaunch()) {
+          NEXORA.App._showLanding();
+          window.location.hash = '';
+          return;
+        }
+        var lp = document.getElementById('landingPage');
+        if (lp) lp.classList.add('hidden');
+        var ap = document.getElementById('authPage');
+        if (ap) ap.classList.remove('hidden');
+        var as = document.getElementById('appShell');
+        if (as) as.classList.add('hidden');
+        window.location.hash = 'login';
+        return;
+      }
+
+      if (!NEXORA.Auth.isAuthenticated()) {
+        this._doNavigate('login');
+        return;
+      }
+
+      var landingEl = document.getElementById('landingPage');
+      if (landingEl) landingEl.classList.add('hidden');
+      var authEl = document.getElementById('authPage');
+      if (authEl) authEl.classList.add('hidden');
+      var shellEl = document.getElementById('appShell');
+      if (shellEl) shellEl.classList.remove('hidden');
+      document.body.classList.add('authed');
+
+      var route = this._map[view];
+      if (!route) { view = 'dashboard'; route = this._map.dashboard; }
+
+      document.querySelectorAll('.view-section').forEach(function(s) { s.classList.remove('active'); });
+      var el = document.getElementById(route.section);
+      if (el) el.classList.add('active');
+
+      var titleEl = document.getElementById('headerTitle');
+      if (titleEl) titleEl.textContent = route.title;
+
+      if (typeof NEXORA.Sidebar !== 'undefined' && NEXORA.Sidebar.setActive) NEXORA.Sidebar.setActive(view);
+
+      if (typeof window[route.render] === 'function') {
+        try {
+          if (route.render === 'openProcessDetail' && NEXORA.App.curProcessId) {
+            window[route.render](NEXORA.App.curProcessId);
+          } else {
+            window[route.render]();
+          }
+        } catch (renderErr) {
+          console.error('[Router] Render error for "' + route.render + '":', renderErr);
+          var contentEl = el ? el.querySelector('[id$="Content"]') : null;
+          if (contentEl) {
+            contentEl.innerHTML = '<div class="empty-state" style="padding:48px;text-align:center;"><i class="ti ti-alert-triangle" style="font-size:36px;color:var(--G);"></i><h3 style="margin-top:12px;">خطأ في تحميل الشاشة</h3><p style="color:var(--TX2);font-size:13px;">' + renderErr.message + '</p></div>';
+          }
+        }
+      } else {
+        var fallbackEl = el ? el.querySelector('[id$="Content"]') : null;
+        if (fallbackEl && !fallbackEl.innerHTML.trim()) {
+          fallbackEl.innerHTML = '<div class="empty-state" style="padding:48px;text-align:center;"><i class="ti ti-loader" style="font-size:36px;color:var(--TX2);"></i><h3 style="margin-top:12px;color:var(--TX2);">' + route.title + '</h3><p style="color:var(--TX2);font-size:13px;">قريباً</p></div>';
+        }
+      }
+
+      var newHash = '#' + view;
+      if (window.location.hash !== newHash) {
+        window.location.hash = view;
+      }
+    } catch (err) {
+      console.error('[Router] Navigation error for "' + view + '":', err);
     }
   },
 

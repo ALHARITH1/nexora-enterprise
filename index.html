@@ -34,9 +34,12 @@
   <div id="landingPage" class="landing">
     <nav class="l-nav">
       <div class="l-nav-brand"><i class="ti ti-building-skyscraper"></i> NEXORA</div>
-      <div class="l-nav-links">
+      <div class="l-nav-links" id="navLoginBtns">
         <a class="btn btn-ghost" href="#login" onclick="NEXORA.Router.navigate('login');event.preventDefault();">تسجيل الدخول</a>
         <a class="btn btn-primary" href="#login" onclick="NEXORA.Router.navigate('login');event.preventDefault();">ابدأ مجاناً</a>
+      </div>
+      <div class="l-nav-links hidden" id="navCountdown">
+        <span class="countdown-badge"><i class="ti ti-clock"></i> يفتح بعد <span id="navCountdownTimer"></span></span>
       </div>
     </nav>
     <section class="l-hero">
@@ -44,9 +47,24 @@
         <div class="l-hero-badge"><i class="ti ti-sparkles"></i> منصة مقاولات سحابية</div>
         <h1>إدارة مشاريع المقاولات<br>بشكل <span>احترافي</span></h1>
         <p>تابع مشاريعك من أي مكان: البنود، المهام، الاعتمادات، التكاليف، والتقارير الذكية — كل ما تحتاجه في منصة واحدة.</p>
-        <div class="l-hero-actions">
+        <div class="l-hero-actions" id="heroLoginBtns">
           <a class="btn btn-primary btn-lg" href="#login" onclick="NEXORA.Router.navigate('login');event.preventDefault();"><i class="ti ti-rocket"></i> ابدأ مجاناً</a>
           <a class="btn btn-lg" href="#features"><i class="ti ti-player-play"></i> شاهد المميزات</a>
+        </div>
+        <div class="l-hero-actions hidden" id="heroCountdown">
+          <div class="countdown-box">
+            <div class="countdown-label"><i class="ti ti-clock-hour-4"></i> المنصة تفتح بعد</div>
+            <div class="countdown-digits">
+              <div class="cd-unit"><span id="cdDays">00</span><small>يوم</small></div>
+              <div class="cd-sep">:</div>
+              <div class="cd-unit"><span id="cdHours">00</span><small>ساعة</small></div>
+              <div class="cd-sep">:</div>
+              <div class="cd-unit"><span id="cdMins">00</span><small>دقيقة</small></div>
+              <div class="cd-sep">:</div>
+              <div class="cd-unit"><span id="cdSecs">00</span><small>ثانية</small></div>
+            </div>
+            <div class="countdown-note">سجّل بريدك الإلكتروني لن通知ك عند الإطلاق</div>
+          </div>
         </div>
         <div class="l-hero-stats">
           <div class="l-hero-stat"><div class="num counter" data-count="500">0</div><div class="lbl">مشروع</div></div>
@@ -109,10 +127,14 @@
       <details><summary>هل أستطيع إضافة موظفين؟</summary><div class="faq-answer">نعم، يمكنك إضافة موظفين بأدوار مختلفة وصلاحيات مخصصة.</div></details>
       <details><summary>هل البيانات آمنة؟</summary><div class="faq-answer">نعم، البيانات محفوظة في قاعدة بيانات مشفرة ومحمية.</div></details>
     </section>
-    <section class="l-cta">
+    <section class="l-cta" id="ctaSection">
       <h2>ابدأ إدارة مشاريعك الآن</h2>
       <p>انضم لمئات الشركات التي تستخدم NEXORA لإدارة مشاريعها بكفاءة</p>
       <a class="btn btn-gold btn-lg" href="#login" onclick="NEXORA.Router.navigate('login');event.preventDefault();"><i class="ti ti-rocket"></i> ابدأ مجاناً</a>
+    </section>
+    <section class="l-cta hidden" id="ctaCountdown">
+      <h2>المنصة قريباً</h2>
+      <p>نعمل على تجهيز كل شيء لتبدأ بتجربة احترافية</p>
     </section>
     <footer class="l-footer">
       <p>&copy; 2026 NEXORA. جميع الحقوق محفوظة.</p>
