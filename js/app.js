@@ -7,6 +7,7 @@ NEXORA.App = {
   curTaskId: null,
   curProcessId: null,
   theme: 'light',
+  mode: 'turbo',
 
   init: function() {
     var self = NEXORA.App;
@@ -46,6 +47,7 @@ NEXORA.App = {
   _showApp: function() {
     var self = NEXORA.App;
     self._augmentSession();
+    self.restoreMode();
 
     NEXORA.Sidebar.init();
     NEXORA.Sidebar.updateUser(self.cu);
@@ -148,6 +150,39 @@ NEXORA.App = {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./sw.js').catch(function() {});
     }
+  },
+
+  switchMode: function(mode) {
+    var self = NEXORA.App;
+    self.mode = mode;
+    try { localStorage.setItem('nexora_mode', mode); } catch(e) {}
+    if (mode === 'turbo') {
+      self._showLandingTurbo();
+    } else {
+      self._showLandingEnterprise();
+    }
+  },
+
+  _showLandingTurbo: function() {
+    document.querySelectorAll('.view-section').forEach(function(s) { s.classList.remove('active'); });
+    var el = document.getElementById('view-turbo');
+    if (el) el.classList.add('active');
+    document.getElementById('headerTitle').textContent = 'وضع Turbo';
+    NEXORA.Sidebar.setActive('turbo');
+    if (typeof renderTurbo === 'function') renderTurbo();
+  },
+
+  _showLandingEnterprise: function() {
+    document.querySelectorAll('.view-section').forEach(function(s) { s.classList.remove('active'); });
+    var el = document.getElementById('view-dashboard');
+    if (el) el.classList.add('active');
+    document.getElementById('headerTitle').textContent = 'لوحة التحكم';
+    NEXORA.Sidebar.setActive('dashboard');
+    if (typeof renderDashboard === 'function') renderDashboard();
+  },
+
+  restoreMode: function() {
+    try { this.mode = localStorage.getItem('nexora_mode') || 'turbo'; } catch(e) {}
   }
 };
 

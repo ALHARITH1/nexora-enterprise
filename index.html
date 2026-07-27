@@ -25,6 +25,8 @@
   <link rel="stylesheet" href="css/kanban.css">
   <link rel="stylesheet" href="css/processes.css">
   <link rel="stylesheet" href="css/dark.css">
+  <link rel="stylesheet" href="css/turbo.css?v=3.5.0">
+  <link rel="stylesheet" href="css/enterprise.css?v=3.5.0">
 </head>
 <body class="rtl">
 
@@ -226,6 +228,14 @@
         <div id="view-stakeholders" class="view-section"><div id="stakeholdersContent"></div></div>
         <div id="view-contracts" class="view-section"><div id="contractsContent"></div></div>
         <div id="view-changes" class="view-section"><div id="changesContent"></div></div>
+        <div id="view-turbo" class="view-section"><div id="turboContent"></div></div>
+        <div id="view-turboDaily" class="view-section"><div id="turboDailyContent"></div></div>
+        <div id="view-turboPurchases" class="view-section"><div id="turboPurchasesContent"></div></div>
+        <div id="view-turboCashflow" class="view-section"><div id="turboCashflowContent"></div></div>
+        <div id="view-entPlanning" class="view-section"><div id="entPlanningContent"></div></div>
+        <div id="view-entExecution" class="view-section"><div id="entExecutionContent"></div></div>
+        <div id="view-entControl" class="view-section"><div id="entControlContent"></div></div>
+        <div id="view-alerts" class="view-section"><div id="alertsContent"></div></div>
       </div>
     </main>
   </div>
@@ -245,7 +255,7 @@
   <!-- ═══════════ ALL SCRIPTS (no defer - load order guaranteed) ═══════════ -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
-  <script src="js/config.js?v=3.4.0"></script>
+  <script src="js/config.js?v=3.5.0"></script>
   <script src="js/utils/helpers.js?v=3.4.0"></script>
   <script src="js/supabaseClient.js?v=3.4.0"></script>
   <script src="js/auth.js?v=3.4.0"></script>
@@ -280,6 +290,14 @@
   <script src="js/views/stakeholders.js?v=3.4.0"></script>
   <script src="js/views/contracts.js?v=3.4.0"></script>
   <script src="js/views/changeRequests.js?v=3.4.0"></script>
+  <script src="js/alerts.js?v=3.5.0"></script>
+  <script src="js/views/turbo/dashboard.js?v=3.5.0"></script>
+  <script src="js/views/turbo/daily.js?v=3.5.0"></script>
+  <script src="js/views/turbo/purchases.js?v=3.5.0"></script>
+  <script src="js/views/turbo/cashflow.js?v=3.5.0"></script>
+  <script src="js/views/enterprise/planning.js?v=3.5.0"></script>
+  <script src="js/views/enterprise/execution.js?v=3.5.0"></script>
+  <script src="js/views/enterprise/control.js?v=3.5.0"></script>
   <script src="js/app.js?v=3.4.0"></script>
 
   <!-- ═══ Init (runs LAST - all modules guaranteed loaded) ═══ -->

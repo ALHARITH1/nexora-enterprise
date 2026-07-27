@@ -1,4 +1,4 @@
-const CACHE = 'nexora-v3.3.0';
+const CACHE = 'nexora-v3.5.0';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -13,6 +13,8 @@ const STATIC_ASSETS = [
   './css/kanban.css',
   './css/processes.css',
   './css/dark.css',
+  './css/turbo.css',
+  './css/enterprise.css',
   './js/config.js',
   './js/utils/helpers.js',
   './js/supabaseClient.js',
@@ -48,7 +50,15 @@ const STATIC_ASSETS = [
   './js/views/cashflow.js',
   './js/views/stakeholders.js',
   './js/views/contracts.js',
-  './js/views/changeRequests.js'
+  './js/views/changeRequests.js',
+  './js/alerts.js',
+  './js/views/turbo/dashboard.js',
+  './js/views/turbo/daily.js',
+  './js/views/turbo/purchases.js',
+  './js/views/turbo/cashflow.js',
+  './js/views/enterprise/planning.js',
+  './js/views/enterprise/execution.js',
+  './js/views/enterprise/control.js'
 ];
 const CDN_ASSETS = [
   'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap',

@@ -21,7 +21,15 @@ NEXORA.Router = {
     cashflow: { section: 'view-cashflow', title: 'السيولة النقدية', render: 'renderCashflow' },
     stakeholders: { section: 'view-stakeholders', title: 'أصحاب المصلحة', render: 'renderStakeholders' },
     contracts: { section: 'view-contracts', title: 'العقود', render: 'renderContracts' },
-    changes: { section: 'view-changes', title: 'طلبات التغيير', render: 'renderChangeRequests' }
+    changes: { section: 'view-changes', title: 'طلبات التغيير', render: 'renderChangeRequests' },
+    turbo: { section: 'view-turbo', title: 'وضع Turbo', render: 'renderTurbo' },
+    turboDaily: { section: 'view-turboDaily', title: 'يوميات سريعة', render: 'renderTurboDaily' },
+    turboPurchases: { section: 'view-turboPurchases', title: 'مشتريات سريعة', render: 'renderTurboPurchases' },
+    turboCashflow: { section: 'view-turboCashflow', title: 'السيولة', render: 'renderTurboCashflow' },
+    entPlanning: { section: 'view-entPlanning', title: 'التخطيط الفائق', render: 'renderEntPlanning' },
+    entExecution: { section: 'view-entExecution', title: 'التنفيذ والسرعة', render: 'renderEntExecution' },
+    entControl: { section: 'view-entControl', title: 'التحكم الذكي', render: 'renderEntControl' },
+    alerts: { section: 'view-alerts', title: 'مركز التنبيهات', render: 'renderAlertsCenter' }
   },
 
   _navigating: false,
@@ -108,8 +116,9 @@ NEXORA.Router = {
       if (self._navigating) return;
       var v = self.getCurrent();
       if (!v) {
+        var m = (NEXORA.App && NEXORA.App.mode) || 'turbo';
         if (NEXORA.Auth.isAuthenticated()) {
-          self.navigate('dashboard');
+          self.navigate(m === 'turbo' ? 'turbo' : 'dashboard');
         } else {
           self.navigate('landing');
         }
@@ -125,6 +134,7 @@ NEXORA.Router = {
     });
 
     var initial = self.getCurrent();
+    var mode = (NEXORA.App && NEXORA.App.mode) || 'turbo';
     if (initial && initial !== 'login') {
       if (NEXORA.Auth.isAuthenticated()) {
         self.navigate(initial);
@@ -134,7 +144,7 @@ NEXORA.Router = {
     } else if (initial === 'login') {
       self.navigate('login');
     } else {
-      self.navigate('dashboard');
+      self.navigate(mode === 'turbo' ? 'turbo' : 'dashboard');
     }
   }
 };
