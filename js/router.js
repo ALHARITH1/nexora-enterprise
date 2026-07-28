@@ -63,11 +63,6 @@ NEXORA.Router = {
       }
 
       if (view === 'login') {
-        if (NEXORA.App && typeof NEXORA.App.isBeforeLaunch === 'function' && NEXORA.App.isBeforeLaunch()) {
-          NEXORA.App._showLanding();
-          window.location.hash = '';
-          return;
-        }
         var lp = document.getElementById('landingPage');
         if (lp) lp.classList.add('hidden');
         var ap = document.getElementById('authPage');

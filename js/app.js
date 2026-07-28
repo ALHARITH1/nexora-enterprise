@@ -141,16 +141,7 @@ NEXORA.App = {
 
   _registerSW: function() {
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./sw.js').then(function(reg) {
-        reg.addEventListener('updatefound', function() {
-          var nw = reg.installing;
-          if (nw) nw.addEventListener('statechange', function() {
-            if (nw.state === 'activated') {
-              if (confirm('تحديث جديد متاح. أعد التحميل؟')) { window.location.reload(); }
-            }
-          });
-        });
-      }).catch(function() {});
+      navigator.serviceWorker.register('./sw.js').catch(function() {});
     }
   },
 
@@ -202,69 +193,7 @@ NEXORA.App = {
     document.getElementById('authPage').classList.add('hidden');
     document.getElementById('appShell').classList.add('hidden');
     document.body.classList.remove('authed');
-
-    if (self.isBeforeLaunch()) {
-      var navBtns = document.getElementById('navLoginBtns');
-      var navCd = document.getElementById('navCountdown');
-      var heroBtns = document.getElementById('heroLoginBtns');
-      var heroCd = document.getElementById('heroCountdown');
-      var ctaNormal = document.getElementById('ctaSection');
-      var ctaCd = document.getElementById('ctaCountdown');
-      if (navBtns) navBtns.classList.add('hidden');
-      if (navCd) navCd.classList.remove('hidden');
-      if (heroBtns) heroBtns.classList.add('hidden');
-      if (heroCd) heroCd.classList.remove('hidden');
-      if (ctaNormal) ctaNormal.classList.add('hidden');
-      if (ctaCd) ctaCd.classList.remove('hidden');
-      self._startCountdown();
-    } else {
-      var navBtns2 = document.getElementById('navLoginBtns');
-      var navCd2 = document.getElementById('navCountdown');
-      var heroBtns2 = document.getElementById('heroLoginBtns');
-      var heroCd2 = document.getElementById('heroCountdown');
-      var ctaNormal2 = document.getElementById('ctaSection');
-      var ctaCd2 = document.getElementById('ctaCountdown');
-      if (navBtns2) navBtns2.classList.remove('hidden');
-      if (navCd2) navCd2.classList.add('hidden');
-      if (heroBtns2) heroBtns2.classList.remove('hidden');
-      if (heroCd2) heroCd2.classList.add('hidden');
-      if (ctaNormal2) ctaNormal2.classList.remove('hidden');
-      if (ctaCd2) ctaCd2.classList.add('hidden');
-      if (self._countdownInterval) { clearInterval(self._countdownInterval); self._countdownInterval = null; }
-    }
   },
-
-  _startCountdown: function() {
-    var self = NEXORA.App;
-    if (self._countdownInterval) clearInterval(self._countdownInterval);
-
-    function update() {
-      var launch = new Date(NEXORA.Config.LAUNCH_DATE).getTime();
-      var diff = launch - Date.now();
-      if (diff <= 0) {
-        clearInterval(self._countdownInterval);
-        self._countdownInterval = null;
-        self._showLanding();
-        return;
-      }
-      var d = Math.floor(diff / 864e5);
-      var h = Math.floor((diff % 864e5) / 36e5);
-      var m = Math.floor((diff % 36e5) / 6e4);
-      var s = Math.floor((diff % 6e4) / 1e3);
-      var pad = function(n) { return n < 10 ? '0' + n : '' + n; };
-      var els = {
-        cdDays: pad(d), cdHours: pad(h), cdMins: pad(m), cdSecs: pad(s),
-        navCountdownTimer: d + ' يوم ' + h + ':' + pad(m) + ':' + pad(s)
-      };
-      Object.keys(els).forEach(function(id) {
-        var el = document.getElementById(id);
-        if (el) el.textContent = els[id];
-      });
-    }
-
-    update();
-    self._countdownInterval = setInterval(update, 1000);
-  }
 };
 
 window.showView = function(view) {
