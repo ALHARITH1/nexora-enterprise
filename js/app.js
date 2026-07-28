@@ -141,7 +141,16 @@ NEXORA.App = {
 
   _registerSW: function() {
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./sw.js').catch(function() {});
+      navigator.serviceWorker.register('./sw.js').then(function(reg) {
+        reg.addEventListener('updatefound', function() {
+          var nw = reg.installing;
+          if (nw) nw.addEventListener('statechange', function() {
+            if (nw.state === 'activated') {
+              if (confirm('تحديث جديد متاح. أعد التحميل؟')) { window.location.reload(); }
+            }
+          });
+        });
+      }).catch(function() {});
     }
   },
 
