@@ -178,15 +178,6 @@ NEXORA.App = {
     try { this.mode = localStorage.getItem('nexora_mode') || 'turbo'; } catch(e) {}
   },
 
-  isBeforeLaunch: function() {
-    try {
-      var launch = new Date(NEXORA.Config.LAUNCH_DATE).getTime();
-      return Date.now() < launch;
-    } catch(e) { return false; }
-  },
-
-  _countdownInterval: null,
-
   _showLanding: function() {
     var self = NEXORA.App;
     document.getElementById('landingPage').classList.remove('hidden');
