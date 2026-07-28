@@ -30,6 +30,7 @@ NEXORA.Sidebar = {
 
     if (mode === 'turbo') {
       h += '<button class="nav-btn" data-view="turbo" onclick="NEXORA.Router.navigate(\'turbo\')"><i class="ti ti-bolt"></i><span>الرئيسية</span></button>';
+      h += '<button class="nav-btn" data-view="projects" onclick="NEXORA.Router.navigate(\'projects\')"><i class="ti ti-building"></i><span>المشاريع</span></button>';
       h += '<button class="nav-btn" data-view="turboDaily" onclick="NEXORA.Router.navigate(\'turboDaily\')"><i class="ti ti-user-plus"></i><span>اليوميات</span></button>';
       h += '<button class="nav-btn" data-view="turboPurchases" onclick="NEXORA.Router.navigate(\'turboPurchases\')"><i class="ti ti-shopping-cart"></i><span>المشتريات</span></button>';
       h += '<button class="nav-btn" data-view="turboCashflow" onclick="NEXORA.Router.navigate(\'turboCashflow\')"><i class="ti ti-cash"></i><span>السيولة</span></button>';
