@@ -15,18 +15,7 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.44.0/dist/tabler-icons.min.css">
 
-  <link rel="stylesheet" href="css/variables.css">
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/layout.css">
-  <link rel="stylesheet" href="css/landing.css">
-  <link rel="stylesheet" href="css/auth.css">
-  <link rel="stylesheet" href="css/dashboard.css">
-  <link rel="stylesheet" href="css/kanban.css">
-  <link rel="stylesheet" href="css/processes.css">
-  <link rel="stylesheet" href="css/dark.css">
-  <link rel="stylesheet" href="css/turbo.css?v=3.5.0">
-  <link rel="stylesheet" href="css/enterprise.css?v=3.5.0">
+  <!-- CSS is now imported via js/main.js to be bundled by Vite -->
 </head>
 <body class="rtl">
 
@@ -35,8 +24,8 @@
     <nav class="l-nav">
       <div class="l-nav-brand"><i class="ti ti-building-skyscraper"></i> NEXORA</div>
       <div class="l-nav-links" id="navLoginBtns">
-        <a class="btn btn-ghost" href="#login" onclick="NEXORA.Router.navigate('login');event.preventDefault();">تسجيل الدخول</a>
-        <a class="btn btn-primary" href="#login" onclick="NEXORA.Router.navigate('login');event.preventDefault();">ابدأ مجاناً</a>
+        <a class="btn btn-ghost" href="#login" id="navLoginBtn">تسجيل الدخول</a>
+        <a class="btn btn-primary" href="#login" id="navStartBtn">ابدأ مجاناً</a>
       </div>
     </nav>
     <section class="l-hero">
@@ -45,7 +34,7 @@
         <h1>إدارة مشاريع المقاولات<br>بشكل <span>احترافي</span></h1>
         <p>تابع مشاريعك من أي مكان: البنود، المهام، الاعتمادات، التكاليف، والتقارير الذكية — كل ما تحتاجه في منصة واحدة.</p>
         <div class="l-hero-actions" id="heroLoginBtns">
-          <a class="btn btn-primary btn-lg" href="#login" onclick="NEXORA.Router.navigate('login');event.preventDefault();"><i class="ti ti-rocket"></i> ابدأ مجاناً</a>
+          <a class="btn btn-primary btn-lg" href="#login" id="heroStartBtn"><i class="ti ti-rocket"></i> ابدأ مجاناً</a>
           <a class="btn btn-lg" href="#features"><i class="ti ti-player-play"></i> شاهد المميزات</a>
         </div>
         <div class="l-hero-stats">
@@ -112,7 +101,7 @@
     <section class="l-cta" id="ctaSection">
       <h2>ابدأ إدارة مشاريعك الآن</h2>
       <p>انضم لمئات الشركات التي تستخدم NEXORA لإدارة مشاريعها بكفاءة</p>
-      <a class="btn btn-gold btn-lg" href="#login" onclick="NEXORA.Router.navigate('login');event.preventDefault();"><i class="ti ti-rocket"></i> ابدأ مجاناً</a>
+      <a class="btn btn-gold btn-lg" href="#login" id="ctaStartBtn"><i class="ti ti-rocket"></i> ابدأ مجاناً</a>
     </section>
     <footer class="l-footer">
       <p>&copy; 2026 NEXORA. جميع الحقوق محفوظة.</p>
@@ -122,7 +111,7 @@
   <!-- ═══════════ AUTH PAGE ═══════════ -->
   <div id="authPage" class="auth hidden">
     <div class="auth-hero">
-      <button class="btn btn-ghost auth-back" onclick="NEXORA.Router.navigate('landing')" style="color:#fff;"><i class="ti ti-arrow-right"></i> الرئيسية</button>
+      <button class="btn btn-ghost auth-back" id="authBackBtn" style="color:#fff;"><i class="ti ti-arrow-right"></i> الرئيسية</button>
       <h1><i class="ti ti-building-skyscraper"></i> NEXORA</h1>
       <p>منصة احترافية لإدارة مشاريع المقاولات</p>
       <div class="features-list">
@@ -135,8 +124,8 @@
     <div class="auth-panel-wrap">
       <div class="auth-panel">
         <div class="auth-tabs">
-          <button class="auth-tab active" onclick="NEXORA.AuthPage._switchTab('login', this)">دخول</button>
-          <button class="auth-tab" onclick="NEXORA.AuthPage._switchTab('register', this)">حساب جديد</button>
+          <button class="auth-tab active" data-tab="login">دخول</button>
+          <button class="auth-tab" data-tab="register">حساب جديد</button>
         </div>
         <div class="auth-card">
           <div id="authLoginForm" class="auth-form active">
@@ -179,7 +168,7 @@
       </div>
       <nav id="sidebarNav" class="sidebar-nav"></nav>
       <div class="sidebar-footer">
-        <div class="sidebar-user" onclick="NEXORA.Auth.logout()">
+        <div class="sidebar-user" id="sidebarLogoutBtn">
           <div class="sidebar-user-avatar" id="sidebarUserAvatar">?</div>
           <div class="sidebar-user-info">
             <div class="user-name" id="sidebarUserName">-</div>
@@ -247,58 +236,22 @@
   <div id="notifPanel" class="notif-panel">
     <div class="notif-panel-header">
       <h4 style="font-size:var(--fs-lg);font-weight:700;">الإشعارات</h4>
-      <button class="btn btn-sm btn-ghost" onclick="document.getElementById('notifPanel').classList.remove('open')"><i class="ti ti-x"></i></button>
+      <button class="btn btn-sm btn-ghost" id="notifCloseBtn"><i class="ti ti-x"></i></button>
     </div>
     <div id="notifPanelBody" class="notif-panel-body"></div>
   </div>
 
-  <!-- ═══════════ ALL SCRIPTS (no defer - load order guaranteed) ═══════════ -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <!-- App Error Boundary -->
+  <div id="appErrorBoundary" class="hidden" style="position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;">
+    <div style="background:var(--surface);padding:40px;border-radius:12px;box-shadow:var(--shadow-lg);max-width:400px;">
+      <i class="ti ti-alert-triangle" style="font-size:48px;color:var(--ER);margin-bottom:16px;"></i>
+      <h2 style="margin-bottom:8px;">تعذر بدء التطبيق</h2>
+      <p id="appErrorText" style="color:var(--TX2);margin-bottom:24px;font-size:14px;"></p>
+      <button onclick="window.location.reload()" class="btn btn-primary">إعادة المحاولة</button>
+    </div>
+  </div>
 
-  <script src="js/config.js?v=3.5.0"></script>
-  <script src="js/utils/helpers.js?v=3.4.0"></script>
-  <script src="js/supabaseClient.js?v=3.4.0"></script>
-  <script src="js/auth.js?v=3.4.0"></script>
-  <script src="js/rbac.js?v=3.4.0"></script>
-  <script src="js/store.js?v=3.4.0"></script>
-  <script src="js/router.js?v=3.4.0"></script>
-  <script src="js/components/toast.js?v=3.4.0"></script>
-  <script src="js/components/modal.js?v=3.4.0"></script>
-  <script src="js/components/charts.js?v=3.4.0"></script>
-  <script src="js/components/sidebar.js?v=3.4.0"></script>
-  <script src="js/components/header.js?v=3.4.0"></script>
-  <script src="js/components/interactive.js?v=3.4.0"></script>
-  <script src="js/views/dashboard.js?v=3.4.0"></script>
-  <script src="js/views/projects.js?v=3.4.0"></script>
-  <script src="js/views/projectDetail.js?v=3.4.0"></script>
-  <script src="js/views/itemDetail.js?v=3.4.0"></script>
-  <script src="js/views/approvals.js?v=3.4.0"></script>
-  <script src="js/views/costs.js?v=3.4.0"></script>
-  <script src="js/views/reports.js?v=3.4.0"></script>
-  <script src="js/views/employees.js?v=3.4.0"></script>
-  <script src="js/views/admin.js?v=3.4.0"></script>
-  <script src="js/views/owner.js?v=3.4.0"></script>
-  <script src="js/processes/processCatalog.js?v=3.4.0"></script>
-  <script src="js/processes/processEngine.js?v=3.4.0"></script>
-  <script src="js/processes/processWizard.js?v=3.4.0"></script>
-  <script src="js/views/processes.js?v=3.4.0"></script>
-  <script src="js/views/processDetail.js?v=3.4.0"></script>
-  <script src="js/views/processDashboard.js?v=3.4.0"></script>
-  <script src="js/views/boq.js?v=3.4.0"></script>
-  <script src="js/views/dailyLabor.js?v=3.4.0"></script>
-  <script src="js/views/cashflow.js?v=3.4.0"></script>
-  <script src="js/views/stakeholders.js?v=3.4.0"></script>
-  <script src="js/views/contracts.js?v=3.4.0"></script>
-  <script src="js/views/changeRequests.js?v=3.4.0"></script>
-  <script src="js/alerts.js?v=3.5.0"></script>
-  <script src="js/views/turbo/dashboard.js?v=3.5.0"></script>
-  <script src="js/views/turbo/daily.js?v=3.5.0"></script>
-  <script src="js/views/turbo/purchases.js?v=3.5.0"></script>
-  <script src="js/views/turbo/cashflow.js?v=3.5.0"></script>
-  <script src="js/views/enterprise/planning.js?v=3.5.0"></script>
-  <script src="js/views/enterprise/execution.js?v=3.5.0"></script>
-  <script src="js/views/enterprise/control.js?v=3.5.0"></script>
-  <script src="js/app.js?v=3.4.0"></script>
+  <!-- ═══════════ ALL SCRIPTS ═══════════ -->
 
   <!-- ═══ Init Module Entry Point ═══ -->
   <script type="module" src="js/main.js"></script>

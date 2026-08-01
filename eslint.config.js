@@ -12,6 +12,8 @@ export default [
         document: "readonly",
         navigator: "readonly",
         localStorage: "readonly",
+        sessionStorage: "readonly",
+        process: "readonly",
         fetch: "readonly",
         console: "readonly",
         setTimeout: "readonly",

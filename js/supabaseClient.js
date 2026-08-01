@@ -2,14 +2,19 @@ import { createClient } from '@supabase/supabase-js';
 
 window.NEXORA = window.NEXORA || {};
 
-const supabaseUrl = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_SUPABASE_URL) || 'https://demo.supabase.co';
-const supabaseAnonKey = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_SUPABASE_ANON_KEY) || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.demo';
+const supabaseUrl = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_SUPABASE_URL) || '';
+const supabaseAnonKey = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_SUPABASE_ANON_KEY) || '';
 
 let supabase = null;
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error('إعدادات الاتصال بقاعدة البيانات مفقودة (VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY). يرجى التحقق من المتغيرات البيئية.');
+}
+
 try {
   supabase = createClient(supabaseUrl, supabaseAnonKey);
 } catch (err) {
-  console.warn('[Supabase] Initialized in fallback mode:', err.message);
+  console.warn('[Supabase] Initialization failed:', err.message);
+  throw err;
 }
 
 NEXORA.Supabase = {

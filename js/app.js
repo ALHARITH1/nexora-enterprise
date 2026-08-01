@@ -9,32 +9,51 @@ NEXORA.App = {
   theme: 'light',
   mode: 'turbo',
 
+  _initialized: false,
+  _initPromise: null,
+
   init: function() {
     var self = NEXORA.App;
+    if (self._initialized && self._initPromise) return self._initPromise;
+    if (self._initPromise) return self._initPromise;
 
-    self.restoreTheme();
-    self._bindKeyboard();
-    self._bindInteractive();
-    self._bindSidebarToggle();
-    self._registerSW();
+    self._initPromise = new Promise(function(resolve, reject) {
+      try {
+        self.restoreTheme();
+        self._bindKeyboard();
+        self._bindInteractive();
+        self._bindSidebarToggle();
+        self._registerSW();
 
-    NEXORA.Store.init().then(function() {
-      var stored = NEXORA.Auth.getUser();
-      if (stored) {
-        self.cu = stored;
-        self._showApp();
-      } else {
-        self._showLanding();
-      }
-    }).catch(function() {
-      var stored = NEXORA.Auth.getUser();
-      if (stored) {
-        self.cu = stored;
-        self._showApp();
-      } else {
-        self._showLanding();
+        NEXORA.Store.init().then(function() {
+          var stored = NEXORA.Auth.getUser();
+          if (stored) {
+            self.cu = stored;
+            self._showApp();
+          } else {
+            self._showLanding();
+          }
+          self._initialized = true;
+          resolve();
+        }).catch(function(err) {
+          var stored = NEXORA.Auth.getUser();
+          if (stored) {
+            self.cu = stored;
+            self._showApp();
+            self._initialized = true;
+            resolve();
+          } else {
+            self._showLanding();
+            self._initialized = true;
+            resolve();
+          }
+        });
+      } catch (err) {
+        reject(err);
       }
     });
+
+    return self._initPromise;
   },
 
   _showApp: function() {
