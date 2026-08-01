@@ -4,3 +4,7 @@ desktop.ini
 *.swp
 *.swo
 *~
+node_modules/
+dist/
+coverage/
+.env.local

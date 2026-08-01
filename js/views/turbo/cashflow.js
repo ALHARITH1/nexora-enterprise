@@ -8,10 +8,16 @@ NEXORA.Views.TurboCashflow = {
     var el = document.getElementById('turboCashflowContent');
     if (!el) return;
 
-    var flows = (DB.cash_flow || []).sort(function(a, b) { return (b.date || '').localeCompare(a.date || ''); });
-    var totalIn = flows.filter(function(c) { return c.type === 'income'; }).reduce(function(s, c) { return s + (c.amount || 0); }, 0);
-    var totalOut = flows.filter(function(c) { return c.type === 'expense'; }).reduce(function(s, c) { return s + (c.amount || 0); }, 0);
-    var balance = totalIn - totalOut;
+    var flows = (DB.cash_flow || []).sort(function(a, b) {
+      var dA = a.transaction_date || a.date || '';
+      var dB = b.transaction_date || b.date || '';
+      return dB.localeCompare(dA);
+    });
+
+    var summary = window.NEXORA.FinanceUtils ? window.NEXORA.FinanceUtils.calculateCashFlowSummary(flows) : { inflow: 0, outflow: 0, netBalance: 0 };
+    var totalIn = summary.inflow;
+    var totalOut = summary.outflow;
+    var balance = summary.netBalance;
 
     var h = '<div class="turbo-section-header">' +
       '<h2><i class="ti ti-cash"></i> السيولة النقدية</h2>' +
@@ -28,7 +34,7 @@ NEXORA.Views.TurboCashflow = {
       '<div class="card-title"><i class="ti ti-plus"></i> إدخال حركة</div>' +
       '<div id="turboCashMsg" class="message-box"></div>' +
       '<div class="turbo-form-row">' +
-        '<select id="turboCashType" class="turbo-input"><option value="income">وارد (+)</option><option value="expense">صادر (-)</option></select>' +
+        '<select id="turboCashType" class="turbo-input"><option value="inflow">وارد (+)</option><option value="outflow">صادر (-)</option></select>' +
         '<input type="text" id="turboCashDesc" class="turbo-input" placeholder="الوصف">' +
         '<input type="number" id="turboCashAmount" class="turbo-input" placeholder="المبلغ">' +
       '</div>' +
@@ -40,8 +46,9 @@ NEXORA.Views.TurboCashflow = {
       h += '<div class="empty-state"><i class="ti ti-cash"></i>لا توجد حركات</div>';
     } else {
       h += flows.slice(0, 15).map(function(c) {
-        var isIn = c.type === 'income';
-        return '<div class="list-item"><div class="info"><strong>' + H.esc(c.description || c.desc || 'حركة') + '</strong><small>' + (c.date || '') + '</small></div>' +
+        var isIn = (c.type === 'inflow' || c.type === 'income');
+        var dStr = c.transaction_date || c.date || '';
+        return '<div class="list-item"><div class="info"><strong>' + H.esc(c.description || c.desc || 'حركة') + '</strong><small>' + dStr + '</small></div>' +
           '<span style="font-weight:700;color:' + (isIn ? 'var(--GR)' : 'var(--RE)') + ';">' + (isIn ? '+' : '-') + ' ' + H.fmt(c.amount || 0) + ' ر.س</span></div>';
       }).join('');
     }
@@ -50,24 +57,37 @@ NEXORA.Views.TurboCashflow = {
     el.innerHTML = h;
   },
 
-  add: function() {
+  add: async function() {
     var DB = NEXORA.DB;
     var H = NEXORA.Helpers;
-    var type = document.getElementById('turboCashType').value;
+    var rawType = document.getElementById('turboCashType').value;
+    var type = (rawType === 'income' || rawType === 'inflow') ? 'inflow' : 'outflow';
     var desc = document.getElementById('turboCashDesc').value.trim();
     var amount = parseFloat(document.getElementById('turboCashAmount').value) || 0;
     if (!desc || !amount) return H.msg('turboCashMsg', 'أدخل الوصف والمبلغ', 'error');
 
-    if (!DB.cash_flow) DB.cash_flow = [];
-    DB.cash_flow.push({
-      id: H.gf(DB.cash_flow),
-      project_id: App.curProjId || 0,
+    var curProjId = (NEXORA.App && NEXORA.App.curProjId) ? NEXORA.App.curProjId : null;
+    var todayStr = window.NEXORA.DateUtils ? window.NEXORA.DateUtils.getLocalDateString() : new Date().toISOString().split('T')[0];
+
+    const record = {
+      project_id: curProjId,
       type: type,
+      category: 'عام',
       description: desc,
       amount: amount,
-      date: new Date().toISOString().split('T')[0]
-    });
-    DB.save();
+      transaction_date: todayStr,
+      date: todayStr
+    };
+
+    if (NEXORA.Repositories && NEXORA.Repositories.cashFlow) {
+      await NEXORA.Repositories.cashFlow.create(record);
+    } else {
+      if (!DB.cash_flow) DB.cash_flow = [];
+      record.id = H.gf(DB.cash_flow);
+      DB.cash_flow.push(record);
+      if (DB.save) DB.save();
+    }
+
     H.msg('turboCashMsg', 'تم التسجيل', 'success');
     document.getElementById('turboCashDesc').value = '';
     document.getElementById('turboCashAmount').value = '';

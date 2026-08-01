@@ -1,108 +1,80 @@
-const CACHE = 'nexora-v3.7.0';
-const STATIC_ASSETS = [
+const CACHE_NAME = 'nexora-v3.8.0';
+
+const APP_SHELL_ASSETS = [
   './',
   './index.html',
   './manifest.json',
-  './css/variables.css',
-  './css/base.css',
-  './css/components.css',
-  './css/layout.css',
-  './css/landing.css',
-  './css/auth.css',
-  './css/dashboard.css',
-  './css/kanban.css',
-  './css/processes.css',
-  './css/dark.css',
-  './css/turbo.css',
-  './css/enterprise.css',
-  './js/config.js',
-  './js/utils/helpers.js',
-  './js/supabaseClient.js',
-  './js/auth.js',
-  './js/rbac.js',
-  './js/store.js',
-  './js/router.js',
-  './js/app.js',
-  './js/components/toast.js',
-  './js/components/modal.js',
-  './js/components/charts.js',
-  './js/components/sidebar.js',
-  './js/components/header.js',
-  './js/components/interactive.js',
-  './js/views/dashboard.js',
-  './js/views/projects.js',
-  './js/views/projectDetail.js',
-  './js/views/itemDetail.js',
-  './js/views/approvals.js',
-  './js/views/costs.js',
-  './js/views/reports.js',
-  './js/views/employees.js',
-  './js/views/admin.js',
-  './js/views/owner.js',
-  './js/processes/processCatalog.js',
-  './js/processes/processEngine.js',
-  './js/processes/processWizard.js',
-  './js/views/processes.js',
-  './js/views/processDetail.js',
-  './js/views/processDashboard.js',
-  './js/views/boq.js',
-  './js/views/dailyLabor.js',
-  './js/views/cashflow.js',
-  './js/views/stakeholders.js',
-  './js/views/contracts.js',
-  './js/views/changeRequests.js',
-  './js/alerts.js',
-  './js/views/turbo/dashboard.js',
-  './js/views/turbo/daily.js',
-  './js/views/turbo/purchases.js',
-  './js/views/turbo/cashflow.js',
-  './js/views/enterprise/planning.js',
-  './js/views/enterprise/execution.js',
-  './js/views/enterprise/control.js'
-];
-const CDN_ASSETS = [
-  'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap',
-  'https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.44.0/dist/tabler-icons.min.css',
-  'https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js',
-  'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2'
+  './js/main.js'
 ];
 
-self.addEventListener('install', e => {
-  e.waitUntil(
-    caches.open(CACHE).then(c => Promise.allSettled(
-      [...STATIC_ASSETS, ...CDN_ASSETS].map(u => c.add(u).catch(() => null))
-    )).then(() => self.skipWaiting())
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(cache => {
+      return cache.addAll(APP_SHELL_ASSETS).catch(err => {
+        console.warn('[SW] App shell precache warning:', err.message);
+      });
+    }).then(() => self.skipWaiting())
   );
 });
 
-self.addEventListener('activate', e => {
-  e.waitUntil(
-    caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k))))
-    .then(() => self.clients.claim())
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(keys => {
+      return Promise.all(
+        keys.map(key => {
+          if (key !== CACHE_NAME) {
+            return caches.delete(key);
+          }
+        })
+      );
+    }).then(() => self.clients.claim())
   );
 });
 
-self.addEventListener('fetch', e => {
-  const url = new URL(e.request.url);
-  if (e.request.mode === 'navigate' || url.pathname.endsWith('.html') || url.pathname === '/' || url.pathname === '') {
-    e.respondWith(
-      fetch(e.request).then(res => {
-        caches.open(CACHE).then(c => c.put(e.request, res.clone()));
-        return res;
-      }).catch(() => caches.match(e.request).then(r => r || caches.match('./index.html').then(r => r || new Response('غير متصل', { status: 503 }))))
+self.addEventListener('fetch', event => {
+  const request = event.request;
+  const url = new URL(request.url);
+
+  // Never cache authentication or Supabase API requests
+  if (url.hostname.includes('supabase') || url.pathname.includes('/auth/v1') || url.pathname.includes('/rest/v1')) {
+    return;
+  }
+
+  // Network-first strategy for navigation requests
+  if (request.mode === 'navigate' || url.pathname.endsWith('.html') || url.pathname === '/') {
+    event.respondWith(
+      fetch(request)
+        .then(response => {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(request, copy));
+          return response;
+        })
+        .catch(() => {
+          return caches.match(request).then(cached => {
+            return cached || caches.match('./index.html') || new Response('Offline', { status: 503 });
+          });
+        })
     );
     return;
   }
-  e.respondWith(
-    caches.match(e.request).then(r => r || fetch(e.request).then(res => {
-      if (res && res.status === 200 && (res.type === 'basic' || res.type === 'cors')) {
-        caches.open(CACHE).then(c => c.put(e.request, res.clone()));
-      }
-      return res;
-    }).catch(() => new Response('', { status: 503 })))
+
+  // Cache-first for static assets
+  event.respondWith(
+    caches.match(request).then(cachedResponse => {
+      if (cachedResponse) return cachedResponse;
+      return fetch(request).then(networkResponse => {
+        if (networkResponse && networkResponse.status === 200 && request.method === 'GET') {
+          const copy = networkResponse.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(request, copy));
+        }
+        return networkResponse;
+      });
+    })
   );
 });
 
-self.addEventListener('message', e => {
-  if (e.data === 'skipWaiting') self.skipWaiting();
+self.addEventListener('message', event => {
+  if (event.data === 'skipWaiting') {
+    self.skipWaiting();
+  }
 });

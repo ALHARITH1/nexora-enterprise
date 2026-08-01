@@ -3,17 +3,19 @@ NEXORA.Views = NEXORA.Views || {};
 
 NEXORA.Views.TurboPurchases = {
   render: function() {
-    var App = NEXORA.App;
     var DB = NEXORA.DB;
     var H = NEXORA.Helpers;
     var el = document.getElementById('turboPurchasesContent');
     if (!el) return;
 
-    var today = new Date().toISOString().split('T')[0];
     var allCosts = (DB.costs || []).concat(DB.cash_flow || []).filter(function(c) {
-      return (c.type === 'expense' || c.category === 'مشتريات');
+      return (c.type === 'outflow' || c.type === 'expense' || c.category === 'مشتريات' || c.category === 'materials');
     });
-    var recentCosts = allCosts.sort(function(a, b) { return (b.date || '').localeCompare(a.date || ''); }).slice(0, 20);
+    var recentCosts = allCosts.sort(function(a, b) {
+      var dA = a.cost_date || a.transaction_date || a.date || '';
+      var dB = b.cost_date || b.transaction_date || b.date || '';
+      return dB.localeCompare(dA);
+    }).slice(0, 20);
 
     var h = '<div class="turbo-section-header">' +
       '<h2><i class="ti ti-shopping-cart"></i> المشتريات</h2>' +
@@ -28,7 +30,7 @@ NEXORA.Views.TurboPurchases = {
       '</div>' +
       '<div class="turbo-form-row">' +
         '<select id="turboPurchProject" class="turbo-input"><option value="">— المشروع —</option>' +
-        DB.projects.map(function(p) { return '<option value="' + p.id + '">' + H.esc(p.name) + '</option>'; }).join('') +
+        (DB.projects || []).map(function(p) { return '<option value="' + p.id + '">' + H.esc(p.name) + '</option>'; }).join('') +
         '</select>' +
         '<button class="btn btn-primary" onclick="NEXORA.Views.TurboPurchases.add()"><i class="ti ti-check"></i> تسجيل</button>' +
       '</div>' +
@@ -39,7 +41,8 @@ NEXORA.Views.TurboPurchases = {
       h += '<div class="empty-state"><i class="ti ti-shopping-cart"></i>لا توجد مشتريات</div>';
     } else {
       h += recentCosts.map(function(c) {
-        return '<div class="list-item"><div class="info"><strong>' + H.esc(c.description || c.desc || 'شراء') + '</strong><small>' + (c.date || '') + '</small></div>' +
+        var dStr = c.cost_date || c.transaction_date || c.date || '';
+        return '<div class="list-item"><div class="info"><strong>' + H.esc(c.description || c.desc || 'شراء') + '</strong><small>' + dStr + '</small></div>' +
           '<span style="font-weight:700;color:var(--RE);">- ' + H.fmt(c.cost || c.amount || 0) + ' ر.س</span></div>';
       }).join('');
     }
@@ -48,25 +51,37 @@ NEXORA.Views.TurboPurchases = {
     el.innerHTML = h;
   },
 
-  add: function() {
+  add: async function() {
     var DB = NEXORA.DB;
     var H = NEXORA.Helpers;
     var desc = document.getElementById('turboPurchDesc').value.trim();
     var amount = parseFloat(document.getElementById('turboPurchAmount').value) || 0;
-    var pid = parseInt(document.getElementById('turboPurchProject').value) || 0;
+    var selectedProjId = document.getElementById('turboPurchProject').value;
+    var pid = selectedProjId || (NEXORA.App && NEXORA.App.curProjId) || null;
+
     if (!desc || !amount) return H.msg('turboPurchMsg', 'أدخل الوصف والمبلغ', 'error');
 
-    DB.costs.push({
-      id: H.gf(DB.costs),
-      item_id: 0,
-      employee_id: 0,
-      hours: 0,
-      hour_rate: 0,
-      cost: amount,
+    var todayStr = window.NEXORA.DateUtils ? window.NEXORA.DateUtils.getLocalDateString() : new Date().toISOString().split('T')[0];
+
+    const costRecord = {
+      project_id: pid,
+      category: 'materials',
       description: desc,
-      date: new Date().toISOString().split('T')[0]
-    });
-    DB.save();
+      amount: amount,
+      cost: amount,
+      cost_date: todayStr,
+      date: todayStr
+    };
+
+    if (NEXORA.Repositories && NEXORA.Repositories.costs) {
+      await NEXORA.Repositories.costs.create(costRecord);
+    } else {
+      if (!DB.costs) DB.costs = [];
+      costRecord.id = H.gf(DB.costs);
+      DB.costs.push(costRecord);
+      if (DB.save) DB.save();
+    }
+
     H.msg('turboPurchMsg', 'تم تسجيل الشراء', 'success');
     document.getElementById('turboPurchDesc').value = '';
     document.getElementById('turboPurchAmount').value = '';

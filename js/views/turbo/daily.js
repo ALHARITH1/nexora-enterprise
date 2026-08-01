@@ -3,21 +3,19 @@ NEXORA.Views = NEXORA.Views || {};
 
 NEXORA.Views.TurboDaily = {
   render: function() {
-    var App = NEXORA.App;
     var DB = NEXORA.DB;
     var H = NEXORA.Helpers;
     var el = document.getElementById('turboDailyContent');
     if (!el) return;
 
-    var today = new Date().toISOString().split('T')[0];
-    var emps = DB.employees.filter(function(e) { return e.active; });
-    var todayLogs = (DB.dailylogs || []).filter(function(l) { return l.date === today; });
-    var todayWages = (DB.daily_wages || []).filter(function(w) { return w.date === today; });
-    var totalWage = todayWages.reduce(function(s, w) { return s + (w.amount || w.daily_wage || 0); }, 0);
+    var todayStr = window.NEXORA.DateUtils ? window.NEXORA.DateUtils.getLocalDateString() : new Date().toISOString().split('T')[0];
+    var emps = (DB.employees || []).filter(function(e) { return e.active !== false && e.status !== 'inactive'; });
+    var todayWages = (DB.daily_wages || []).filter(function(w) { return (w.work_date || w.date) === todayStr; });
+    var totalWage = todayWages.reduce(function(s, w) { return s + (w.total_wage || w.amount || w.daily_wage || 0); }, 0);
 
     var h = '<div class="turbo-section-header">' +
       '<h2><i class="ti ti-user-plus"></i> يوميات اليوم</h2>' +
-      '<span class="badge">' + today + '</span>' +
+      '<span class="badge">' + todayStr + '</span>' +
     '</div>';
 
     h += '<div class="turbo-quick-form card">' +
@@ -25,7 +23,7 @@ NEXORA.Views.TurboDaily = {
       '<div id="turboDailyMsg" class="message-box"></div>' +
       '<div class="turbo-form-row">' +
         '<select id="turboEmpSelect" class="turbo-input"><option value="">— اختر عامل —</option>' +
-        emps.map(function(e) { return '<option value="' + e.id + '">' + H.esc(e.full_name) + ' (' + H.esc(e.role) + ')</option>'; }).join('') +
+        emps.map(function(e) { return '<option value="' + e.id + '">' + H.esc(e.full_name || e.name) + ' (' + H.esc(e.role || e.role_code || 'عامل') + ')</option>'; }).join('') +
         '</select>' +
         '<input type="number" id="turboEmpRate" class="turbo-input" placeholder="الأجر/يوم" value="150">' +
         '<input type="number" id="turboEmpDays" class="turbo-input" placeholder="أيام" value="1" min="0.5" step="0.5">' +
@@ -38,9 +36,10 @@ NEXORA.Views.TurboDaily = {
       h += '<div class="empty-state"><i class="ti ti-users"></i>لا يوجد تسجيل بعد</div>';
     } else {
       h += todayWages.map(function(w) {
-        var emp = H.emp(w.employee_id);
-        return '<div class="list-item"><div class="info"><strong>' + (emp ? H.esc(emp.full_name) : '?') + '</strong><small>' + (w.days || 1) + ' أيام × ' + H.fmt(w.daily_wage) + '</small></div>' +
-          '<span style="font-weight:700;">' + H.fmt(w.amount || (w.days || 1) * (w.daily_wage || 0)) + ' ر.س</span></div>';
+        var emp = H.emp ? H.emp(w.employee_id) : (DB.employees || []).find(e => String(e.id) === String(w.employee_id));
+        var empName = emp ? (emp.full_name || emp.name) : (w.worker_name || '?');
+        return '<div class="list-item"><div class="info"><strong>' + H.esc(empName) + '</strong><small>' + (w.days || 1) + ' أيام × ' + H.fmt(w.daily_rate || w.daily_wage || 0) + '</small></div>' +
+          '<span style="font-weight:700;">' + H.fmt(w.total_wage || w.amount || (w.days || 1) * (w.daily_wage || 0)) + ' ر.س</span></div>';
       }).join('');
       h += '<div style="border-top:2px solid var(--BD);padding-top:8px;margin-top:8px;display:flex;justify-content:space-between;"><strong>الإجمالي</strong><strong style="color:var(--P);">' + H.fmt(totalWage) + ' ر.س</strong></div>';
     }
@@ -54,29 +53,43 @@ NEXORA.Views.TurboDaily = {
     el.innerHTML = h;
   },
 
-  addLog: function() {
+  addLog: async function() {
     var DB = NEXORA.DB;
     var H = NEXORA.Helpers;
-    var eid = parseInt(document.getElementById('turboEmpSelect').value);
+    var eid = document.getElementById('turboEmpSelect').value;
     var rate = parseFloat(document.getElementById('turboEmpRate').value) || 150;
     var days = parseFloat(document.getElementById('turboEmpDays').value) || 1;
     if (!eid) return H.msg('turboDailyMsg', 'اختر عامل', 'error');
 
-    var emp = H.emp(eid);
-    if (!emp) return;
+    var emp = (DB.employees || []).find(e => String(e.id) === String(eid));
+    var workerName = emp ? (emp.full_name || emp.name) : 'عامل';
+    var pid = (NEXORA.App && NEXORA.App.curProjId) ? NEXORA.App.curProjId : null;
+    var todayStr = window.NEXORA.DateUtils ? window.NEXORA.DateUtils.getLocalDateString() : new Date().toISOString().split('T')[0];
 
-    DB.daily_wages.push({
-      id: H.gf(DB.daily_wages),
+    const wageRecord = {
       employee_id: eid,
-      project_id: App.curProjId || 0,
-      date: new Date().toISOString().split('T')[0],
+      worker_name: workerName,
+      project_id: pid,
+      work_date: todayStr,
+      date: todayStr,
+      daily_rate: rate,
       daily_wage: rate,
       days: days,
+      total_wage: rate * days,
       amount: rate * days,
-      paid: false
-    });
-    DB.save();
-    H.msg('turboDailyMsg', 'تم تسجيل ' + emp.full_name, 'success');
+      status: 'pending'
+    };
+
+    if (NEXORA.Repositories && NEXORA.Repositories.dailyWages) {
+      await NEXORA.Repositories.dailyWages.create(wageRecord);
+    } else {
+      if (!DB.daily_wages) DB.daily_wages = [];
+      wageRecord.id = H.gf(DB.daily_wages);
+      DB.daily_wages.push(wageRecord);
+      if (DB.save) DB.save();
+    }
+
+    H.msg('turboDailyMsg', 'تم تسجيل ' + workerName, 'success');
     NEXORA.Views.TurboDaily.render();
   }
 };

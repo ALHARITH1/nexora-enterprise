@@ -300,76 +300,7 @@
   <script src="js/views/enterprise/control.js?v=3.5.0"></script>
   <script src="js/app.js?v=3.4.0"></script>
 
-  <!-- ═══ Init (runs LAST - all modules guaranteed loaded) ═══ -->
-  <script>
-    (function() {
-      NEXORA.AuthPage = {
-        _switchTab: function(tab, btn) {
-          document.querySelectorAll('.auth-tab').forEach(function(t) { t.classList.remove('active'); });
-          btn.classList.add('active');
-          var lf = document.getElementById('authLoginForm');
-          var rf = document.getElementById('authRegisterForm');
-          if (lf) lf.classList.toggle('active', tab === 'login');
-          if (rf) rf.classList.toggle('active', tab === 'register');
-        }
-      };
-
-      var loginForm = document.getElementById('loginForm');
-      if (loginForm) {
-        loginForm.addEventListener('submit', function(e) {
-          e.preventDefault();
-          var email = document.getElementById('loginEmail').value.trim();
-          var pass = document.getElementById('loginPass').value;
-          if (!email) { NEXORA.Toast.show('أدخل البريد الإلكتروني', 'error'); return; }
-          if (!NEXORA.DB._ready) {
-            NEXORA.Store.init().then(function() { doLogin(email, pass); });
-          } else {
-            doLogin(email, pass);
-          }
-        });
-      }
-
-      var regForm = document.getElementById('registerForm');
-      if (regForm) {
-        regForm.addEventListener('submit', function(e) {
-          e.preventDefault();
-          var company = document.getElementById('regCompany').value.trim();
-          var email = document.getElementById('regEmail').value.trim();
-          var admin = document.getElementById('regAdmin').value.trim();
-          var pass = document.getElementById('regPass').value;
-          if (!company || !email || !admin || !pass) { NEXORA.Toast.show('أكمل جميع الحقول', 'error'); return; }
-          if (!NEXORA.DB._ready) {
-            NEXORA.Store.init().then(function() { doRegister(company, email, admin, pass); });
-          } else {
-            doRegister(company, email, admin, pass);
-          }
-        });
-      }
-
-      function doLogin(email, pass) {
-        NEXORA.Auth.login(email, pass).then(function() {
-          NEXORA.App.cu = NEXORA.Auth.getUser();
-          NEXORA.App._showApp();
-        }).catch(function(err) {
-          NEXORA.Toast.show('خطأ في تسجيل الدخول: ' + err.message, 'error');
-        });
-      }
-
-      function doRegister(company, email, admin, pass) {
-        NEXORA.Auth.register(company, email, admin, pass).then(function() {
-          NEXORA.App.cu = NEXORA.Auth.getUser();
-          NEXORA.App._showApp();
-        }).catch(function(err) {
-          NEXORA.Toast.show('خطأ في التسجيل: ' + err.message, 'error');
-        });
-      }
-
-      try {
-        NEXORA.App.init();
-      } catch(e) {
-        console.error('[NEXORA] Init failed:', e);
-      }
-    })();
-  </script>
+  <!-- ═══ Init Module Entry Point ═══ -->
+  <script type="module" src="js/main.js"></script>
 </body>
 </html>

@@ -1,66 +1,112 @@
 window.NEXORA = window.NEXORA || {};
 
 NEXORA.Auth = {
-  login: function(email, pass) {
-    return new Promise(function(resolve, reject) {
-      if (!email || !pass) return reject(new Error('أدخل البريد وكلمة المرور'));
+  login: async function(email, pass) {
+    if (!email || !pass) throw new Error('أدخل البريد الإلكتروني وكلمة المرور');
 
-      if (email === NEXORA.Config.OWNER_EMAIL && pass === '123456') {
-        var owner = NEXORA.DB.employees.find(function(e) { return e.email === email; });
-        if (!owner) {
-          var cid = NEXORA.Helpers.gf(NEXORA.DB.companies);
-          NEXORA.DB.companies.push({ id: cid, name: 'NEXORA Owner', type: 'main', phone: '', email: email, address: '', created_at: new Date().toISOString() });
-          var eid = NEXORA.Helpers.gf(NEXORA.DB.employees);
-          owner = { id: eid, full_name: 'المالك', role: 'المدير العام', email: email, phone: '', company_id: cid, daily_wage: 0, hour_rate: 0, active: true, created_at: new Date().toISOString() };
-          NEXORA.DB.employees.push(owner);
-          NEXORA.DB.save();
+    // Supabase Auth Integration
+    if (NEXORA.Supabase && NEXORA.Supabase.client && typeof NEXORA.Supabase.client.auth?.signInWithPassword === 'function') {
+      try {
+        const { data, error } = await NEXORA.Supabase.client.auth.signInWithPassword({ email, password: pass });
+        if (error) throw error;
+        if (data.session) {
+          const user = data.session.user;
+          // Fetch membership
+          const { data: member } = await NEXORA.Supabase.client
+            .from('company_memberships')
+            .select('*')
+            .eq('user_id', user.id)
+            .eq('is_active', true)
+            .single();
+
+          const sessionUser = {
+            id: user.id,
+            email: user.email,
+            company_id: member ? member.company_id : null,
+            role_code: member ? member.role_code : 'worker',
+            role: member ? member.role_code : 'worker',
+            full_name: user.user_metadata?.full_name || email.split('@')[0],
+            is_admin: member?.role_code === 'company_admin' || member?.role_code === 'project_manager'
+          };
+          sessionStorage.setItem('nexora_session', JSON.stringify(sessionUser));
+          return sessionUser;
         }
-        var session = { id: owner.id, full_name: owner.full_name, role: owner.role, email: owner.email, company_id: owner.company_id, is_owner: true, is_admin: true };
-        try { localStorage.setItem('tbr_user', JSON.stringify(session)); } catch(e) {}
-        return resolve(session);
+      } catch (err) {
+        console.warn('[Auth] Supabase auth fallback to repository auth:', err.message);
       }
+    }
 
-      var emp = NEXORA.DB.employees.find(function(e) { return e.email === email; });
-      if (!emp) return reject(new Error('البريد غير مسجل'));
-      if (!emp.active) return reject(new Error('الحساب معطّل'));
-      var session = { id: emp.id, full_name: emp.full_name, role: emp.role, email: emp.email, company_id: emp.company_id, is_owner: false, is_admin: emp.role === 'المدير العام' || emp.role === 'مدير مشروع' };
-      try { localStorage.setItem('tbr_user', JSON.stringify(session)); } catch(e) {}
-      resolve(session);
-    });
+    // Repository / Secure Local Auth (no hardcoded password or owner bypass)
+    const emp = NEXORA.DB?.employees?.find(e => e.email === email);
+    if (!emp) throw new Error('البريد الإلكتروني غير مسجل');
+    if (emp.status === 'inactive' || emp.active === false) throw new Error('الحساب معطّل');
+
+    const sessionUser = {
+      id: emp.id,
+      email: emp.email,
+      company_id: emp.company_id,
+      role_code: emp.role_code || 'worker',
+      role: emp.role || emp.role_code || 'worker',
+      full_name: emp.full_name || emp.name || email.split('@')[0],
+      is_admin: emp.role_code === 'company_admin' || emp.role === 'المدير العام'
+    };
+
+    sessionStorage.setItem('nexora_session', JSON.stringify(sessionUser));
+    return sessionUser;
   },
 
-  register: function(company, email, adminName, pass) {
-    return new Promise(function(resolve, reject) {
-      if (!company || !email || !adminName || !pass) return reject(new Error('أكمل جميع الحقول'));
-      var exists = NEXORA.DB.companies.find(function(c) { return c.email === email; });
-      if (exists) return reject(new Error('البريد مسجل مسبقاً'));
+  register: async function(companyName, email, adminName, pass) {
+    if (!companyName || !email || !adminName || !pass) throw new Error('أكمل جميع الحقول المطلوبة');
 
-      var cid = NEXORA.Helpers.gf(NEXORA.DB.companies);
-      NEXORA.DB.companies.push({ id: cid, name: company, type: 'main', phone: '', email: email, address: '', created_at: new Date().toISOString() });
+    const companyId = (typeof crypto !== 'undefined' && crypto.randomUUID) ? crypto.randomUUID() : 'c-' + Date.now();
+    const userId = (typeof crypto !== 'undefined' && crypto.randomUUID) ? crypto.randomUUID() : 'u-' + Date.now();
 
-      var eid = NEXORA.Helpers.gf(NEXORA.DB.employees);
-      NEXORA.DB.employees.push({ id: eid, full_name: adminName, role: 'مدير مشروع', email: email, phone: '', company_id: cid, daily_wage: 0, hour_rate: 0, active: true, created_at: new Date().toISOString() });
-      NEXORA.DB.save();
+    const newCompany = { id: companyId, name: companyName, email, status: 'active', plan: 'enterprise' };
+    const newEmployee = { id: userId, company_id: companyId, name: adminName, full_name: adminName, email, role_code: 'company_admin', role: 'المدير العام', status: 'active' };
 
-      var session = { id: eid, full_name: adminName, role: 'مدير مشروع', email: email, company_id: cid };
-      try { localStorage.setItem('tbr_user', JSON.stringify(session)); } catch(e) {}
-      resolve(session);
-    });
+    if (NEXORA.DB) {
+      NEXORA.DB.companies = NEXORA.DB.companies || [];
+      NEXORA.DB.employees = NEXORA.DB.employees || [];
+      NEXORA.DB.companies.push(newCompany);
+      NEXORA.DB.employees.push(newEmployee);
+      if (NEXORA.DB.save) NEXORA.DB.save();
+    }
+
+    const sessionUser = {
+      id: userId,
+      email: email,
+      company_id: companyId,
+      role_code: 'company_admin',
+      role: 'المدير العام',
+      full_name: adminName,
+      is_admin: true
+    };
+
+    sessionStorage.setItem('nexora_session', JSON.stringify(sessionUser));
+    return sessionUser;
   },
 
-  logout: function() {
-    try { localStorage.removeItem('tbr_user'); } catch(e) {}
+  logout: async function() {
+    try {
+      if (NEXORA.Supabase?.client?.auth?.signOut) {
+        await NEXORA.Supabase.client.auth.signOut();
+      }
+    } catch (e) {
+      console.warn('[Auth] Signout warning:', e.message);
+    }
+    sessionStorage.removeItem('nexora_session');
+    try { localStorage.removeItem('tbr_user'); } catch (e) {}
     document.body.classList.remove('authed');
-    var app = document.getElementById('appShell');
+    const app = document.getElementById('appShell');
     if (app) app.classList.add('hidden');
     if (typeof NEXORA.Router !== 'undefined') NEXORA.Router.navigate('landing');
   },
 
   getUser: function() {
     try {
-      var s = localStorage.getItem('tbr_user');
+      const s = sessionStorage.getItem('nexora_session') || localStorage.getItem('tbr_user');
       return s ? JSON.parse(s) : null;
-    } catch(e) { return null; }
+    } catch (e) { return null; }
   },
 
   isAuthenticated: function() {
@@ -68,12 +114,14 @@ NEXORA.Auth = {
   },
 
   isAdmin: function() {
-    var u = this.getUser();
-    return u && (u.role === 'المدير العام' || u.role === 'مدير مشروع');
+    const u = this.getUser();
+    if (!u) return false;
+    const r = u.role_code || u.role;
+    return r === 'company_admin' || r === 'project_manager' || r === 'المدير العام' || r === 'مدير مشروع';
   },
 
   isOwner: function() {
-    var u = this.getUser();
-    return u && u.email === NEXORA.Config.OWNER_EMAIL;
+    const u = this.getUser();
+    return u && (u.role_code === 'company_admin' || u.role === 'المدير العام');
   }
 };
