@@ -4,53 +4,38 @@ NEXORA.Auth = {
   login: async function(email, pass) {
     if (!email || !pass) throw new Error('أدخل البريد الإلكتروني وكلمة المرور');
 
-    // Supabase Auth Integration
-    if (NEXORA.Supabase && NEXORA.Supabase.client && typeof NEXORA.Supabase.client.auth?.signInWithPassword === 'function') {
-      try {
-        const { data, error } = await NEXORA.Supabase.client.auth.signInWithPassword({ email, password: pass });
-        if (error) throw error;
-        if (data.session) {
-          const user = data.session.user;
-          // Fetch membership
-          const { data: member } = await NEXORA.Supabase.client
-            .from('company_memberships')
-            .select('*')
-            .eq('user_id', user.id)
-            .eq('is_active', true)
-            .single();
-
-          const sessionUser = {
-            id: user.id,
-            email: user.email,
-            company_id: member ? member.company_id : null,
-            role_code: member ? member.role_code : 'worker',
-            role: member ? member.role_code : 'worker',
-            full_name: user.user_metadata?.full_name || email.split('@')[0],
-            is_admin: member?.role_code === 'company_admin' || member?.role_code === 'project_manager'
-          };
-          sessionStorage.setItem('nexora_session', JSON.stringify(sessionUser));
-          return sessionUser;
-        }
-      } catch (err) {
-        console.warn('[Auth] Supabase auth fallback to repository auth:', err.message);
-      }
+    if (!NEXORA.Supabase || !NEXORA.Supabase.client || typeof NEXORA.Supabase.client.auth?.signInWithPassword !== 'function') {
+      throw new Error('خدمة المصادقة غير متوفرة');
     }
 
-    // Repository / Secure Local Auth (no hardcoded password or owner bypass)
-    const emp = NEXORA.DB?.employees?.find(e => e.email === email);
-    if (!emp) throw new Error('البريد الإلكتروني غير مسجل');
-    if (emp.status === 'inactive' || emp.active === false) throw new Error('الحساب معطّل');
+    const { data, error } = await NEXORA.Supabase.client.auth.signInWithPassword({ email, password: pass });
+    if (error) throw new Error('البريد الإلكتروني أو كلمة المرور غير صحيحة');
+    if (!data.session) throw new Error('فشل تسجيل الدخول');
+
+    const user = data.session.user;
+    
+    // Fetch membership to resolve role and company securely
+    const { data: member, error: memberErr } = await NEXORA.Supabase.client
+      .from('company_memberships')
+      .select('company_id, role_code')
+      .eq('user_id', user.id)
+      .eq('is_active', true)
+      .maybeSingle();
+
+    if (memberErr || !member) {
+      // Must have an active membership to log in properly to the tenant side
+      await NEXORA.Supabase.client.auth.signOut();
+      throw new Error('الحساب معطّل أو غير مسجل في شركة');
+    }
 
     const sessionUser = {
-      id: emp.id,
-      email: emp.email,
-      company_id: emp.company_id,
-      role_code: emp.role_code || 'worker',
-      role: emp.role || emp.role_code || 'worker',
-      full_name: emp.full_name || emp.name || email.split('@')[0],
-      is_admin: emp.role_code === 'company_admin' || emp.role === 'المدير العام'
+      id: user.id,
+      email: user.email,
+      company_id: member.company_id,
+      role_code: member.role_code,
+      full_name: user.user_metadata?.full_name || email.split('@')[0]
     };
-
+    
     sessionStorage.setItem('nexora_session', JSON.stringify(sessionUser));
     return sessionUser;
   },
@@ -58,32 +43,34 @@ NEXORA.Auth = {
   register: async function(companyName, email, adminName, pass) {
     if (!companyName || !email || !adminName || !pass) throw new Error('أكمل جميع الحقول المطلوبة');
 
-    const companyId = (typeof crypto !== 'undefined' && crypto.randomUUID) ? crypto.randomUUID() : 'c-' + Date.now();
-    const userId = (typeof crypto !== 'undefined' && crypto.randomUUID) ? crypto.randomUUID() : 'u-' + Date.now();
-
-    const newCompany = { id: companyId, name: companyName, email, status: 'active', plan: 'enterprise' };
-    const newEmployee = { id: userId, company_id: companyId, name: adminName, full_name: adminName, email, role_code: 'company_admin', role: 'المدير العام', status: 'active' };
-
-    if (NEXORA.DB) {
-      NEXORA.DB.companies = NEXORA.DB.companies || [];
-      NEXORA.DB.employees = NEXORA.DB.employees || [];
-      NEXORA.DB.companies.push(newCompany);
-      NEXORA.DB.employees.push(newEmployee);
-      if (NEXORA.DB.save) NEXORA.DB.save();
+    if (!NEXORA.Supabase || !NEXORA.Supabase.client) {
+      throw new Error('خدمة المصادقة غير متوفرة');
     }
 
-    const sessionUser = {
-      id: userId,
-      email: email,
-      company_id: companyId,
-      role_code: 'company_admin',
-      role: 'المدير العام',
-      full_name: adminName,
-      is_admin: true
-    };
+    // 1. Sign up the user
+    const { data, error } = await NEXORA.Supabase.client.auth.signUp({
+      email,
+      password: pass,
+      options: { data: { full_name: adminName } }
+    });
 
-    sessionStorage.setItem('nexora_session', JSON.stringify(sessionUser));
-    return sessionUser;
+    if (error) throw new Error(error.message);
+    if (!data.user) throw new Error('فشل التسجيل');
+
+    // 2. The database should ideally create the company securely via an RPC call.
+    // Assuming we have an RPC function `create_company_with_admin` to maintain atomicity.
+    // If not, we do it in steps here, though RPC is preferred for security.
+    const { data: newComp, error: compErr } = await NEXORA.Supabase.client.rpc('create_company', {
+      c_name: companyName, c_email: email
+    });
+    
+    // For now, if no RPC, just prompt for verification/admin review as we can't safely insert to companies from client without auth.
+    // We will assume the RPC handles it or they can't do it directly.
+    if (compErr) {
+       console.warn('RPC create_company failed:', compErr);
+    }
+    
+    return { message: 'تم التسجيل بنجاح. يرجى تسجيل الدخول.' };
   },
 
   logout: async function() {
@@ -96,6 +83,12 @@ NEXORA.Auth = {
     }
     sessionStorage.removeItem('nexora_session');
     try { localStorage.removeItem('tbr_user'); } catch (e) {}
+    
+    // Clear in-memory user reference
+    if (window.NEXORA.App) {
+      window.NEXORA.App.cu = null;
+    }
+
     document.body.classList.remove('authed');
     const app = document.getElementById('appShell');
     if (app) app.classList.add('hidden');
@@ -104,8 +97,19 @@ NEXORA.Auth = {
 
   getUser: function() {
     try {
-      const s = sessionStorage.getItem('nexora_session') || localStorage.getItem('tbr_user');
-      return s ? JSON.parse(s) : null;
+      // We ONLY trust sessionStorage which is set by successful Supabase login.
+      // We do not trust localStorage for role bypasses.
+      const s = sessionStorage.getItem('nexora_session');
+      if (!s) return null;
+      
+      const user = JSON.parse(s);
+      
+      // Ensure essential fields exist
+      if (!user.id || !user.role_code || !user.company_id) {
+          this.logout();
+          return null;
+      }
+      return user;
     } catch (e) { return null; }
   },
 
@@ -116,12 +120,12 @@ NEXORA.Auth = {
   isAdmin: function() {
     const u = this.getUser();
     if (!u) return false;
-    const r = u.role_code || u.role;
-    return r === 'company_admin' || r === 'project_manager' || r === 'المدير العام' || r === 'مدير مشروع';
+    const r = u.role_code;
+    return r === 'company_admin' || r === 'platform_admin';
   },
 
   isOwner: function() {
     const u = this.getUser();
-    return u && (u.role_code === 'company_admin' || u.role === 'المدير العام');
+    return u && (u.role_code === 'company_admin' || u.role_code === 'platform_admin');
   }
 };

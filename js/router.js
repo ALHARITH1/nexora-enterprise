@@ -89,6 +89,17 @@ NEXORA.Router = {
       var route = this._map[view];
       if (!route) { view = 'dashboard'; route = this._map.dashboard; }
 
+      // Enforce RBAC
+      if (NEXORA.RBAC && !NEXORA.RBAC.can(view)) {
+        console.warn('[Router] Access denied for route: ' + view);
+        if (view !== 'dashboard') {
+          this._doNavigate('dashboard');
+        } else {
+          NEXORA.Auth.logout();
+        }
+        return;
+      }
+
       document.querySelectorAll('.view-section').forEach(function(s) { s.classList.remove('active'); });
       var el = document.getElementById(route.section);
       if (el) el.classList.add('active');
