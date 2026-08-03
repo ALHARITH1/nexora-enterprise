@@ -57,17 +57,17 @@ NEXORA.Auth = {
     if (error) throw new Error(error.message);
     if (!data.user) throw new Error('فشل التسجيل');
 
-    // 2. The database should ideally create the company securely via an RPC call.
-    // Assuming we have an RPC function `create_company_with_admin` to maintain atomicity.
-    // If not, we do it in steps here, though RPC is preferred for security.
-    const { data: newComp, error: compErr } = await NEXORA.Supabase.client.rpc('create_company', {
-      c_name: companyName, c_email: email
+    // 2. The database creates the company securely via an RPC call.
+    const { data: newComp, error: compErr } = await NEXORA.Supabase.client.rpc('register_company_with_admin', {
+      p_company_name: companyName,
+      p_company_email: email,
+      p_company_phone: '',
+      p_admin_name: adminName
     });
     
-    // For now, if no RPC, just prompt for verification/admin review as we can't safely insert to companies from client without auth.
-    // We will assume the RPC handles it or they can't do it directly.
     if (compErr) {
-       console.warn('RPC create_company failed:', compErr);
+       console.warn('RPC register_company_with_admin failed:', compErr);
+       throw new Error('تم تسجيل الحساب لكن فشل إنشاء الشركة. يرجى التواصل مع الدعم.');
     }
     
     return { message: 'تم التسجيل بنجاح. يرجى تسجيل الدخول.' };

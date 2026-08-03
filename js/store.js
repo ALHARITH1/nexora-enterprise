@@ -27,24 +27,12 @@ NEXORA.Store = (function() {
     change_requests: [],
     _ready: false,
     save: function() {
-      this._saveToDB();
       var self = this;
-      DB_TABLES.forEach(function(k) {
-        if (Array.isArray(self[k])) {
-          try { localStorage.setItem('tbr_' + k, JSON.stringify(self[k])); } catch(e) {}
-        }
-      });
+      // We only save preferences to localStorage now, NOT business data.
+      // E.g. Theme, layout, language, but NOT DB_TABLES.
     },
     _saveToDB: function() {
-      var self = this;
-      if (!window.indexedDB) return Promise.resolve();
-      return NEXORA.Store.dbTx('readwrite', function(stores) {
-        DB_TABLES.forEach(function(t) {
-          var ob = stores[t];
-          ob.clear();
-          self[t].forEach(function(item) { ob.put(item); });
-        });
-      });
+      return Promise.resolve(); // Disabled for business data
     },
     nextId: function(arr) {
       return arr.length ? Math.max.apply(null, arr.map(function(x) { return x.id; })) + 1 : 1;
@@ -140,24 +128,7 @@ NEXORA.Store = (function() {
   }
 
   function migrateFromLocal() {
-    if (!window.indexedDB) return Promise.resolve();
-    if (localStorage.getItem('tbr_migrated')) return Promise.resolve();
-    var hasData = DB_TABLES.some(function(t) { return localStorage.getItem('tbr_' + t); });
-    if (!hasData) {
-      localStorage.setItem('tbr_migrated', '1');
-      return Promise.resolve();
-    }
-    return dbTx('readwrite', function(stores) {
-      DB_TABLES.forEach(function(t) {
-        var data;
-        try { data = JSON.parse(localStorage.getItem('tbr_' + t) || '[]'); } catch(e) { data = []; }
-        data.forEach(function(item) { stores[t].put(item); });
-      });
-    }).then(function() {
-      localStorage.setItem('tbr_migrated', '1');
-    }).catch(function(e) {
-      console.warn('Migration error:', e);
-    });
+    return Promise.resolve(); // Disable auto-migration on boot. Handled by manual migration script.
   }
 
   function init() {

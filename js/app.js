@@ -17,7 +17,7 @@ NEXORA.App = {
     if (self._initialized && self._initPromise) return self._initPromise;
     if (self._initPromise) return self._initPromise;
 
-    self._initPromise = new Promise(function(resolve, reject) {
+    self._initPromise = new Promise(async function(resolve, reject) {
       try {
         self.restoreTheme();
         self._bindKeyboard();
@@ -25,31 +25,62 @@ NEXORA.App = {
         self._bindSidebarToggle();
         self._registerSW();
 
-        NEXORA.Store.init().then(function() {
-          var stored = NEXORA.Auth.getUser();
-          if (stored) {
-            self.cu = stored;
-            self._showApp();
-          } else {
-            self._showLanding();
+        await NEXORA.Store.init();
+
+        // Check Supabase session first
+        if (NEXORA.Supabase && NEXORA.Supabase.client) {
+          const { data, error } = await NEXORA.Supabase.client.auth.getSession();
+          if (data && data.session && data.session.user) {
+            // Validate membership
+            const { data: member, error: memberErr } = await NEXORA.Supabase.client
+              .from('company_memberships')
+              .select('company_id, role_code')
+              .eq('user_id', data.session.user.id)
+              .eq('is_active', true)
+              .maybeSingle();
+
+            if (!memberErr && member) {
+              const sessionUser = {
+                id: data.session.user.id,
+                email: data.session.user.email,
+                company_id: member.company_id,
+                role_code: member.role_code,
+                full_name: data.session.user.user_metadata?.full_name || data.session.user.email.split('@')[0]
+              };
+              sessionStorage.setItem('nexora_session', JSON.stringify(sessionUser));
+              self.cu = sessionUser;
+              self._showApp();
+              self._initialized = true;
+              return resolve();
+            } else {
+              // Sign out if no active membership
+              await NEXORA.Supabase.client.auth.signOut();
+              sessionStorage.removeItem('nexora_session');
+            }
           }
-          self._initialized = true;
-          resolve();
-        }).catch(function(err) {
-          var stored = NEXORA.Auth.getUser();
-          if (stored) {
-            self.cu = stored;
-            self._showApp();
-            self._initialized = true;
-            resolve();
-          } else {
-            self._showLanding();
-            self._initialized = true;
-            resolve();
-          }
-        });
+        }
+
+        // If no valid Supabase session, check sessionStorage fallback, or show landing
+        var stored = NEXORA.Auth.getUser();
+        if (stored) {
+          self.cu = stored;
+          self._showApp();
+        } else {
+          self._showLanding();
+        }
+        self._initialized = true;
+        resolve();
       } catch (err) {
-        reject(err);
+        console.error("Init Error:", err);
+        var stored = NEXORA.Auth.getUser();
+        if (stored) {
+          self.cu = stored;
+          self._showApp();
+        } else {
+          self._showLanding();
+        }
+        self._initialized = true;
+        resolve();
       }
     });
 
@@ -71,12 +102,9 @@ NEXORA.App = {
   _augmentSession: function() {
     var self = NEXORA.App;
     if (!self.cu) return;
-    if (typeof self.cu.is_owner === 'undefined') {
-      self.cu.is_owner = self.cu.email === NEXORA.Config.OWNER_EMAIL;
-    }
-    if (typeof self.cu.is_admin === 'undefined') {
-      self.cu.is_admin = self.cu.is_owner || self.cu.role === 'المدير العام' || self.cu.role === 'مدير مشروع';
-    }
+    // Real RBAC check instead of mock email checks
+    self.cu.is_admin = (self.cu.role_code === 'company_admin' || self.cu.role_code === 'platform_admin');
+    self.cu.is_owner = self.cu.is_admin;
   },
 
   toggleTheme: function() {

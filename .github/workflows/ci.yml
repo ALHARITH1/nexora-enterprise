@@ -25,8 +25,14 @@ jobs:
       - name: Run ESLint
         run: npm run lint
 
-      - name: Run Vitest Unit & Integration Tests
+      - name: Run Tests (Vitest)
         run: npm run test
 
       - name: Build Production Distribution
         run: npm run build
+
+      - name: Check Artifact Integrity
+        run: npm run check:dist
+
+      - name: Dependency Security Audit
+        run: npm audit --omit=dev

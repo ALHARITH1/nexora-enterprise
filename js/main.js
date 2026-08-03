@@ -14,6 +14,8 @@ import '../css/enterprise.css';
 import 'chart.js/auto';
 
 import './config.js';
+import './utils/financeUtils.js';
+import './utils/dateUtils.js';
 import './utils/helpers.js';
 import './supabaseClient.js';
 import './auth.js';
@@ -57,11 +59,28 @@ import './views/enterprise/planning.js';
 import './views/enterprise/execution.js';
 import './views/enterprise/control.js';
 import './app.js';
+import { registerSW } from 'virtual:pwa-register';
 
 export async function initAppModule() {
   if (typeof window.NEXORA !== 'undefined' && window.NEXORA.App) {
     try {
       await window.NEXORA.App.init();
+      
+      // Register PWA service worker after successful app init
+      const updateSW = registerSW({
+        onNeedRefresh() {
+          if (confirm('تحديث جديد متاح. هل تريد التحديث الآن؟')) {
+            updateSW(true);
+          }
+        },
+        onOfflineReady() {
+          console.log('[PWA] App ready to work offline');
+        },
+        onRegisterError(error) {
+          console.error('[PWA] Service worker registration error:', error);
+        }
+      });
+
     } catch (e) {
       console.error('[NEXORA] Application initialization failed:', e);
       showStartupError(e.message || 'حدث خطأ أثناء تحميل التطبيق');
@@ -120,6 +139,30 @@ function bindDOMEvents() {
         }
       }
     });
+  });
+
+  // Global Delegated Action Listener for DOM Security (replaces inline onclick)
+  document.body.addEventListener('click', function(e) {
+    const actionEl = e.target.closest('[data-action]');
+    if (!actionEl) return;
+    
+    const action = actionEl.getAttribute('data-action');
+    
+    // Turbo Cashflow Add
+    if (action === 'turboCashflowAdd' && window.NEXORA?.Views?.TurboCashflow?.add) {
+      window.NEXORA.Views.TurboCashflow.add();
+    }
+
+    // Standard Cashflow actions
+    if (action === 'filterCashflow' && window.NEXORA?.Views?.Cashflow?.filter) {
+      window.NEXORA.Views.Cashflow.filter();
+    }
+    if (action === 'exportCashflow') {
+      alert('سيتم تصدير التقرير');
+    }
+    
+    // Extensible for future actions:
+    // if (action === 'someOtherAction') { ... }
   });
 }
 

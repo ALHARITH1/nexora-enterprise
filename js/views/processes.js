@@ -65,70 +65,79 @@ var PMBOK_CATALOG = [
 ];
 
 NEXORA.Views.Processes = {
-  render: function() {
+  _currentDbProcs: [],
+
+  render: async function() {
     var App = NEXORA.App;
-    var DB = NEXORA.DB;
     var H = NEXORA.Helpers;
-    var cu = App.cu;
     var el = document.getElementById('processesContent');
     if (!el) return;
 
     var tier = NEXORA.Views.Processes.getTier();
     var procs = NEXORA.Views.Processes.getFilteredProcesses();
     var pid = App.curProjId;
-    var proj = pid ? H.proj(pid) : null;
 
-    var completed = 0, inProgress = 0, pending = 0;
-    procs.forEach(function(p) {
-      var st = NEXORA.Views.Processes.getProcessStatus(p.id, pid);
-      if (st === 'done') completed++;
-      else if (st === 'in_progress') inProgress++;
-      else pending++;
-    });
-    var total = procs.length;
-    var progPct = total ? Math.round(completed / total * 100) : 0;
+    el.innerHTML = '<div class="card"><div class="empty-state"><i class="ti ti-loader"></i>جاري التحميل...</div></div>';
 
-    var projOptions = '<option value="">— بدون مشروع —</option>';
-    DB.projects.forEach(function(p) {
-      projOptions += '<option value="' + p.id + '"' + (pid == p.id ? ' selected' : '') + '>' + H.esc(p.name) + '</option>';
-    });
+    try {
+      var projects = await NEXORA.Repositories.projects.list();
+      var dbProcs = pid ? await NEXORA.Repositories.processes.list({ project_id: pid }) : [];
+      NEXORA.Views.Processes._currentDbProcs = dbProcs;
 
-    var h = '<div class="card" style="border-right:4px solid var(--P);">' +
-      '<div class="flex-between">' +
-        '<div><div class="card-title"><i class="ti ti-engineering"></i> محرك العمليات PMBOK</div>' +
-          '<div style="font-size:var(--fs-sm);color:var(--TX2);">الوضع: <strong style="color:' + (tier === 1 ? 'var(--GR)' : 'var(--P)') + ';">' + (tier === 1 ? '⚡ بسيط (Tier 1)' : '🏢 مؤسسي (Tier 2)') + '</strong></div></div>' +
-        '<div style="display:flex;align-items:center;gap:8px;">' +
-          '<select id="procProjSelect" style="width:auto;min-width:180px;margin:0;" onchange="NEXORA.Views.Processes._onProjectChange(this.value)">' + projOptions + '</select>' +
-          '<button class="btn btn-sm btn-o" onclick="NEXORA.Views.Processes._toggleTier()" title="تبديل الوضع">' + (tier === 1 ? '🏢 انتقال للمؤسسي' : '⚡ انتقال للبسيط') + '</button>' +
+      var completed = 0, inProgress = 0, pending = 0;
+      procs.forEach(function(p) {
+        var st = NEXORA.Views.Processes.getProcessStatus(p.id, pid);
+        if (st === 'done') completed++;
+        else if (st === 'in_progress') inProgress++;
+        else pending++;
+      });
+      var total = procs.length;
+      var progPct = total ? Math.round(completed / total * 100) : 0;
+
+      var projOptions = '<option value="">— بدون مشروع —</option>';
+      projects.forEach(function(p) {
+        projOptions += '<option value="' + p.id + '"' + (String(pid) === String(p.id) ? ' selected' : '') + '>' + H.esc(p.name) + '</option>';
+      });
+
+      var h = '<div class="card" style="border-right:4px solid var(--P);">' +
+        '<div class="flex-between">' +
+          '<div><div class="card-title"><i class="ti ti-engineering"></i> محرك العمليات PMBOK</div>' +
+            '<div style="font-size:var(--fs-sm);color:var(--TX2);">الوضع: <strong style="color:' + (tier === 1 ? 'var(--GR)' : 'var(--P)') + ';">' + (tier === 1 ? '⚡ بسيط (Tier 1)' : '🏢 مؤسسي (Tier 2)') + '</strong></div></div>' +
+          '<div style="display:flex;align-items:center;gap:8px;">' +
+            '<select id="procProjSelect" style="width:auto;min-width:180px;margin:0;" onchange="NEXORA.Views.Processes._onProjectChange(this.value)">' + projOptions + '</select>' +
+            '<button class="btn btn-sm btn-o" onclick="NEXORA.Views.Processes._toggleTier()" title="تبديل الوضع">' + (tier === 1 ? '🏢 انتقال للمؤسسي' : '⚡ انتقال للبسيط') + '</button>' +
+          '</div>' +
         '</div>' +
-      '</div>' +
-    '</div>';
+      '</div>';
 
-    h += '<div class="stats">' +
-      '<div class="stat-card green"><div class="num">' + completed + '</div><div class="lbl">مكتملة</div></div>' +
-      '<div class="stat-card blue"><div class="num">' + inProgress + '</div><div class="lbl">جارية</div></div>' +
-      '<div class="stat-card gold"><div class="num">' + pending + '</div><div class="lbl">قيد الانتظار</div></div>' +
-      '<div class="stat-card purple"><div class="num">' + progPct + '%</div><div class="lbl">التقدم الإجمالي</div></div>' +
-    '</div>';
+      h += '<div class="stats">' +
+        '<div class="stat-card green"><div class="num">' + completed + '</div><div class="lbl">مكتملة</div></div>' +
+        '<div class="stat-card blue"><div class="num">' + inProgress + '</div><div class="lbl">جارية</div></div>' +
+        '<div class="stat-card gold"><div class="num">' + pending + '</div><div class="lbl">قيد الانتظار</div></div>' +
+        '<div class="stat-card purple"><div class="num">' + progPct + '%</div><div class="lbl">التقدم الإجمالي</div></div>' +
+      '</div>';
 
-    h += '<div class="card" style="padding:14px 16px;margin-bottom:14px;">' +
-      '<div class="progress-bar" style="height:10px;"><div class="progress-fill ' + (progPct >= 75 ? 'green' : progPct >= 40 ? 'gold' : 'blue') + '" style="width:' + progPct + '%"></div></div>' +
-    '</div>';
+      h += '<div class="card" style="padding:14px 16px;margin-bottom:14px;">' +
+        '<div class="progress-bar" style="height:10px;"><div class="progress-fill ' + (progPct >= 75 ? 'green' : progPct >= 40 ? 'gold' : 'blue') + '" style="width:' + progPct + '%"></div></div>' +
+      '</div>';
 
-    h += '<div class="tab-bar" id="procGroupTabs">';
-    h += '<button class="tab-btn active" onclick="filterProcGroup(\'all\',this)">الكل (' + procs.length + ')</button>';
-    PMBOK_GROUPS.forEach(function(g) {
-      var count = procs.filter(function(p) { return p.group === g.name; }).length;
-      if (count > 0) {
-        h += '<button class="tab-btn" onclick="filterProcGroup(\'' + H.esc(g.name) + '\',this)"><i class="' + g.icon + '"></i> ' + g.name + ' (' + count + ')</button>';
-      }
-    });
-    h += '</div>';
+      h += '<div class="tab-bar" id="procGroupTabs">';
+      h += '<button class="tab-btn active" onclick="filterProcGroup(\'all\',this)">الكل (' + procs.length + ')</button>';
+      PMBOK_GROUPS.forEach(function(g) {
+        var count = procs.filter(function(p) { return p.group === g.name; }).length;
+        if (count > 0) {
+          h += '<button class="tab-btn" onclick="filterProcGroup(\'' + H.esc(g.name) + '\',this)"><i class="' + g.icon + '"></i> ' + g.name + ' (' + count + ')</button>';
+        }
+      });
+      h += '</div>';
 
-    h += '<div id="procGroupContent"></div>';
+      h += '<div id="procGroupContent"></div>';
 
-    el.innerHTML = h;
-    NEXORA.Views.Processes.filterGroup('all', document.querySelector('#procGroupTabs .tab-btn'));
+      el.innerHTML = h;
+      NEXORA.Views.Processes.filterGroup('all', document.querySelector('#procGroupTabs .tab-btn'));
+    } catch(err) {
+      el.innerHTML = '<div class="card"><div class="empty-state"><i class="ti ti-alert-triangle" style="color:var(--ER);"></i>حدث خطأ: ' + H.esc(err.message) + '</div></div>';
+    }
   },
 
   filterGroup: function(group, btn) {
@@ -173,9 +182,9 @@ NEXORA.Views.Processes = {
           '<div style="display:flex;align-items:center;gap:6px;">' +
             '<span class="badge ' + stCls + '">' + stLabel + '</span>' +
             (pid ? '<div style="display:flex;gap:3px;">' +
-              '<button class="btn btn-sm ' + (st === 'in_progress' ? 'btn-warning' : 'btn-o') + '" onclick="event.stopPropagation();setProcessStatus(\'' + p.id + '\',' + pid + ',\'in_progress\',\'\')" title="جاري">◉</button>' +
-              '<button class="btn btn-sm ' + (st === 'done' ? 'btn-success' : 'btn-o') + '" onclick="event.stopPropagation();setProcessStatus(\'' + p.id + '\',' + pid + ',\'done\',\'\')" title="مكتمل">✓</button>' +
-              '<button class="btn btn-sm ' + (st === 'pending' ? 'btn-o' : 'btn-o') + '" onclick="event.stopPropagation();setProcessStatus(\'' + p.id + '\',' + pid + ',\'pending\',\'\')" title="قيد الانتظار">○</button>' +
+              '<button class="btn btn-sm ' + (st === 'in_progress' ? 'btn-warning' : 'btn-o') + '" onclick="event.stopPropagation();setProcessStatus(\'' + p.id + '\',\'' + pid + '\',\'in_progress\',\'\')" title="جاري">◉</button>' +
+              '<button class="btn btn-sm ' + (st === 'done' ? 'btn-success' : 'btn-o') + '" onclick="event.stopPropagation();setProcessStatus(\'' + p.id + '\',\'' + pid + '\',\'done\',\'\')" title="مكتمل">✓</button>' +
+              '<button class="btn btn-sm ' + (st === 'pending' ? 'btn-o' : 'btn-o') + '" onclick="event.stopPropagation();setProcessStatus(\'' + p.id + '\',\'' + pid + '\',\'pending\',\'\')" title="قيد الانتظار">○</button>' +
             '</div>' : '') +
           '</div>' +
         '</div>';
@@ -201,53 +210,47 @@ NEXORA.Views.Processes = {
   },
 
   getProcessStatus: function(pid, projId) {
-    var DB = NEXORA.DB;
     if (!projId) return 'pending';
-    var proc = DB.processes.find(function(p) { return p.process_id === pid && p.project_id === projId; });
+    var proc = NEXORA.Views.Processes._currentDbProcs.find(function(p) { return String(p.process_id) === String(pid) && String(p.project_id) === String(projId); });
     return proc ? proc.status : 'pending';
   },
 
-  setProcessStatus: function(pid, projId, status, note) {
-    var DB = NEXORA.DB;
-    var H = NEXORA.Helpers;
-
+  setProcessStatus: async function(pid, projId, status, note) {
     if (!projId) {
       if (typeof showToast === 'function') showToast('اختر مشروع أولاً', 'warning');
       return;
     }
 
-    var proc = DB.processes.find(function(p) { return p.process_id === pid && p.project_id === projId; });
-    if (proc) {
-      proc.status = status;
-      proc.updated_at = new Date().toISOString();
-    } else {
-      DB.processes.push({
-        id: H.gf(DB.processes),
+    try {
+      var proc = NEXORA.Views.Processes._currentDbProcs.find(function(p) { return String(p.process_id) === String(pid) && String(p.project_id) === String(projId); });
+      
+      if (proc) {
+        await NEXORA.Repositories.processes.update(proc.id, { status: status, note: note || '' });
+      } else {
+        await NEXORA.Repositories.processes.create({
+          process_id: pid,
+          project_id: projId,
+          status: status,
+          note: note || ''
+        });
+      }
+
+      await NEXORA.Repositories.process_logs.create({
         process_id: pid,
         project_id: projId,
         status: status,
-        note: note || '',
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
+        note: note || ''
       });
+
+      if (typeof showToast === 'function') showToast('تم التحديث بنجاح', 'success');
+      await NEXORA.Views.Processes.render();
+    } catch(err) {
+      alert('فشل التحديث: ' + err.message);
     }
-
-    DB.process_logs.push({
-      id: H.gf(DB.process_logs),
-      process_id: pid,
-      project_id: projId,
-      status: status,
-      note: note || '',
-      changed_by: NEXORA.App.cu ? NEXORA.App.cu.id : 0,
-      changed_at: new Date().toISOString()
-    });
-
-    DB.save();
-    NEXORA.Views.Processes.render();
   },
 
   _onProjectChange: function(val) {
-    NEXORA.App.curProjId = val ? parseInt(val) : null;
+    NEXORA.App.curProjId = val ? String(val) : null;
     NEXORA.Views.Processes.render();
   },
 

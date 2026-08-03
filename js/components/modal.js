@@ -30,16 +30,46 @@ NEXORA.Components.Modal = {
   },
 
   closeAll: function() {
+    var self = NEXORA.Components.Modal;
     document.querySelectorAll('.modal-overlay.active, .modal.active').forEach(function(el) {
       el.classList.remove('active');
+      el.removeAttribute('aria-modal');
     });
+    if (self._previousActiveElement && typeof self._previousActiveElement.focus === 'function') {
+      self._previousActiveElement.focus();
+      self._previousActiveElement = null;
+    }
+  },
+  
+  handleTab: function(e, activeModal) {
+    var focusable = activeModal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    if (!focusable.length) return;
+    
+    var firstElement = focusable[0];
+    var lastElement = focusable[focusable.length - 1];
+
+    if (e.shiftKey) {
+      if (document.activeElement === firstElement) {
+        lastElement.focus();
+        e.preventDefault();
+      }
+    } else {
+      if (document.activeElement === lastElement) {
+        firstElement.focus();
+        e.preventDefault();
+      }
+    }
   }
 };
 
 if (typeof window !== 'undefined') {
   window.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
+    var activeModal = document.querySelector('.modal-overlay.active, .modal.active');
+    
+    if (e.key === 'Escape' && activeModal) {
       NEXORA.Components.Modal.closeAll();
+    } else if (e.key === 'Tab' && activeModal) {
+      NEXORA.Components.Modal.handleTab(e, activeModal);
     }
   });
 }

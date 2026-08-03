@@ -11,8 +11,8 @@ Nexora Enterprise is a multi-tenant cloud-native application designed for constr
 - **Frontend:** Vanilla JavaScript (ES modules) bundled via Vite
 - **Database & Auth:** Supabase (PostgreSQL with Row-Level Security)
 - **Styling:** CSS3 Design Tokens & Glassmorphism System
-- **Testing:** Vitest + JSDOM + Axe-Core + Playwright
-- **Deployment:** Cloudflare Pages (with strict Content Security Policy in `_headers`)
+- **Testing:** Vitest + JSDOM + Axe-Core
+- **Deployment:** GitHub Pages (via GitHub Actions artifact build). Note: GitHub Pages does not currently support strict `_headers` for Content-Security-Policy injection.
 
 ---
 
@@ -84,5 +84,5 @@ Database migrations reside in `supabase/migrations/001_initial_schema.sql`.
 - Exports are schema-validated using `js/utils/importValidator.js`.
 
 ### Deployment & CSP Verification
-- Deployment configured for Cloudflare Pages via `_headers`.
-- Includes strict Content-Security-Policy, X-Frame-Options: DENY, and X-Content-Type-Options: nosniff.
+- Deployment is configured via GitHub Actions artifact upload to GitHub Pages.
+- Since GitHub Pages does not currently parse `_headers`, strict CSP via HTTP headers is not enforced natively on this host. For production deployments requiring strict headers, it is recommended to transition to Cloudflare Pages or a similar host.
