@@ -168,14 +168,14 @@
       </div>
       <nav id="sidebarNav" class="sidebar-nav"></nav>
       <div class="sidebar-footer">
-        <div class="sidebar-user" id="sidebarLogoutBtn">
+        <button type="button" class="sidebar-user" id="sidebarLogoutBtn" aria-label="تسجيل الخروج">
           <div class="sidebar-user-avatar" id="sidebarUserAvatar">?</div>
           <div class="sidebar-user-info">
             <div class="user-name" id="sidebarUserName">-</div>
             <div class="user-role" id="sidebarUserRole">-</div>
           </div>
-          <i class="ti ti-logout" style="margin-right:auto;color:var(--TX3);font-size:18px;" aria-label="تسجيل الخروج"></i>
-        </div>
+          <i class="ti ti-logout" style="margin-right:auto;color:var(--TX3);font-size:18px;"></i>
+        </button>
       </div>
     </aside>
     <main class="main-content">
@@ -236,7 +236,7 @@
   <div id="notifPanel" class="notif-panel">
     <div class="notif-panel-header">
       <h4 style="font-size:var(--fs-lg);font-weight:700;">الإشعارات</h4>
-      <button class="btn btn-sm btn-ghost" id="notifCloseBtn"><i class="ti ti-x"></i></button>
+      <button type="button" class="btn btn-sm btn-ghost" id="notifCloseBtn" aria-label="إغلاق الإشعارات"><i class="ti ti-x"></i></button>
     </div>
     <div id="notifPanelBody" class="notif-panel-body"></div>
   </div>

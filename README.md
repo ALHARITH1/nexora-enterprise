@@ -20,7 +20,7 @@ Nexora Enterprise is a multi-tenant cloud-native application designed for constr
 
 ### Prerequisites
 
-- Node.js 20+
+- Node.js 22+
 - npm 10+
 
 ### Installation & Development

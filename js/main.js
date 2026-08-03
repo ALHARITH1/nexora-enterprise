@@ -20,6 +20,7 @@ import './utils/helpers.js';
 import './supabaseClient.js';
 import './auth.js';
 import './rbac.js';
+import './repositories/index.js';
 import './store.js';
 import './router.js';
 import './components/toast.js';

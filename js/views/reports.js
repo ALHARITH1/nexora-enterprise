@@ -94,7 +94,7 @@ NEXORA.Views.Reports = {
       h += '</tbody></table></div></div>';
 
       h += '<div style="display:flex;gap:8px;flex-wrap:wrap;">' +
-        '<button class="btn btn-primary btn-sm" onclick="exportReportPDF(\'reportTabContent\',\'تقرير المشاريع\')"><i class="ti ti-file-pdf"></i> تصدير PDF</button>' +
+        '<button class="btn btn-primary btn-sm" type="button" disabled aria-disabled="true" title="تصدير PDF غير متاح حالياً بسبب قيود دعم العربية RTL"><i class="ti ti-file-pdf"></i> تصدير PDF (غير متاح)</button>' +
         '<button class="btn btn-sm" onclick="exportReportCSV(getProjectReportRows(),\'مشاريع\')"><i class="ti ti-file-spreadsheet"></i> تصدير CSV</button>' +
         '<button class="btn btn-g btn-sm" onclick="exportReportJSON()"><i class="ti ti-json"></i> تصدير JSON</button>' +
       '</div>';
@@ -164,7 +164,7 @@ NEXORA.Views.Reports = {
       });
 
       h += '<div style="display:flex;gap:8px;flex-wrap:wrap;">' +
-        '<button class="btn btn-primary btn-sm" onclick="exportReportPDF(\'reportTabContent\',\'تقرير الميزانية\')"><i class="ti ti-file-pdf"></i> تصدير PDF</button>' +
+        '<button class="btn btn-primary btn-sm" type="button" disabled aria-disabled="true" title="تصدير PDF غير متاح حالياً بسبب قيود دعم العربية RTL"><i class="ti ti-file-pdf"></i> تصدير PDF (غير متاح)</button>' +
       '</div>';
 
       c.innerHTML = h;
@@ -212,7 +212,7 @@ NEXORA.Views.Reports = {
       h += '</tbody></table></div></div>';
 
       h += '<div style="display:flex;gap:8px;flex-wrap:wrap;">' +
-        '<button class="btn btn-primary btn-sm" onclick="exportReportPDF(\'reportTabContent\',\'تقرير الموظفين\')"><i class="ti ti-file-pdf"></i> تصدير PDF</button>' +
+        '<button class="btn btn-primary btn-sm" type="button" disabled aria-disabled="true" title="تصدير PDF غير متاح حالياً بسبب قيود دعم العربية RTL"><i class="ti ti-file-pdf"></i> تصدير PDF (غير متاح)</button>' +
         '<button class="btn btn-sm" onclick="exportReportCSV(getEmpReportRows(),\'موظفين\')"><i class="ti ti-file-spreadsheet"></i> تصدير CSV</button>' +
       '</div>';
 
@@ -300,7 +300,7 @@ NEXORA.Views.Reports = {
       }
       h += '</div>';
 
-      h += '<button class="btn btn-primary btn-sm" onclick="exportReportPDF(\'reportTabContent\',\'تقرير المتأخرات\')"><i class="ti ti-file-pdf"></i> تصدير PDF</button>';
+      h += '<button class="btn btn-primary btn-sm" type="button" disabled aria-disabled="true" title="تصدير PDF غير متاح حالياً بسبب قيود دعم العربية RTL"><i class="ti ti-file-pdf"></i> تصدير PDF (غير متاح)</button>';
 
       c.innerHTML = h;
     } catch(err) {
@@ -349,7 +349,7 @@ NEXORA.Views.Reports = {
       h += '</div>';
 
       h += '<div style="display:flex;gap:8px;flex-wrap:wrap;">' +
-        '<button class="btn btn-primary btn-sm" onclick="exportReportPDF(\'reportTabContent\',\'تقرير الاعتمادات المعلقة\')"><i class="ti ti-file-pdf"></i> تصدير PDF</button>' +
+        '<button class="btn btn-primary btn-sm" type="button" disabled aria-disabled="true" title="تصدير PDF غير متاح حالياً بسبب قيود دعم العربية RTL"><i class="ti ti-file-pdf"></i> تصدير PDF (غير متاح)</button>' +
       '</div>';
 
       c.innerHTML = h;
@@ -378,7 +378,7 @@ NEXORA.Views.Reports = {
     '</div>' +
     '<div id="advReportResult"></div>' +
     '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;">' +
-      '<button class="btn btn-primary btn-sm" onclick="exportReportPDF(\'advReportResult\',\'تقرير متقدم\')"><i class="ti ti-file-pdf"></i> تصدير PDF</button>' +
+      '<button class="btn btn-primary btn-sm" type="button" disabled aria-disabled="true" title="تصدير PDF غير متاح حالياً بسبب قيود دعم العربية RTL"><i class="ti ti-file-pdf"></i> تصدير PDF (غير متاح)</button>' +
       '<button class="btn btn-sm" onclick="exportReportCSV(advCsvRows||[],\'تقرير_متقدم\')"><i class="ti ti-file-spreadsheet"></i> تصدير CSV</button>' +
       '<button class="btn btn-g btn-sm" onclick="exportReportJSON()"><i class="ti ti-json"></i> تصدير JSON</button>' +
       '<button class="btn btn-sm" style="background:var(--GR);color:#fff;" onclick="exportAllData()"><i class="ti ti-download"></i> نسخة احتياطية كاملة</button>' +
@@ -495,26 +495,10 @@ NEXORA.Views.Reports = {
     }
   },
 
-  exportReportPDF: function(elementId, title) {
-    var el = document.getElementById(elementId);
-    if (!el) return;
-    if (typeof html2canvas === 'undefined' || typeof jspdf === 'undefined') {
-      if (typeof showToast === 'function') showToast('جاري تحميل مكتبات التصدير...', 'info');
-      return;
+  exportReportPDF: function() {
+    if (typeof showToast === 'function') {
+      showToast('تصدير PDF غير متاح حالياً بسبب قيود دعم العربية RTL', 'info');
     }
-    html2canvas(el, { scale: 2, useCORS: true }).then(function(canvas) {
-      var imgData = canvas.toDataURL('image/png');
-      var pdf = new jspdf.jsPDF('l', 'mm', 'a4');
-      var pdfW = pdf.internal.pageSize.getWidth();
-      var pdfH = (canvas.height * pdfW) / canvas.width;
-      pdf.setFontSize(16);
-      pdf.text(title || 'TADR', pdfW / 2, 15, { align: 'center' });
-      pdf.addImage(imgData, 'PNG', 5, 20, pdfW - 10, pdfH);
-      pdf.save((title || 'report') + '.pdf');
-      if (typeof showToast === 'function') showToast('تم التصدير بنجاح', 'success');
-    }).catch(function() {
-      if (typeof showToast === 'function') showToast('حدث خطأ أثناء التصدير', 'error');
-    });
   },
 
   exportReportCSV: function(rows, filename) {

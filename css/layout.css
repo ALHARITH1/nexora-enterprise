@@ -12,7 +12,7 @@
 .sidebar-brand small{font-size:var(--fs-xs);color:var(--TX2);font-weight:500}
 .sidebar-nav{flex:1;padding:12px 8px;display:flex;flex-direction:column;gap:2px;overflow-y:auto}
 .sidebar-footer{border-top:1px solid var(--BD);padding:12px}
-.sidebar-user{display:flex;align-items:center;gap:10px;cursor:pointer;padding:10px;border-radius:var(--radius);transition:background .15s}
+.sidebar-user{display:flex;align-items:center;gap:10px;width:100%;cursor:pointer;padding:10px;border:0;border-radius:var(--radius);background:transparent;color:inherit;font:inherit;text-align:inherit;transition:background .15s}
 .sidebar-user:hover{background:var(--PLL)}
 .sidebar-user-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--G),#b8911e);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:var(--fs-base);flex-shrink:0}
 .sidebar-user-info{flex:1;min-width:0}

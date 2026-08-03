@@ -1,19 +1,27 @@
+import fs from 'node:fs';
+import path from 'node:path';
 import { describe, test, expect } from 'vitest';
-import { jsPDF } from 'jspdf';
 
-describe('WP-06 PWA Reliability & Incomplete Features (PDF & Gantt)', () => {
-  test('jsPDF library creates valid report document', () => {
-    const doc = new jsPDF();
-    doc.text('Nexora Enterprise Report', 10, 10);
-    const pdfOutput = doc.output('datauristring');
-    expect(pdfOutput).toContain('data:application/pdf');
+const repositoryRoot = process.cwd();
+
+describe('WP-06 PWA Reliability & Explicit Feature Limits', () => {
+  test('PDF export is explicitly disabled after removal of the vulnerable dependency', () => {
+    const packageJson = JSON.parse(fs.readFileSync(path.resolve(repositoryRoot, 'package.json'), 'utf8'));
+    const reportsSource = fs.readFileSync(path.resolve(repositoryRoot, 'js/views/reports.js'), 'utf8');
+
+    expect(packageJson.dependencies).not.toHaveProperty('jspdf');
+    expect(packageJson.dependencies).not.toHaveProperty('jspdf-autotable');
+    expect(reportsSource).not.toContain('new jspdf.jsPDF');
+    expect(reportsSource).not.toContain('onclick="exportReportPDF');
+    expect(reportsSource).toContain('تصدير PDF غير متاح حالياً');
   });
 
-  test('Service worker script contains strict exclusion for Supabase API requests', async () => {
-    const swContent = `
-      if (url.hostname.includes('supabase') || url.pathname.includes('/auth/v1')) return;
-    `;
-    expect(swContent).toContain('supabase');
-    expect(swContent).toContain('/auth/v1');
+  test('PWA configuration excludes Supabase API traffic from runtime caching', () => {
+    const viteConfig = fs.readFileSync(path.resolve(repositoryRoot, 'vite.config.js'), 'utf8');
+
+    expect(viteConfig).toContain("handler: 'NetworkOnly'");
+    expect(viteConfig).toContain("url.hostname.includes('supabase')");
+    expect(viteConfig).toContain("url.pathname.includes('/auth/v1')");
+    expect(viteConfig).toContain("url.pathname.includes('/rest/v1')");
   });
 });

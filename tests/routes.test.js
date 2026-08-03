@@ -1,11 +1,11 @@
+import fs from 'node:fs';
+import path from 'node:path';
 import { describe, test, expect, beforeEach, afterEach, vi } from 'vitest';
 import '../js/router.js'; // Ensure router is imported so NEXORA.Router exists
 
 describe('Route Smoke Test (WP-01) @runtime', () => {
   beforeEach(() => {
-    const fs = require('fs');
-    const path = require('path');
-    const html = fs.readFileSync(path.resolve(__dirname, '../index.html'), 'utf8');
+    const html = fs.readFileSync(path.resolve(process.cwd(), 'index.html'), 'utf8');
     document.body.innerHTML = html;
 
     window.NEXORA = window.NEXORA || {};
